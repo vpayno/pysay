@@ -5,7 +5,9 @@ description = "Like cowsay but with a python using Python (from Real Python tuto
 authors = [
     {name = "Victor Payno", email = "vpayno@users.noreply.github.com"},
 ]
-dependencies = []
+dependencies = [
+    "rich>=13.7.0",
+]
 requires-python = ">=3.12"
 readme = "README.md"
 license = {text = "MIT"}
