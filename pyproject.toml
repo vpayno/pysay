@@ -26,6 +26,11 @@ keywords = ["pysay", "cli", "terminal"]
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
 
+[tool.pdm.dev-dependencies]
+dev1 = ["pytest", "pytest-randomly", "pytest-datafiles", "pytest-cov"]
+dev2 = ["mkdocs"]
+dev3 = ["pdoc3"]
+
 [tool.pdm.version]
 source = "scm"
 write_to = "pysay/_version.py"
@@ -52,7 +57,13 @@ coverage_report = { shell = "coverage report --show-missing" }
 coverage_annotate = { shell = "coverage annotate" }
 test = { composite = ["doctest", "pytest"] }
 
-full = { composite = ["lint", "test"] }
+pydoc_text = { shell = "python -m pydoc pysay | tee pysay.txt" }
+pydoc_html = { shell = "python -m pydoc -w pysay" }
+pdoc_html = { shell = "pdoc --html --force ." }
+mkdocs = { shell = "mkdocs new mkdocs && cd mkdocs && echo theme: readthedocs >> mkdocs.yml && yq --yaml-output . mkdocs.yml | sponge mkdocs.yml && mkdocs build" }
+doc = { composite = ["pydoc_text", "pydoc_html", "pdoc_html", "mkdocs"] }
+
+full = { composite = ["lint", "test", "doc"] }
 
 [tool.pyright]
 include = ["src", "tests"]
