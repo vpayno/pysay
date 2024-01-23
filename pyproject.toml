@@ -1,7 +1,7 @@
 [project]
 name = "pysay"
 version = "0.1.0"
-description = "Like cowsay but with a python using Python (from Real Python tutorial)"
+description = "Like cowsay but with a python (from Real Python tutorial)"
 authors = [
     {name = "Victor Payno", email = "vpayno@users.noreply.github.com"},
 ]
