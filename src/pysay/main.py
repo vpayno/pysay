@@ -11,7 +11,7 @@ from pysay import snake
 install()  # setup rich
 
 
-def main():
+def main() -> None:
     """
     Runs the cli application code.
     """

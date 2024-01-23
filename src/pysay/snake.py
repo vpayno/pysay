@@ -13,7 +13,7 @@ SNAKE = r"""
 """
 
 
-def bubble(message):
+def bubble(message: str) -> str:
     r"""
     Draws a speech bubble with the given message.
      _______________
@@ -21,7 +21,8 @@ def bubble(message):
      ---------------
     """
 
-    bubble_length = len(message) + 2
+    bubble_length: int = len(message) + 2
+
     return f"""
     {" " + "_" * bubble_length}
     ( {message} )
@@ -29,7 +30,7 @@ def bubble(message):
     """
 
 
-def say(message):
+def say(message: str) -> None:
     r"""
     Draws the speech bubble and snake.
 
