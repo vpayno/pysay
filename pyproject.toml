@@ -38,7 +38,12 @@ package-type = "library"
 [tool.pdm.scripts]
 main = { call = "pysay:main" }
 module = { shell = "python -m pysay" }
-lint = "ruff ."
+ruff = { shell = "ruff check" }
+pylint = { shell = "pylint --ignore-patterns='_[a-z][a-z0-9_-]+.py' ./src ./tests" }
+pyright = { shell = "pyright --stats" }
+refurb = { shell = "refurb ./src ./tests" }
+bandit = { shell = "bandit --verbose --recursive ./src" }
+lint = { composite = ["ruff", "pyright", "pylint", "refurb"] }
 test = "pytest"
 full = { composite = ["lint", "test"] }
 
