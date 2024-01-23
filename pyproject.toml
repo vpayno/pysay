@@ -47,5 +47,8 @@ lint = { composite = ["ruff", "pyright", "pylint", "refurb"] }
 test = "pytest"
 full = { composite = ["lint", "test"] }
 
+[tool.pyright]
+include = ["src", "tests"]
+
 [project.scripts]
 pysay = "pysay.main:main"
