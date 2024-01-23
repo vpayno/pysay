@@ -1,5 +1,5 @@
 """
-pysay tool
+pysay tool main module
 """
 
 import sys
@@ -12,6 +12,10 @@ install()  # setup rich
 
 
 def main():
+    """
+    Runs the cli application code.
+    """
+
     snake.say(" ".join(sys.argv[1:]))
 
 
