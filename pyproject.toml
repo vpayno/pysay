@@ -4,6 +4,9 @@ description = "Like cowsay but with a python (from Real Python tutorial)"
 authors = [
     {name = "Victor Payno", email = "vpayno@users.noreply.github.com"},
 ]
+maintainers = [
+    {name = "Victor Payno", email = "vpayno@users.noreply.github.com"},
+]
 dependencies = [
     "rich>=13.7.0",
 ]
