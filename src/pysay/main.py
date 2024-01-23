@@ -6,7 +6,7 @@ import sys
 
 from rich.traceback import install
 
-import pysay.snake as snake
+from pysay import snake
 
 install()  # setup rich
 
