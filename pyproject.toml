@@ -38,13 +38,20 @@ package-type = "library"
 [tool.pdm.scripts]
 main = { call = "pysay:main" }
 module = { shell = "python -m pysay" }
+
 ruff = { shell = "ruff check" }
 pylint = { shell = "pylint --ignore-patterns='_[a-z][a-z0-9_-]+.py' ./src ./tests" }
 pyright = { shell = "pyright --stats" }
 refurb = { shell = "refurb ./src ./tests" }
 bandit = { shell = "bandit --verbose --recursive ./src" }
 lint = { composite = ["ruff", "pyright", "pylint", "refurb"] }
-test = "pytest"
+
+doctest = { shell = "python -m doctest -v ./src/*/[a-z]*.py" }
+pytest = { shell = "pytest --verbose --cov=. --cov-branch --cov-report=term-missing --cov-report=xml:.coverage.xml -p no:randomly ./tests" }
+coverage_report = { shell = "coverage report --show-missing" }
+coverage_annotate = { shell = "coverage annotate" }
+test = { composite = ["doctest", "pytest"] }
+
 full = { composite = ["lint", "test"] }
 
 [tool.pyright]
