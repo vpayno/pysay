@@ -19,6 +19,8 @@ keywords = ["pysay", "cli", "terminal"]
 [project.urls]
 "Homepage" = "https://github.com/vpayno/pysay"
 "Bug Tracker" = "https://github.com/vpayno/pysay/issues"
+"Repository" = "https://github.com/vpayno/pysay.git"
+"Changelog" = "https://github.com/vpayno/pysay/releases"
 
 [build-system]
 requires = ["pdm-backend"]
