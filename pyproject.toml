@@ -36,5 +36,5 @@ lint = "ruff ."
 test = "pytest"
 full = { composite = ["lint", "test"] }
 
-[project.script]
+[project.scripts]
 pysay = "pysay.main:main"
