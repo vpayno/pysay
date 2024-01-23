@@ -71,5 +71,8 @@ include = ["src", "tests"]
 [tool.ruff]
 line-length = 120
 
+[tool.black]
+line-length = 120
+
 [project.scripts]
 pysay = "pysay.main:main"
