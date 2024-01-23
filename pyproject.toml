@@ -50,6 +50,11 @@ package-type = "library"
 main = { call = "pysay:main" }
 module = { shell = "python -m pysay" }
 
+clean_docs = { shell = "rm -rf html mkdocs pysay.html pysay.md pysay.txt" }
+clean_pycache = { shell = "find . -type f -name '*.py[co]' -delete -print -o -type d -name __pycache__ -delete -print" }
+clean_build = { shell = "rm -rf dist" }
+clean = { composite = ["clean_docs", "clean_pycache", "clean_build"] }
+
 ruff = { shell = "ruff check" }
 pylint = { shell = "pylint --ignore-patterns='_[a-z][a-z0-9_-]+.py' ./src ./tests" }
 pyright = { shell = "pyright --stats" }
@@ -70,7 +75,7 @@ pdoc_html = { shell = "pdoc --html --force ." }
 mkdocs = { shell = "mkdocs new mkdocs && cd mkdocs && echo theme: readthedocs >> mkdocs.yml && yq --yaml-output . mkdocs.yml | sponge mkdocs.yml && mkdocs build" }
 doc = { composite = ["pydoc_text", "pydoc_html", "pdoc_html", "mkdocs"] }
 
-full = { composite = ["lint", "test", "doc"] }
+full = { composite = ["clean", "lint", "test", "doc"] }
 
 [tool.pyright]
 include = ["src", "tests"]
