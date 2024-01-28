@@ -82,6 +82,22 @@ include = ["src", "tests"]
 
 [tool.ruff]
 line-length = 120
+indent-width = 4
+
+[tool.ruff.lint]
+# select = []
+# ignore = []
+fixable = ["ALL"]
+unfixable = []
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = true
+docstring-code-line-length = "dynamic"
 
 [tool.mypy]
 check_untyped_defs = true
