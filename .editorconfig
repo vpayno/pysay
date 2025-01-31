@@ -12,6 +12,31 @@ max_line_length = 240
 # tab_width = 4
 trim_trailing_whitespace = true
 
+[*.nix]
+indent_size = 2
+indent_style = space
+tab_width = 2
+
+[{*.hcl,*.tf,*.tfvars,*.terraformrc,terraform.rc}]
+indent_size = 4
+indent_style = space
+tab_width = 4
+
+[*.tfstate]
+indent_size = 4
+indent_style = space
+tab_width = 4
+
+[*.{c,h,cpp,hpp}]
+indent_size = 2
+indent_style = space
+tab_width = 2
+
+[*.{vim,vimrc}]
+indent_size = 4
+indent_style = space
+tab_width = 4
+
 [*.csv]
 indent_size = 4
 indent_style = space
@@ -42,9 +67,24 @@ indent_size = 4
 indent_style = tab
 tab_width = 4
 
+[*.rb]
+indent_size = 4
+indent_style = space
+tab_width = 4
+
+[*.pl]
+indent_size = 4
+indent_style = tab
+tab_width = 4
+
 [{*.go,go.mod,go.sum}]
 indent_size = 4
 indent_style = tab
+tab_width = 4
+
+[*.{rs,ld}]
+indent_size = 4
+indent_style = space
 tab_width = 4
 
 [*.py]
@@ -67,20 +107,15 @@ indent_size = 4
 indent_style = space
 indent_size = 4
 
-[*.json]
-indent_size = 4
+[*.{json,jsonl}]
+indent_size = 2
 indent_style = space
-indent_size = 4
+indent_size = 2
 
 [*.{yml,yaml}]
 indent_size = 2
 indent_style = space
 indent_size = 2
-
-[*.cue]
-indent_size = 4
-indent_style = tab
-indent_size = 4
 
 [*.{html,xhtml,xml,svg}]
 indent_size = 2
@@ -96,3 +131,18 @@ indent_size = 4
 indent_size = 4
 indent_style = space
 indent_size = 4
+
+[*.rb]
+indent_size = 2
+indent_style = space
+indent_size = 2
+
+[*.cue]
+indent_size = 4
+indent_style = tab
+indent_size = 4
+
+[*.gleam]
+indent_size = 2
+indent_style = space
+indent_size = 2
