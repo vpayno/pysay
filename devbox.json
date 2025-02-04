@@ -1,0 +1,29 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.13.7/.schema/devbox.schema.json",
+  "packages": [
+    "python@3.12",
+    "pdm@latest",
+    "uv@latest",
+    "git@latest",
+    "glow@latest",
+    "runme@latest",
+    "python312Packages.hatch-vcs@latest",
+    "hatch@latest"
+  ],
+  "shell": {
+    "init_hook": [
+      "unset PYTHONPATH",
+      "[ -d ${VENV_DIR} ] || pdm install",
+      "[ -d ${VENV_DIR} ] && . ${VENV_DIR}/bin/activate"
+    ],
+    "scripts": {
+      "update_locks": [
+        "pdm lock",
+        "uv lock"
+      ],
+      "update_flake": [
+        "nix flake update"
+      ]
+    }
+  }
+}
