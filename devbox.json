@@ -1,0 +1,27 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.13.7/.schema/devbox.schema.json",
+  "packages": [
+    "python@3.12",
+    "uv@latest",
+    "git@latest",
+    "glow@latest",
+    "runme@latest",
+    "python312Packages.ipython@latest",
+    "just@latest",
+    "refurb@latest"
+  ],
+  "shell": {
+    "init_hook": [
+      "unset PYTHONPATH",
+      "printf 'VENVDIR=%s\n' ${VENV_DIR}",
+      "[ -d ${VENV_DIR} ] || uv install",
+      "[ -d ${VENV_DIR} ] && . ${VENV_DIR}/bin/activate",
+      "uv sync"
+    ],
+    "scripts": {
+      "update_locks": [
+        "uv lock"
+      ]
+    }
+  }
+}
