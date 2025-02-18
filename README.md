@@ -40,6 +40,56 @@ $ which pysay
 $ exit
 ```
 
+## nix run
+
+To use `pysay` without installing it use `nix run`:
+
+```text
+$ nix run github:vpayno/pysay hello
+
+     _______
+    ( hello )
+     -------
+       \    __
+        \  {oo}
+           (__)\
+             λ \\
+               _\\__
+              (_____)_
+             (________)0o°
+```
+
+## nix profile
+
+To install it use `nix profile install`:
+
+```text
+$ nix profile install github:vpayno/pysay
+
+$ nix profile list
+...
+Name:               pysay
+Flake attribute:    packages.x86_64-linux.default
+Original flake URL: github:vpayno/pysay/uv
+Locked flake URL:   github:vpayno/pysay/f2b5541991355534abc668c17053081817b10f5d?narHash=sha256-Xvt50%2B5CvqEv4aNxEEHX6WMiIQgWIESwBRn1nLf8yZQ%3D
+Store paths:        /nix/store/wd9g39zv4f8j92k518fmx500s66p5zz3-pysay-prod-env
+...
+
+$ which pysay
+/home/vpayno/.nix-profile/bin/pysay
+```
+
+## nix develop
+
+To start a shell with pysay run `nix develop`:
+
+```bash
+$ nix develop
+
+$ which pysay
+/nix/store/0256lx2lafd5vlvz8lqpks5vji0q0zjs-pysay/bin/pysay
+```
+
 ## nix-shell
 
 Tried using `pip2nix` but it needs the project to support Python 3.9 which

@@ -1,6 +1,10 @@
 # uv/devbox
 .python-version
 
+# nix
+/result
+/result-*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
