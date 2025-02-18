@@ -236,6 +236,70 @@ The `uv tool install` command creates a private virtual environment for the
 program you are installing. Unfortunately it doesn't also bundle in a Python
 interpreter so it's still better to use `nix`.
 
+```bash
+$ devbox run uv tool install git+https://github.com/vpayno/pysay
+
+$ which pysay
+/home/vpayno/.local/bin/pysay
+
+$ ls -lh /home/vpayno/.local/bin/pysay
+lrwxrwxrwx 1 vpayno vpayno 50 Feb 17 22:37 /home/vpayno/.local/bin/pysay -> /home/vpayno/.local/share/uv/tools/pysay/bin/pysay
+
+$ tree /home/vpayno/.local/share/uv/tools/pysay/
+/home/vpayno/.local/share/uv/tools/pysay/
+├── bin
+│   ├── activate
+│   ├── activate.bat
+│   ├── activate.csh
+│   ├── activate.fish
+│   ├── activate.nu
+│   ├── activate.ps1
+│   ├── activate_this.py
+│   ├── deactivate.bat
+│   ├── markdown-it
+│   ├── pydoc.bat
+│   ├── pygmentize
+│   ├── pysay
+│   ├── python -> /home/vpayno/git_vpayno/pysay-cr-nix/.devbox/nix/profile/default/bin/python
+│   ├── python3 -> python
+│   └── python3.12 -> python
+├── CACHEDIR.TAG
+├── lib
+│   └── python3.12
+│       └── site-packages
+│           ├── markdown_it
+│           ├── markdown_it_py-3.0.0.dist-info
+│           ├── mdurl
+│           ├── mdurl-0.1.2.dist-info
+│           ├── pygments
+│           ├── pygments-2.19.1.dist-info
+│           ├── pysay
+│           │   ├── __init__.py
+│           │   ├── __main__.py
+│           │   ├── main.py
+│           │   ├── snake.py
+│           │   └── _version.py
+│           ├── pysay-0.4.1.dev8+gba124be.dist-info
+│           │   ├── direct_url.json
+│           │   ├── entry_points.txt
+│           │   ├── INSTALLER
+│           │   ├── licenses
+│           │   │   └── LICENSE
+│           │   ├── METADATA
+│           │   ├── RECORD
+│           │   ├── REQUESTED
+│           │   └── WHEEL
+│           ├── rich
+│           ├── rich-13.9.4.dist-info
+│           ├── _virtualenv.pth
+│           └── _virtualenv.py
+├── lib64 -> lib
+├── pyvenv.cfg
+└── uv-receipt.toml
+
+29 directories, 552 files
+```
+
 ### nix profile
 
 To install it use `nix profile install`:
