@@ -10,6 +10,17 @@ Publishing, Pages, etc.
 Once it's feature complete, I might treat it as an archived project and only
 play with dependency update related maintenance.
 
+## uv
+
+Switched from `pdm` to `uv` to make working with the project using `uv2nix`
+easier.
+
+### uv tool install
+
+The `uv tool install` command creates a private virtual environment for the
+program you are installing. Unfortunately it doesn't also bundle in a Python
+interpreter so it's still better to use `nix`.
+
 ## devbox shell
 
 Added a `devbox` shell for development.
