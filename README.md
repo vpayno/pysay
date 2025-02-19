@@ -337,3 +337,14 @@ Store paths:        /nix/store/61i2bx85wzvpww6bjcgzwx1f2psvyznf-pysay-prod-env
 $ which pysay
 /home/vpayno/.nix-profile/bin/pysay
 ```
+
+## Running UV Tools
+
+`uv` doesn't support custom commands like `pdm` does so I'm using `poethepoet`
+to define and run them.
+
+To see a list of available commands run:
+
+```text
+devbox run uv run poe
+```
