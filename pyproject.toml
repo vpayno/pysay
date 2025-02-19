@@ -119,36 +119,147 @@ multi_line_output = 3
 wrap_length = 10
 line_length = 11
 
-[tool.poe.tasks]
-main = "python -m pysay 'Hello UV!'"
-module = "pysay:main 'Hello UV!'"
+# task keys: {'shell', 'script', 'cmd', 'ref', 'sequence', 'switch', 'expr'}
+[tool.poe.tasks.main]
+cmd = "python -m pysay"
+help = "Run main module"
 
-clean_docs = "rm -rf html mkdocs pysay.html pysay.md pysay.txt"
-clean_pycache = "find . -type f -name '*.py[co]' -delete -print -o -type d -name __pycache__ -delete -print"
-clean_build = "rm -rf dist"
-clean = "for c in clean_docs clean_pycache clean_build; do uv run ${c}; done"
+[tool.poe.tasks.clean_docs]
+shell = "rm -rf html mkdocs pysay.html pysay.md pysay.txt"
+help = "Clean up generated docs"
 
-format = "ruff format"
+[tool.poe.tasks.clean_pycache]
+shell = "find ./src ./tests -type f -name '*.py[co]' -delete -print -o -type d -name __pycache__ -delete -print"
+help = "Clean up pycache"
 
-ruff = "isort --dont-follow-links && ruff check"
-pylint = "pylint --ignore-patterns='_[a-z][a-z0-9_-]+.py' ./src ./tests"
-pyright = "pyright --stats"
-refurb = "refurb ./src ./tests"
-bandit = "bandit --verbose --recursive ./src"
-mypy = "mypy --install-types --non-interactive ./src ./tests"
-outdated = "pip list --outdated"
-lint = "for c in ruff pyright pylint refurb mypy; do uv run ${c}; done"
+[tool.poe.tasks.clean_build]
+shell = "rm -rf dist"
+help = " Clean up builds"
 
-doctest = "python -m doctest -v ./src/*/[a-z]*.py"
-pytest = "pytest --verbose --cov=. --cov-branch --cov-report=term-missing --cov-report=xml:.coverage.xml -p no:randomly ./tests"
-coverage_report = "coverage report --show-missing"
-coverage_annotate = "coverage annotate"
-test = "for c in doctest pytest; do uv run ${c}; done"
+[tool.poe.tasks.ruff]
+shell = "ruff check"
+help = "Run ruff linter"
 
-pydoc_text = "python -m pydoc pysay | tee pysay.txt"
-pydoc_html = "python -m pydoc -w pysay"
-pdoc_html = "pdoc --html --force ."
-mkdocs = "mkdocs new mkdocs && cd mkdocs && echo theme: readthedocs >> mkdocs.yml && yq --yaml-output . mkdocs.yml | sponge mkdocs.yml && mkdocs build"
-doc = "for c in pydoc_text pydoc_html pdoc_html mkdocs; do uv run ${c}; done"
+[tool.poe.tasks.pylint]
+shell = "pylint --ignore-patterns='_[a-z][a-z0-9_-]+.py' ./src ./tests"
+help = "Run pylint"
 
-full = "for c in clean format lint test doc; do uv run ${c}; done"
+[tool.poe.tasks.pyright]
+cmd = "pyright --stats"
+help = "Run pyright linter"
+
+[tool.poe.tasks.refurb]
+cmd = "refurb ./src ./tests"
+help = "Run refurb linter"
+
+[tool.poe.tasks.bandit]
+cmd = "bandit --verbose --recursive ./src"
+help = "Run bandit security linter"
+
+[tool.poe.tasks.mypy]
+cmd = "mypy --install-types --non-interactive ./src ./tests"
+help = "Run mypy type annotation linter"
+
+[tool.poe.tasks.outdated]
+cmd = "pip list --outdated"
+help = "Show outdated dependencies"
+
+[tool.poe.tasks.doctest]
+shell = "python -m doctest -v ./src/*/[a-z]*.py"
+help = "Run doctests"
+
+[tool.poe.tasks.pytest]
+cmd = "pytest --verbose --cov=. --cov-branch --cov-report=term-missing --cov-report=xml:.coverage.xml -p no:randomly ./tests"
+help = "Run pytests"
+
+[tool.poe.tasks.coverage_report]
+cmd = "coverage report --show-missing"
+help = "Generate test coverage report"
+
+[tool.poe.tasks.coverage_annotate]
+cmd = "coverage annotate"
+help = "Generate test coverage annotations"
+
+[tool.poe.tasks.pydoc_text]
+shell = "python -m pydoc pysay | tee pysay.txt"
+help = "Build pydoc_text documentation"
+
+[tool.poe.tasks.pydoc_html]
+shell = "python -m pydoc -w pysay"
+help = "Build pydoc_html documentation"
+
+[tool.poe.tasks.pdoc_html]
+shell = "pdoc --html --force ."
+help = "Build pdoc_html documentation"
+
+[tool.poe.tasks.mkdocs]
+shell = """
+mkdocs new mkdocs || exit
+cd mkdocs || exit
+echo theme: readthedocs >> mkdocs.yml || exit
+yq --output-format yaml . mkdocs.yml | sponge mkdocs.yml || exit
+mkdocs build
+"""
+help = "Use mkdocs to build docs"
+
+[tool.poe.tasks.format]
+shell = """
+isort --dont-follow-links ./src ./tests
+ruff format ./src ./tests
+"""
+help = "Run isort and ruff format on project"
+
+[tool.poe.tasks.info]
+shell = """
+uv version
+which uv
+printf '\n'
+python --version
+which python
+"""
+help = "Show tool info"
+
+[tool.poe.tasks.clean]
+shell = """
+for c in clean_docs clean_pycache clean_build; do
+    uv run poe ${c} || exit
+    printf '\n'
+done
+"""
+help = "Clean project directory"
+
+[tool.poe.tasks.lint]
+shell = """
+for c in ruff pyright pylint refurb mypy; do
+    uv run poe ${c} || exit
+    printf '\n'
+done
+"""
+help = "Run all project lint tools"
+
+[tool.poe.tasks.test]
+shell = """
+for c in doctest pytest; do
+    uv run poe ${c} || exit
+    printf '\n'
+done
+"""
+help = "Run all project tests"
+
+[tool.poe.tasks.doc]
+shell = """
+for c in pydoc_text pydoc_html pdoc_html makedocs; do
+    uv run poe ${c} || exit
+    printf '\n'
+done
+"""
+help = "Build project documentation"
+
+[tool.poe.tasks.full]
+shell = """
+for c in clean format lint test doc; do
+    uv run poe ${c} || exit
+    printf '\n'
+done
+"""
+help = "Run all project tools"
