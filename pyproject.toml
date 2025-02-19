@@ -135,6 +135,7 @@ pyright = "pyright --stats"
 refurb = "refurb ./src ./tests"
 bandit = "bandit --verbose --recursive ./src"
 mypy = "mypy --install-types --non-interactive ./src ./tests"
+outdated = "pip list --outdated"
 lint = "for c in ruff pyright pylint refurb mypy; do uv run ${c}; done"
 
 doctest = "python -m doctest -v ./src/*/[a-z]*.py"
