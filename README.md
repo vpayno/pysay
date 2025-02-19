@@ -135,6 +135,24 @@ $ nix run github:vpayno/pysay -- hello
              (________)0o°
 ```
 
+To run a specific version from GitHub using a specific version use the
+`?tag=v0.5.0` argument:
+
+```text
+$ nix run github:vpayno/pysay?tag=v0.5.0 -- hello
+
+     _______
+    ( hello )
+     -------
+       \    __
+        \  {oo}
+           (__)\
+             λ \\
+               _\\__
+              (_____)_
+             (________)0o°
+```
+
 To run it from a local git checkout:
 
 ```text
