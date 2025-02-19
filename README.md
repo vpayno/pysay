@@ -323,15 +323,15 @@ $ tree /home/vpayno/.local/share/uv/tools/pysay/
 To install it use `nix profile install`:
 
 ```text
-$ nix profile install github:vpayno/pysay
+$ nix profile install github:vpayno/pysay?tag=v0.5.0
 
 $ nix profile list
 ...
 Name:               pysay
 Flake attribute:    packages.x86_64-linux.default
-Original flake URL: github:vpayno/pysay/uv
-Locked flake URL:   github:vpayno/pysay/f2b5541991355534abc668c17053081817b10f5d?narHash=sha256-Xvt50%2B5CvqEv4aNxEEHX6WMiIQgWIESwBRn1nLf8yZQ%3D
-Store paths:        /nix/store/wd9g39zv4f8j92k518fmx500s66p5zz3-pysay-prod-env
+Original flake URL: github:vpayno/pysay
+Locked flake URL:   github:vpayno/pysay/79f80c9284550319b192ddae60f5c9fff76f6478?narHash=sha256-gbCb0mQyRSWkS8ctaSvvwWN7yvtJr/5jVljE7SVW/vU%3D
+Store paths:        /nix/store/61i2bx85wzvpww6bjcgzwx1f2psvyznf-pysay-prod-env
 ...
 
 $ which pysay
