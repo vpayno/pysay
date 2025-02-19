@@ -47,6 +47,7 @@ dev = [
     "pytest-randomly>=3.16.0",
     "pytest>=8.3.4",
     "ruff>=0.9.6",
+    "poethepoet>=0.32.2",
 ]
 
 [build-system]
