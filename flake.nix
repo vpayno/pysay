@@ -95,6 +95,8 @@
       mainProgram = "pysay";
     };
   in {
+    formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-rfc-style;
+
     # Package a virtual environment as our main application.
     #
     # Enable no optional dependencies for production build.
