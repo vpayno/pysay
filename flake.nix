@@ -31,7 +31,10 @@
     pyproject-build-systems,
     ...
   }: let
+    system = "x86_64-linux";
+
     inherit (nixpkgs) lib;
+
     # Load a uv workspace from a workspace root.
     # Uv2nix treats all uv projects as workspace projects.
     workspace = uv2nix.lib.workspace.loadWorkspace {workspaceRoot = ./.;};
@@ -60,8 +63,7 @@
       # It's using https://pyproject-nix.github.io/pyproject.nix/build.html
     };
 
-    # This example is only using x86_64-linux
-    pkgs = nixpkgs.legacyPackages.x86_64-linux;
+    pkgs = nixpkgs.legacyPackages.${system};
 
     # Use Python 3.12 from nixpkgs
     python = pkgs.python312;
@@ -95,19 +97,19 @@
       mainProgram = "pysay";
     };
   in {
-    formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-rfc-style;
+    formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
 
     # Package a virtual environment as our main application.
     #
     # Enable no optional dependencies for production build.
-    packages.x86_64-linux.default = pythonSet.mkVirtualEnv "pysay-prod-env" workspace.deps.default;
+    packages.${system}.default = pythonSet.mkVirtualEnv "pysay-prod-env" workspace.deps.default;
 
     # Make pysay runnable with `nix run`
-    apps.x86_64-linux = {
+    apps.${system} = {
       default =
         {
           type = "app";
-          program = "${self.packages.x86_64-linux.default}/bin/pysay";
+          program = "${self.packages.${system}.default}/bin/pysay";
         }
         // {meta = metadata;};
     };
@@ -115,7 +117,7 @@
     # This example provides two different modes of development:
     # - Impurely using uv to manage virtual environments
     # - Pure development using uv2nix to manage virtual environments
-    devShells.x86_64-linux = {
+    devShells.${system} = {
       # It is of course perfectly OK to keep using an impure virtualenv workflow and only use uv2nix to build packages.
       # This devShell simply adds Python and undoes the dependency leakage done by Nixpkgs Python infrastructure.
       impure = pkgs.mkShell {
