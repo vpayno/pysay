@@ -86,8 +86,8 @@
     metadata = {
       homepage = "https://github.com/vpayno/pysay";
       description = "Like cowsay but with a python";
-      license = with lib.licenses; [mit];
-      # maintainers = with lib.maintainers; [vpayno];
+      license = with pkgs.lib.licenses; [mit];
+      # maintainers = with pkgs.lib.maintainers; [vpayno];
       maintainers = {
         email = "vpayno@users.noreply.github.com";
         github = "vpayno";
@@ -102,16 +102,15 @@
     # Package a virtual environment as our main application.
     #
     # Enable no optional dependencies for production build.
-    packages.${system}.default = pythonSet.mkVirtualEnv "pysay-prod-env" workspace.deps.default;
+    packages.${system}.default = pythonSet.mkVirtualEnv "pysay-prod-env" workspace.deps.default // {meta = metadata;};
 
     # Make pysay runnable with `nix run`
     apps.${system} = {
-      default =
-        {
-          type = "app";
-          program = "${self.packages.${system}.default}/bin/pysay";
-        }
-        // {meta = metadata;};
+      default = {
+        type = "app";
+        program = "${self.packages.${system}.default}/bin/pysay";
+        meta = metadata;
+      };
     };
 
     # This example provides two different modes of development:
