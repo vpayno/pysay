@@ -177,3 +177,13 @@ cython_debug/
 /pysay.html
 /pysay.md
 /pysay.txt
+
+# Devenv
+.devenv*
+devenv.local.nix
+
+# direnv
+.direnv
+
+# pre-commit
+.pre-commit-config.yaml
