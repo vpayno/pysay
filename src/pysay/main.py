@@ -4,9 +4,13 @@ pysay tool main module
 
 import sys
 
-from rich.traceback import install
+from rich.traceback import (
+    install,
+)
 
-from pysay import snake
+from pysay import (
+    snake,
+)
 
 install()  # setup rich
 

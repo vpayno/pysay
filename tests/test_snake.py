@@ -2,13 +2,22 @@
 Snake Tests
 """
 
-from typing import Any, List, Union
+from typing import (
+    Any,
+    List,
+    Union,
+)
 
 import pytest
-from _pytest.capture import CaptureFixture, CaptureResult
+from _pytest.capture import (
+    CaptureFixture,
+    CaptureResult,
+)
 
 # Our Project
-from pysay import snake
+from pysay import (
+    snake,
+)
 
 # [[input, expected], ...]
 unit_test_data: List[List[str]] = [
