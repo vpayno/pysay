@@ -21,6 +21,11 @@
       inputs.uv2nix.follows = "uv2nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    treefmt-conf ={
+      url = "github:vpayno/nix-treefmt-conf";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -29,6 +34,7 @@
     pyproject-nix,
     uv2nix,
     pyproject-build-systems,
+    treefmt-conf,
     ...
   }: let
     system = "x86_64-linux";
@@ -97,7 +103,7 @@
       mainProgram = "pysay";
     };
   in {
-    formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
+    formatter.${system} = treefmt-conf.formatter.${system};
 
     # Package a virtual environment as our main application.
     #
