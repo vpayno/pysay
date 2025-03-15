@@ -103,6 +103,18 @@
         };
         mainProgram = "pysay";
       };
+
+      usageMessage = ''
+        Available pysay flake commands:
+
+          nix run .#usage
+
+          nix run . -- "message"
+            nix run .#default -- "message"
+            nix run .#pysay -- "message"
+
+          nix profile install github:vpayno/pysay
+      '';
     in
     rec {
       formatter.${system} = treefmt-conf.formatter.${system};
@@ -115,6 +127,10 @@
           meta = metadata;
         };
         default = pysay;
+
+        showUsage = pkgs.writeShellScriptBin "showUsage" ''
+          printf "%s" "${usageMessage}"
+        '';
       };
 
       # Make pysay runnable with `nix run`
@@ -125,6 +141,12 @@
           meta = metadata;
         };
         default = pysay;
+
+        usage = {
+          type = "app";
+          program = "${pkgs.lib.getExe packages.${system}.showUsage}";
+          meta = metadata;
+        };
       };
 
       # This example provides two different modes of development:
