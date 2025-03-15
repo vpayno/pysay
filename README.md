@@ -10,6 +10,59 @@ Publishing, Pages, etc.
 Once it's feature complete, I might treat it as an archived project and only
 play with dependency update related maintenance.
 
+## Usage
+
+To show the usage help screen run: `nix run github:vpayno/pysay#usage`
+
+```text
+$ nix run github:vpayno/pysay#usage
+this derivation will be built:
+  /nix/store/j7y81rm34jn8v6j001z7xzlh6zq9i3d0-showUsage.drv
+building '/nix/store/j7y81rm34jn8v6j001z7xzlh6zq9i3d0-showUsage.drv'...
+Available pysay flake commands:
+
+  nix run .#usage
+
+  nix run . -- message
+    nix run .#default -- message
+    nix run .#pysay -- message
+
+  nix profile install github:vpayno/pysay
+```
+
+To to run `pysay` run: `nix run github:vpayno/pysay -- "Hello World!"`
+
+```text
+$ nix run github:vpayno/pysay -- "Hello World!"
+
+     ______________
+    ( Hello World! )
+     --------------
+       \    __
+        \  {oo}
+           (__)\
+             λ \\
+               _\\__
+              (_____)_
+             (________)0o°
+```
+
+To install `pysay` from the command line use `nix profile install`.
+
+```text
+$ nix profile install github:vpayno/pysay
+
+$ nix profile list
+Name:               pysay
+Flake attribute:    packages.x86_64-linux.default
+Original flake URL: github:vpayno/pysay
+Locked flake URL:   github:vpayno/pysay/d935615aadd005e9a8c1bf1f8e2f1dc77a6aae79?narHash=sha256-fcp2HSmibZsXsdGBcOdue3k4EKBu5l5oND5JpkOOHV8%3D
+Store paths:        /nix/store/m79i1q42qmbj21yxbgi6d37frzcs6ppk-pysay-prod-env
+
+$ which pysay
+/home/vpayno/.nix-profile/bin/pysay
+```
+
 ## pdm to uv
 
 Switched from `pdm` to `uv` to make working with the project using `uv2nix`
