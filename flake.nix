@@ -39,6 +39,9 @@
       ...
     }:
     let
+      pname = "pysay";
+      version = "v0.5.4";
+
       system = "x86_64-linux";
 
       inherit (nixpkgs) lib;
@@ -105,7 +108,7 @@
       };
 
       usageMessage = ''
-        Available pysay flake commands:
+        Available pysay ${version} flake commands:
 
           nix run .#usage
 
@@ -123,7 +126,9 @@
       #
       # Enable no optional dependencies for production build.
       packages.${system} = rec {
-        pysay = pythonSet.mkVirtualEnv "pysay-prod-env" workspace.deps.default // {
+        pysay = pythonSet.mkVirtualEnv "pysay-prod-env-${version}" workspace.deps.default // {
+          pname = "pysay";
+          inherit version;
           meta = metadata;
         };
         default = pysay;
@@ -131,12 +136,18 @@
         showUsage = pkgs.writeShellScriptBin "showUsage" ''
           printf "%s" "${usageMessage}"
         '';
+
+        showVersion = pkgs.writeShellScriptBin "showVersion" ''
+          printf "%s version: %s\n" "${pname}" "${version}"
+        '';
       };
 
       # Make pysay runnable with `nix run`
       apps.${system} = rec {
         pysay = {
           type = "app";
+          inherit pname;
+          inherit version;
           program = "${self.packages.${system}.default}/bin/pysay";
           meta = metadata;
         };
@@ -144,7 +155,17 @@
 
         usage = {
           type = "app";
+          pname = "usage";
+          inherit version;
           program = "${pkgs.lib.getExe packages.${system}.showUsage}";
+          meta = metadata;
+        };
+
+        version = {
+          type = "app";
+          pname = "version";
+          inherit version;
+          program = "${pkgs.lib.getExe packages.${system}.showVersion}";
           meta = metadata;
         };
       };
@@ -231,7 +252,7 @@
             # Build virtual environment, with local packages being editable.
             #
             # Enable all optional dependencies for development.
-            virtualenv = editablePythonSet.mkVirtualEnv "pysay-dev-env" workspace.deps.all;
+            virtualenv = editablePythonSet.mkVirtualEnv "pysay-dev-env-${version}" workspace.deps.all;
           in
           pkgs.mkShell {
             packages = [
