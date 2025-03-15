@@ -104,23 +104,27 @@
         mainProgram = "pysay";
       };
     in
-    {
+    rec {
       formatter.${system} = treefmt-conf.formatter.${system};
 
       # Package a virtual environment as our main application.
       #
       # Enable no optional dependencies for production build.
-      packages.${system}.default = pythonSet.mkVirtualEnv "pysay-prod-env" workspace.deps.default // {
-        meta = metadata;
+      packages.${system} = rec {
+        pysay = pythonSet.mkVirtualEnv "pysay-prod-env" workspace.deps.default // {
+          meta = metadata;
+        };
+        default = pysay;
       };
 
       # Make pysay runnable with `nix run`
-      apps.${system} = {
-        default = {
+      apps.${system} = rec {
+        pysay = {
           type = "app";
           program = "${self.packages.${system}.default}/bin/pysay";
           meta = metadata;
         };
+        default = pysay;
       };
 
       # This example provides two different modes of development:
