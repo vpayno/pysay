@@ -178,13 +178,16 @@
       # This example provides two different modes of development:
       # - Impurely using uv to manage virtual environments
       # - Pure development using uv2nix to manage virtual environments
-      devShells.${system} = {
+      devShells.${system} = rec {
+        default = impure;
+
         # It is of course perfectly OK to keep using an impure virtualenv workflow and only use uv2nix to build packages.
         # This devShell simply adds Python and undoes the dependency leakage done by Nixpkgs Python infrastructure.
         impure = pkgs.mkShell {
           packages = [
             python
             pkgs.uv
+            pkgs.bashInteractive
           ];
           env =
             {
@@ -196,10 +199,13 @@
             // lib.optionalAttrs pkgs.stdenv.isLinux {
               # Python libraries often load native shared objects using dlopen(3).
               # Setting LD_LIBRARY_PATH makes the dynamic library loader aware of libraries without using RPATH for lookup.
-              LD_LIBRARY_PATH = lib.makeLibraryPath pkgs.pythonManylinuxPackages.manylinux1;
+              # LD_LIBRARY_PATH = lib.makeLibraryPath pkgs.pythonManylinuxPackages.manylinux1;
             };
           shellHook = ''
             unset PYTHONPATH
+            ${pkgs.lib.getExe pkgs.cowsay} "Welcome to ${pname}'s devShell!"
+            printf "\n"
+            which python uv
           '';
         };
 
@@ -263,6 +269,7 @@
             packages = [
               virtualenv
               pkgs.uv
+              pkgs.bashInteractive
             ];
 
             env = {
