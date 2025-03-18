@@ -39,8 +39,9 @@
       ...
     }:
     let
-      pname = "pysay";
+      name = "pysay";
       version = "v0.5.6";
+      pname = "${name}-${version}";
 
       system = "x86_64-linux";
 
@@ -127,8 +128,9 @@
       # Enable no optional dependencies for production build.
       packages.${system} = rec {
         pysay = pythonSet.mkVirtualEnv "pysay-prod-env-${version}" workspace.deps.default // {
-          pname = "pysay";
+          inherit name;
           inherit version;
+          inherit pname;
           meta = metadata;
         };
         default = pysay;
@@ -146,8 +148,9 @@
       apps.${system} = rec {
         pysay = {
           type = "app";
-          inherit pname;
+          inherit name;
           inherit version;
+          inherit pname;
           program = "${self.packages.${system}.default}/bin/pysay";
           meta = metadata;
         };
@@ -155,7 +158,8 @@
 
         usage = {
           type = "app";
-          pname = "usage";
+          name = "usage";
+          pname = "${name}-${version}";
           inherit version;
           program = "${pkgs.lib.getExe packages.${system}.showUsage}";
           meta = metadata;
@@ -163,7 +167,8 @@
 
         version = {
           type = "app";
-          pname = "version";
+          name = "version";
+          pname = "${name}-${version}";
           inherit version;
           program = "${pkgs.lib.getExe packages.${system}.showVersion}";
           meta = metadata;
