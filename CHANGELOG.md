@@ -2,11 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.7] - 2025-03-18
+
+### Nix
+
+- Fix name/version/pname
+- Fix devShells and set default to impure
+- Update locks
+
+### Other
+
+- Bump minimum pythoon version to 3.12
+
 ## [0.5.6] - 2025-03-16
 
 ### Nix
 
 - Update locks
+
+### Other
+
+- *(v0.5.6)* Updated flake locks
 
 ### Miscellaneous Tasks
 
