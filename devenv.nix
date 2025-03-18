@@ -9,7 +9,7 @@
   # https://devenv.sh/basics/
   env = {
     GREET = "devenv";
-    UV_PYTHON = "${pkgs.lib.getExe pkgs.python39Full}";
+    UV_PYTHON = "${pkgs.lib.getExe pkgs.python312Full}";
     UV_PYTHON_PREFERENCE = "only-system";
   };
 
@@ -24,7 +24,7 @@
     glow
     runme
     uv
-    python39Full
+    python312Full
   ];
 
   # https://devenv.sh/languages/
@@ -42,7 +42,7 @@
       which git python uv
       printf "\n"
       printf "%s: %s\n" "git" "${pkgs.git.version}"
-      printf "%s: %s\n" "python" "${pkgs.python39Full.version}"
+      printf "%s: %s\n" "python" "${pkgs.python312Full.version}"
       printf "%s: %s\n" "uv" "${pkgs.uv.version}"
     '';
 
@@ -129,7 +129,7 @@
       venv = {
         enable = false;
       };
-      version = "3.9";
+      version = "3.12";
     };
   };
 }

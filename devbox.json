@@ -1,20 +1,17 @@
 {
-  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.13.7/.schema/devbox.schema.json",
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.14.0/.schema/devbox.schema.json",
   "packages": {
-    "bashInteractive":          "latest",
-    "coreutils":                "latest",
-    "moreutils":                "latest",
-    "python": {
-      "version":        "3.9",
-      "disable_plugin": false
-    },
-    "uv":                       "latest",
-    "git":                      "latest",
-    "tig":                      "latest",
-    "glow":                     "latest",
-    "runme":                    "latest",
-    "python39Packages.ipython": "latest",
-    "refurb":                   "latest"
+    "bashInteractive":           "latest",
+    "coreutils":                 "latest",
+    "moreutils":                 "latest",
+    "uv":                        "latest",
+    "git":                       "latest",
+    "tig":                       "latest",
+    "glow":                      "latest",
+    "runme":                     "latest",
+    "python312Packages.ipython": "latest",
+    "refurb":                    "latest",
+    "python":                    "3.12"
   },
   "env": {
     "UV_PYTHON":            "python3",
