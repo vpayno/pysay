@@ -169,7 +169,7 @@ cython_debug/
 #.idea/
 
 # Ignore dynamic version file.
-/src/pysay/_version.py
+/src/pysay/__version__.py
 
 # Ignore docs.
 /html/
