@@ -320,6 +320,70 @@
         }
       }
     },
+    "hatch@latest": {
+      "last_modified": "2025-03-13T11:38:39Z",
+      "resolved": "github:NixOS/nixpkgs/573c650e8a14b2faa0041645ab18aed7e60f0c9a#hatch",
+      "source": "devbox-search",
+      "version": "1.14.0",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/qqzgw9qw275jppcp5l4malk04rcv3mhj-hatch-1.14.0",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/kylxpxhfq0v4bdmi1xp7m5nvzzjp7wsz-hatch-1.14.0-dist"
+            }
+          ],
+          "store_path": "/nix/store/qqzgw9qw275jppcp5l4malk04rcv3mhj-hatch-1.14.0"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/61dpwyl9c5r2grzlzh5vph9zzqqv8lqs-hatch-1.14.0",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/3g4lndp6nzk0ycgzdglblinn0phwkjfn-hatch-1.14.0-dist"
+            }
+          ],
+          "store_path": "/nix/store/61dpwyl9c5r2grzlzh5vph9zzqqv8lqs-hatch-1.14.0"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/0x8pwc0d1iww3v1wlfqm2dbm1jlk03sr-hatch-1.14.0",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/gc1xdkq2c8ad8nj1qk76b63h51z7xqqp-hatch-1.14.0-dist"
+            }
+          ],
+          "store_path": "/nix/store/0x8pwc0d1iww3v1wlfqm2dbm1jlk03sr-hatch-1.14.0"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/gmrbxjbbhi2cd0rnqd89xzn0ybi9l4x8-hatch-1.14.0",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/yk6a2yr7h2ld6j2xnfb629wk5ai3ay5i-hatch-1.14.0-dist"
+            }
+          ],
+          "store_path": "/nix/store/gmrbxjbbhi2cd0rnqd89xzn0ybi9l4x8-hatch-1.14.0"
+        }
+      }
+    },
     "moreutils@latest": {
       "last_modified": "2025-03-11T17:52:14Z",
       "resolved": "github:NixOS/nixpkgs/0d534853a55b5d02a4ababa1d71921ce8f0aee4c#moreutils",
@@ -365,6 +429,70 @@
             }
           ],
           "store_path": "/nix/store/bm8h6n4k8mv3r7b0x9mbx4x5kb3r3cg6-moreutils-0.70"
+        }
+      }
+    },
+    "python312Packages.hatch-vcs@latest": {
+      "last_modified": "2025-03-11T17:52:14Z",
+      "resolved": "github:NixOS/nixpkgs/0d534853a55b5d02a4ababa1d71921ce8f0aee4c#python312Packages.hatch-vcs",
+      "source": "devbox-search",
+      "version": "0.4.0",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/093qkaz482jrss32yd0vwq520f18gm8s-python3.12-hatch-vcs-0.4.0",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/f1hlpdsd676fyvqp8zmkibb2xbx7vc85-python3.12-hatch-vcs-0.4.0-dist"
+            }
+          ],
+          "store_path": "/nix/store/093qkaz482jrss32yd0vwq520f18gm8s-python3.12-hatch-vcs-0.4.0"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/s7b1wz3csl2517wqpphkzabxs24f778q-python3.12-hatch-vcs-0.4.0",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/qv11gbxsarmv3kzwr2zhrmgi1j9588ym-python3.12-hatch-vcs-0.4.0-dist"
+            }
+          ],
+          "store_path": "/nix/store/s7b1wz3csl2517wqpphkzabxs24f778q-python3.12-hatch-vcs-0.4.0"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/469zrarkya9l6kw85g2fyiqsfgmjsh1x-python3.12-hatch-vcs-0.4.0",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/dfifgx2yg8gc64icyx4wm5pahkk9fjlc-python3.12-hatch-vcs-0.4.0-dist"
+            }
+          ],
+          "store_path": "/nix/store/469zrarkya9l6kw85g2fyiqsfgmjsh1x-python3.12-hatch-vcs-0.4.0"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/cjfm3fqy2p5lc6z943jp9r5slm73387c-python3.12-hatch-vcs-0.4.0",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/6941wm6iajff9ygn3vdm7vnq3jhlds97-python3.12-hatch-vcs-0.4.0-dist"
+            }
+          ],
+          "store_path": "/nix/store/cjfm3fqy2p5lc6z943jp9r5slm73387c-python3.12-hatch-vcs-0.4.0"
         }
       }
     },
