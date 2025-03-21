@@ -30,11 +30,29 @@
       "pip() { uv pip \"$@\"; }"
     ],
     "scripts": {
+      "lint": [
+        "uv run poe ruff",
+        "uv run poe pylint",
+        "uv run poe pyright",
+        "uv run poe refurb",
+        "uv run poe bandit",
+        "uv run poe mypy"
+      ],
+      "outdated": [
+        "uv run poe outdated"
+      ],
       "pip": [
         "uv pip \"$@\""
       ],
+      "test": [
+        "uv run poe test"
+      ],
       "update_locks": [
-        "uv lock \"$@\""
+        "uv run poe outdated",
+        "uv lock --upgrade \"$@\"",
+        "uv sync",
+        "uv run poe outdated",
+        "uv run poe test"
       ]
     }
   }
