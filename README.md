@@ -2,7 +2,7 @@
 
 Like `cowsay` but with a `python` and written in `Python`.
 
-From a `Real Python` tutorial.
+Python ASCII art is from a `Real Python` tutorial.
 
 It's a simple project that let's me focus on other things like CI, Releases,
 Publishing, Pages, etc.
