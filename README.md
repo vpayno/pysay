@@ -10,6 +10,14 @@ Publishing, Pages, etc.
 Once it's feature complete, I might treat it as an archived project and only
 play with dependency update related maintenance.
 
+## Releases
+
+To tag a release run:
+
+```bash
+nix run github:vpayno/nix-treefmt-conf#tag-release v0.5.8 'devbox shell, pyproject.toml and flake.nix fixes'
+```
+
 ## Usage
 
 To show the usage help screen run: `nix run github:vpayno/pysay#usage`
