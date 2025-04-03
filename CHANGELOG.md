@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.8] - 2025-04-03
+
+### Nix
+
+- Fix pname/version/name usage
+- Add hack and git to shells
+- Update locks
+- Update locks
+- Switch default devShell from impure to uv2nix
+- Update locks
+
+### Other
+
+- Add hatch
+- Fix vcs version settings
+- Update locks
+- Update scripts
+- Fix license declaration for uv2nix
+- Update classifiers metadata
+
 ## [0.5.7] - 2025-03-18
 
 ### Nix
@@ -13,6 +33,7 @@ All notable changes to this project will be documented in this file.
 ### Other
 
 - Bump minimum pythoon version to 3.12
+- *(v0.5.7)* Update/fix devShells, updated flake locks
 
 ## [0.5.6] - 2025-03-16
 
