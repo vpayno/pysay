@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.9] - 2025-04-04
+
+### Nix
+
+- Add tag-release app from nix-treefmt-conf
+- Update locks
+
+### Documentation
+
+- Add note on how to tag a release
+- Fix note on source of ascii art
+
+### Miscellaneous Tasks
+
+- Remove release commits from change log
+
 ## [0.5.8] - 2025-04-03
 
 ### Nix
@@ -33,17 +49,12 @@ All notable changes to this project will be documented in this file.
 ### Other
 
 - Bump minimum pythoon version to 3.12
-- *(v0.5.7)* Update/fix devShells, updated flake locks
 
 ## [0.5.6] - 2025-03-16
 
 ### Nix
 
 - Update locks
-
-### Other
-
-- *(v0.5.6)* Updated flake locks
 
 ### Miscellaneous Tasks
 
@@ -56,10 +67,6 @@ All notable changes to this project will be documented in this file.
 - Add pysay package/app and set it as the default
 - Add usage help message app
 - Add flake/project version
-
-### Other
-
-- *(v0.5.5)* Flake improvements
 
 ### Documentation
 
