@@ -112,6 +112,7 @@
         Available ${name} flake commands:
 
           nix run .#usage
+          nix run .#tag-release v1.2.3 'release notes'
 
           nix run . -- "message"
             nix run .#default -- "message"
@@ -146,6 +147,10 @@
 
       # Make pysay runnable with `nix run`
       apps.${system} = rec {
+        inherit (treefmt-conf.apps.${system}) tag-release;
+
+        default = pysay;
+
         pysay = {
           type = "app";
           inherit pname;
@@ -154,7 +159,6 @@
           program = "${self.packages.${system}.default}/bin/pysay";
           meta = metadata;
         };
-        default = pysay;
 
         usage = {
           type = "app";
