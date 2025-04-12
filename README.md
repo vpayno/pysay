@@ -466,3 +466,482 @@ To see a list of available commands run:
 ```text
 devbox run uv run poe
 ```
+
+## Docker
+
+### Using NixOS Containers
+
+#### Building the container
+
+```text
+$ nix build .#dockerImageNixos
+
+$ ls -lh ./result
+lrwxrwxrwx 1 vpayno vpayno   75 Apr 11 10:25 result -> /nix/store/vnrqz28p0xv5iph9xm52b7cfx5shbpfa-docker-image-nixos-pysay.tar.gz
+```
+
+#### Caching/Installing the container
+
+```text
+$ docker load < ./result
+bac1ce201147: Loading layer [==================================================>]  2.079MB/2.079MB
+73c3619fb187: Loading layer [==================================================>]  399.4kB/399.4kB
+d49827920aca: Loading layer [==================================================>]    215kB/215kB
+c8eacd12fc04: Loading layer [==================================================>]  30.78MB/30.78MB
+3904c3bfe5fb: Loading layer [==================================================>]  143.4kB/143.4kB
+c1794f64bf67: Loading layer [==================================================>]  5.202MB/5.202MB
+185acf266499: Loading layer [==================================================>]   1.72MB/1.72MB
+cc16370331d9: Loading layer [==================================================>]    215kB/215kB
+9d4dc07856d6: Loading layer [==================================================>]   1.69MB/1.69MB
+eef160dc49d3: Loading layer [==================================================>]  92.16kB/92.16kB
+25d5f0ab16e8: Loading layer [==================================================>]    297kB/297kB
+829e9138c982: Loading layer [==================================================>]  10.02MB/10.02MB
+690ae98a8704: Loading layer [==================================================>]  491.5kB/491.5kB
+b011966820c8: Loading layer [==================================================>]  81.92kB/81.92kB
+7926448bbffa: Loading layer [==================================================>]  143.4kB/143.4kB
+3b0071b79b5f: Loading layer [==================================================>]  133.1kB/133.1kB
+6a1dc9365436: Loading layer [==================================================>]  235.5kB/235.5kB
+abcb277ace82: Loading layer [==================================================>]  8.264MB/8.264MB
+abc445bff6ba: Loading layer [==================================================>]  491.5kB/491.5kB
+67fe4cdb969c: Loading layer [==================================================>]  2.929MB/2.929MB
+6b1cb7f6fab8: Loading layer [==================================================>]  2.017MB/2.017MB
+3af9d70cfe80: Loading layer [==================================================>]  911.4kB/911.4kB
+fa922ca941c6: Loading layer [==================================================>]  118.5MB/118.5MB
+4db172c1d0a2: Loading layer [==================================================>]  757.8kB/757.8kB
+c5c02fcf2467: Loading layer [==================================================>]  81.92kB/81.92kB
+ac435e72ae6a: Loading layer [==================================================>]  9.574MB/9.574MB
+840c9d39c4b1: Loading layer [==================================================>]  61.44kB/61.44kB
+d916d045ef48: Loading layer [==================================================>]  2.376MB/2.376MB
+1b320df473e0: Loading layer [==================================================>]  61.44kB/61.44kB
+0eeef386fb1f: Loading layer [==================================================>]  30.72kB/30.72kB
+Loaded image: docker-image-nixos-pysay:v0.5.9
+```
+
+```text
+$ docker image ls docker-image-nixos-pysay:v0.5.9
+REPOSITORY                 TAG       IMAGE ID       CREATED         SIZE
+docker-image-nixos-pysay   v0.5.9    b9df191303bc   4 minutes ago   189MB
+```
+
+#### Using dive to inspect the image
+
+Having issues mixing `nixpkgs#dive` with `debian#docker`.
+
+```text
+$ nix run nixpkgs#dive -- ./result --source docker-archive --ci
+Image Source: docker-archive://./result
+Extracting image from docker-archive... (this can take a while for large images)
+archive/tar: invalid tar header
+
+$ nix run nixpkgs#dive -- docker-image-nixos-pysay:v0.5.9 --ci
+  Using default CI config
+Image Source: docker://docker-image-nixos-pysay:v0.5.9
+Extracting image from docker-engine... (this can take a while for large images)
+> could not determine docker host: context "default": context not found: open /home/vpayno/.docker/contexts/meta/37a8eec1ce19687d132fe29051dca629d164e2c4958ba141d5f4133a33f
+0688f/meta.json: no such file or directory
+cannot fetch image
+unable to parse docker host ``
+```
+
+Using a shell with the required tools instead.
+
+```text
+$ nix-shell -p docker-client dive --command 'dive docker-image-nixos-pysay:v0.5.9 --ci'
+  Using default CI config
+Image Source: docker://docker-image-nixos-pysay:v0.5.9
+Fetching image... (this can take a while for large images)
+Analyzing image...
+  efficiency: 100.0000 %
+  wastedBytes: 0 bytes (0 B)
+  userWastedPercent: 0.0000 %
+Inefficient Files:
+Count  Wasted Space  File Path
+None
+Results:
+  PASS: highestUserWastedPercent
+  SKIP: highestWastedBytes: rule disabled
+  PASS: lowestEfficiency
+Result:PASS [Total:3] [Passed:2] [Failed:0] [Warn:0] [Skipped:1]
+```
+
+#### Using skopeo to inspect the image
+
+```text
+$ nix run nixpkgs#skopeo -- inspect docker-archive:./result
+{
+    "Digest": "sha256:99fdb56b3d8d4bfa80ead30db2adce757dcb863ea755d8eb38ea35dc1eb183d2",
+    "RepoTags": [],
+    "Created": "2025-04-11T17:24:56.667003Z",
+    "DockerVersion": "",
+    "Labels": null,
+    "Architecture": "amd64",
+    "Os": "linux",
+    "Layers": [
+        "sha256:bac1ce201147bfaef5591ae3e3f77d8baa10468410e80520ca08d4be9ed425ca",
+        "sha256:73c3619fb187b9129dcb3380ca18f27e7de5c4cc992170c41b079af66d839d56",
+        "sha256:d49827920acab921e0bfa976477bad46f8b94188cd022aecc5f62614708eefe7",
+        "sha256:c8eacd12fc040a3c8eb38e03465a29d436540973a26a1a63931f11c57dc78cc4",
+        "sha256:3904c3bfe5fbfe7d68abcbc91e5b21783aa36e72bb7427303e2faf6477c68e6f",
+        "sha256:c1794f64bf676e2fb25dfb58e85d5336b32982f6b4a799622f077f40e96b7234",
+        "sha256:185acf2664997c97f173ef199bbc7504f82b846cd1808efc0dd22ed8a6049ca2",
+        "sha256:cc16370331d928b90506a67348d91a8737625ed041fe01d9ed349f22c25ee699",
+        "sha256:9d4dc07856d6f0b4bd884600279c724420ac72a640c7b61dc049a3947712b919",
+        "sha256:eef160dc49d394c1800881543d17c50556f2cf6bb31c05aedc3adeded2bfe2b1",
+        "sha256:25d5f0ab16e86a4eef8cf4fd235a02fa234c2a1f7137a7463e6c3e3ebd03423f",
+        "sha256:829e9138c98268da65671b0234152637a5bf6fdda417af058a0cbbd268588218",
+        "sha256:690ae98a8704d22a8615f65202f09efc9e080cc35abc19145299b90c17923d6e",
+        "sha256:b011966820c86414f0356040315bf038f8073b404c3a6a58e5d8145b1dcc5d85",
+        "sha256:7926448bbffad18f1bdc471d8b0fc50b22e98c7ca748a77e54addec48cbbdf74",
+        "sha256:3b0071b79b5f08b1151a49a826bd989a18951689b23e9ddc5f0d50e25c161e57",
+        "sha256:6a1dc936543612b09ab70e1a6dde9fd60f921be781db91166ebb24dffbe7e5e8",
+        "sha256:abcb277ace828f13e9d3aa4fe46149dddb1feac0b6148113577172dbb2f4d5e9",
+        "sha256:abc445bff6bae22c9b362b7dee5f387ee167d60f92686a35e8f55c2d738ca97b",
+        "sha256:67fe4cdb969cc13f67728b848d6ef725a707781961ff7b1d65b0d15d81fecff3",
+        "sha256:6b1cb7f6fab8e706823ac6a52664cc4f5a61259426b82dff90c5863d4dfb0fc1",
+        "sha256:3af9d70cfe804a029b9f6277bf82d4359f22803fa3c60380736ee90fd45aee54",
+        "sha256:fa922ca941c62a97c059a7e33e0221095a1f1abcbd1ae25dcc5a579ef644c056",
+        "sha256:4db172c1d0a216abe85ea729db9b00ea9d6bdf3e61aa324f2fa6770337eb661d",
+        "sha256:c5c02fcf2467e4c2876cae84cbac3f4290e312eface931dd941f2acee4ff8b66",
+        "sha256:ac435e72ae6a274c966419e260e411eb62fc58f0d3a95426d2b2bba31ce54e97",
+        "sha256:840c9d39c4b12828cf15a7151a1cae3edd456a09eb25cfeb34863c6eae6a50aa",
+        "sha256:d916d045ef481d98c27e08fd5883c6f9839fc1a86564387bd02fc06b23e734a3",
+        "sha256:1b320df473e032a29fe33c53b77f0976b4821747af3497cb28c7184e37c9612c",
+        "sha256:0eeef386fb1f9a45060471639c41b039e8caf392411f4ed9c1ed144dec8cf843"
+    ],
+    "LayersData": [
+        {
+            "MIMEType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "Digest": "sha256:bac1ce201147bfaef5591ae3e3f77d8baa10468410e80520ca08d4be9ed425ca",
+            "Size": 2078720,
+            "Annotations": null
+        },
+        {
+            "MIMEType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "Digest": "sha256:73c3619fb187b9129dcb3380ca18f27e7de5c4cc992170c41b079af66d839d56",
+            "Size": 399360,
+            "Annotations": null
+        },
+        {
+            "MIMEType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "Digest": "sha256:d49827920acab921e0bfa976477bad46f8b94188cd022aecc5f62614708eefe7",
+            "Size": 215040,
+            "Annotations": null
+        },
+        {
+            "MIMEType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "Digest": "sha256:c8eacd12fc040a3c8eb38e03465a29d436540973a26a1a63931f11c57dc78cc4",
+            "Size": 30781440,
+            "Annotations": null
+        },
+        {
+            "MIMEType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "Digest": "sha256:3904c3bfe5fbfe7d68abcbc91e5b21783aa36e72bb7427303e2faf6477c68e6f",
+            "Size": 143360,
+            "Annotations": null
+        },
+        {
+            "MIMEType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "Digest": "sha256:c1794f64bf676e2fb25dfb58e85d5336b32982f6b4a799622f077f40e96b7234",
+            "Size": 5201920,
+            "Annotations": null
+        },
+        {
+            "MIMEType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "Digest": "sha256:185acf2664997c97f173ef199bbc7504f82b846cd1808efc0dd22ed8a6049ca2",
+            "Size": 1720320,
+            "Annotations": null
+        },
+        {
+            "MIMEType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "Digest": "sha256:cc16370331d928b90506a67348d91a8737625ed041fe01d9ed349f22c25ee699",
+            "Size": 215040,
+            "Annotations": null
+        {
+            "MIMEType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "Digest": "sha256:9d4dc07856d6f0b4bd884600279c724420ac72a640c7b61dc049a3947712b919",
+            "Size": 1689600,
+            "Annotations": null
+        },
+        {
+            "MIMEType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "Digest": "sha256:eef160dc49d394c1800881543d17c50556f2cf6bb31c05aedc3adeded2bfe2b1",
+            "Size": 92160,
+            "Annotations": null
+        },
+        {
+            "MIMEType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "Digest": "sha256:25d5f0ab16e86a4eef8cf4fd235a02fa234c2a1f7137a7463e6c3e3ebd03423f",
+            "Size": 296960,
+            "Annotations": null
+        },
+        {
+            "MIMEType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "Digest": "sha256:829e9138c98268da65671b0234152637a5bf6fdda417af058a0cbbd268588218",
+            "Size": 10024960,
+            "Annotations": null
+        },
+        {
+            "MIMEType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "Digest": "sha256:690ae98a8704d22a8615f65202f09efc9e080cc35abc19145299b90c17923d6e",
+            "Size": 491520,
+            "Annotations": null
+        },
+        {
+            "MIMEType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "Digest": "sha256:b011966820c86414f0356040315bf038f8073b404c3a6a58e5d8145b1dcc5d85",
+            "Size": 81920,
+            "Annotations": null
+        },
+        {
+            "MIMEType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "Digest": "sha256:7926448bbffad18f1bdc471d8b0fc50b22e98c7ca748a77e54addec48cbbdf74",
+            "Size": 143360,
+            "Annotations": null
+        },
+        {
+            "MIMEType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "Digest": "sha256:3b0071b79b5f08b1151a49a826bd989a18951689b23e9ddc5f0d50e25c161e57",
+            "Size": 133120,
+            "Annotations": null
+        },
+        {
+            "MIMEType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "Digest": "sha256:6a1dc936543612b09ab70e1a6dde9fd60f921be781db91166ebb24dffbe7e5e8",
+            "Size": 235520,
+            "Annotations": null
+        },
+        {
+            "MIMEType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "Digest": "sha256:abcb277ace828f13e9d3aa4fe46149dddb1feac0b6148113577172dbb2f4d5e9",
+            "Size": 8263680,
+            "Annotations": null
+        },
+        {
+            "MIMEType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "Digest": "sha256:abc445bff6bae22c9b362b7dee5f387ee167d60f92686a35e8f55c2d738ca97b",
+            "Size": 491520,
+            "Annotations": null
+        },
+        {
+            "MIMEType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "Digest": "sha256:67fe4cdb969cc13f67728b848d6ef725a707781961ff7b1d65b0d15d81fecff3",
+            "Size": 2928640,
+            "Annotations": null
+        },
+        },
+        {
+            "MIMEType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "Digest": "sha256:6b1cb7f6fab8e706823ac6a52664cc4f5a61259426b82dff90c5863d4dfb0fc1",
+            "Size": 2017280,
+            "Annotations": null
+        },
+        {
+            "MIMEType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "Digest": "sha256:3af9d70cfe804a029b9f6277bf82d4359f22803fa3c60380736ee90fd45aee54",
+            "Size": 911360,
+            "Annotations": null
+        },
+        {
+            "MIMEType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "Digest": "sha256:fa922ca941c62a97c059a7e33e0221095a1f1abcbd1ae25dcc5a579ef644c056",
+            "Size": 118517760,
+            "Annotations": null
+        },
+        {
+            "MIMEType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "Digest": "sha256:4db172c1d0a216abe85ea729db9b00ea9d6bdf3e61aa324f2fa6770337eb661d",
+            "Size": 757760,
+            "Annotations": null
+        },
+        {
+            "MIMEType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "Digest": "sha256:c5c02fcf2467e4c2876cae84cbac3f4290e312eface931dd941f2acee4ff8b66",
+            "Size": 81920,
+            "Annotations": null
+        },
+        {
+            "MIMEType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "Digest": "sha256:ac435e72ae6a274c966419e260e411eb62fc58f0d3a95426d2b2bba31ce54e97",
+            "Size": 9574400,
+            "Annotations": null
+        },
+        {
+            "MIMEType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "Digest": "sha256:840c9d39c4b12828cf15a7151a1cae3edd456a09eb25cfeb34863c6eae6a50aa",
+            "Size": 61440,
+            "Annotations": null
+        },
+        {
+            "MIMEType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "Digest": "sha256:d916d045ef481d98c27e08fd5883c6f9839fc1a86564387bd02fc06b23e734a3",
+            "Size": 2375680,
+            "Annotations": null
+        },
+        {
+            "MIMEType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "Digest": "sha256:1b320df473e032a29fe33c53b77f0976b4821747af3497cb28c7184e37c9612c",
+            "Size": 61440,
+            "Annotations": null
+        },
+        {
+            "MIMEType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "Digest": "sha256:0eeef386fb1f9a45060471639c41b039e8caf392411f4ed9c1ed144dec8cf843",
+            "Size": 30720,
+            "Annotations": null
+        }
+    ],
+    "Env": [
+        "ENTRYPOINT=/nix/store/m353j8ynv7cki5dlzm2fdvpyxc2nsmpk-pysay-prod-env-v0.5.9/bin/pysay"
+    ]
+}
+```
+
+#### Using dive to inspect the image layers
+
+```text
+$ nix run .#dive
+DOCKER_HOST="unix:///run/docker.sock"
+
+Using UI config file: /nix/store/522m88vm1r315pm8yjzy0xdg1bp4f7mi-dive-ui.yaml
+
+Using config file: /nix/store/522m88vm1r315pm8yjzy0xdg1bp4f7mi-dive-ui.yaml
+Image Source: docker://docker-image-nixos-pysay:v0.5.9
+Extracting image from docker-engine... (this can take a while for large images)
+Analyzing image...
+Building cache...
+
+Image file: /nix/store/rxl3ys5ql65xk1apcj2ss3m27blgmbx3-docker-image-nixos-pysay.tar.gz
+
+Inspecting Image:
+{
+  "Digest": "sha256:677f4689750a77ff38e794e432c76a050e5a5410ee188a90fcf1a6ab08f228f7",
+  "RepoTags": [],
+  "Created": "2025-04-12T02:03:49.749271Z",
+  "DockerVersion": "",
+  "Labels": null,
+  "Architecture": "amd64",
+  "Os": "linux",
+  "Layers": [
+    "sha256:bac1ce201147bfaef5591ae3e3f77d8baa10468410e80520ca08d4be9ed425ca",
+    "sha256:73c3619fb187b9129dcb3380ca18f27e7de5c4cc992170c41b079af66d839d56",
+    "sha256:d49827920acab921e0bfa976477bad46f8b94188cd022aecc5f62614708eefe7",
+    "sha256:c8eacd12fc040a3c8eb38e03465a29d436540973a26a1a63931f11c57dc78cc4",
+    "sha256:3904c3bfe5fbfe7d68abcbc91e5b21783aa36e72bb7427303e2faf6477c68e6f",
+    "sha256:c1794f64bf676e2fb25dfb58e85d5336b32982f6b4a799622f077f40e96b7234",
+
+Loaded image: docker-image-nixos-pysay:v0.5.9
+
+                                                                                      │ Current Layer Contents ├───────────────────────────────────────────────────────────
+┃ ● Layers ┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Permission     UID:GID       Size  Filetree
+Cmp   Size  Command                                                                   drwxr-xr-x         0:0        0 B  ├── bin
+    864 kB                                                                            -rwxrwxrwx         0:0        0 B  │   ├── Activate.ps1 → /nix/store/334ah0x9bpfnpaxh
+    113 MB                                                                            -rwxrwxrwx         0:0        0 B  │   ├── activate → /nix/store/334ah0x9bpfnpaxh9ir0
+    473 kB                                                                            -rwxrwxrwx         0:0        0 B  │   ├── activate.csh → /nix/store/334ah0x9bpfnpaxh
+     40 kB                                                                            -rwxrwxrwx         0:0        0 B  │   ├── activate.fish → /nix/store/334ah0x9bpfnpax
+    8.3 MB                                                                            -rwxrwxrwx         0:0        0 B  │   ├── markdown-it → /nix/store/334ah0x9bpfnpaxh9
+     39 kB                                                                            -rwxrwxrwx         0:0        0 B  │   ├── pygmentize → /nix/store/334ah0x9bpfnpaxh9i
+    2.1 MB                                                                            -rwxrwxrwx         0:0        0 B  │   ├── pysay → /nix/store/334ah0x9bpfnpaxh9ir0i30
+     32 kB                                                                            -rwxrwxrwx         0:0        0 B  │   ├── python → python3.12
+       0 B                                                                            -rwxrwxrwx         0:0        0 B  │   ├── python3 → python3.12
+                                                                                      -rwxrwxrwx         0:0        0 B  │   └── python3.12 → /nix/store/334ah0x9bpfnpaxh9i
+│ Layer Details ├──────────────────────────────────────────────────────────────────── drwxr-xr-x         0:0        0 B  ├── include
+                                                                                      drwxr-xr-x         0:0        0 B  │   └── python3.12
+Tags:   (unavailable)                                                                 drwxr-xr-x         0:0        0 B  ├── lib
+Id:     blobs                                                                         drwxr-xr-x         0:0        0 B  │   └── python3.12
+Size:   0 B                                                                           drwxr-xr-x         0:0        0 B  │       └── site-packages
+Digest: sha256:02696cb685f886caefb6c2420b06237ea0d788e61c8493bd0e07b25d75fb9240       -rwxrwxrwx         0:0        0 B  │           ├── markdown_it → /nix/store/nlg36q3vi
+Command:                                                                              -rwxrwxrwx         0:0        0 B  │           ├── markdown_it_py-3.0.0.dist-info → /
+                                                                                      -rwxrwxrwx         0:0        0 B  │           ├── mdurl → /nix/store/f1yxy650k0f02kq
+                                                                                      -rwxrwxrwx         0:0        0 B  │           ├── mdurl-0.1.2.dist-info → /nix/store
+                                                                                      -rwxrwxrwx         0:0        0 B  │           ├── pygments → /nix/store/sb6qb2s2fyb5
+                                                                                      -rwxrwxrwx         0:0        0 B  │           ├── pygments-2.19.1.dist-info → /nix/s
+                                                                                      -rwxrwxrwx         0:0        0 B  │           ├── pysay → /nix/store/b0ghhphgf9wf8dg
+│ Image Details ├──────────────────────────────────────────────────────────────────── -rwxrwxrwx         0:0        0 B  │           ├── pysay-0.0.0.dist-info → /nix/store
+                                                                                      -rwxrwxrwx         0:0        0 B  │           ├── rich → /nix/store/9mllf5546jlpnw52
+Image name: docker-image-nixos-pysay:v0.5.9                                           -rwxrwxrwx         0:0        0 B  │           └── rich-13.9.4.dist-info → /nix/store
+Total Image size: 189 MB                                                              -rwxrwxrwx         0:0        0 B  ├── lib64 → lib
+Potential wasted space: 0 B                                                           -rwxrwxrwx         0:0        0 B  └── pyvenv.cfg → /nix/store/334ah0x9bpfnpaxh9ir0i3
+Image efficiency score: 100 %
+
+Count   Total Space  Path
+
+
+
+▏^C Quit ▏Tab Switch view ▏^F Filter ▏^L Show layer changes ▏^A Show aggregated changes ▏
+```
+
+#### Running the container without arguments for the entry point
+
+````text
+$ docker run --rm -it docker-image-nixos-pysay:v0.5.9
+
+     __________________________
+    ( Hello From NixOS+Docker! )
+     --------------------------
+       \    __
+        \  {oo}
+           (__)\
+             λ \\
+               _\\__
+              (_____)_
+             (________)0o°
+
+
+#### Running the container with arguments for the entry point
+
+```text
+$ docker run --rm -it docker-image-nixos-pysay:v0.5.9 "Hello from command-line!"
+
+     __________________________
+    ( Hello from command-line! )
+     --------------------------
+       \    __
+        \  {oo}
+           (__)\
+             λ \\
+               _\\__
+              (_____)_
+             (________)0o°
+````
+
+#### Using nix run to run docker run
+
+```text
+$ nix run .#dockerRun -- 'Hello from Nix!'
+DOCKER_HOST="unix:///run/docker.sock"
+
+Image file: /nix/store/rxl3ys5ql65xk1apcj2ss3m27blgmbx3-docker-image-nixos-pysay.tar.gz
+
+Inspecting Image:
+{
+  "Digest": "sha256:677f4689750a77ff38e794e432c76a050e5a5410ee188a90fcf1a6ab08f228f7",
+  "RepoTags": [],
+  "Created": "2025-04-12T02:03:49.749271Z",
+  "DockerVersion": "",
+  "Labels": null,
+  "Architecture": "amd64",
+  "Os": "linux",
+  "Layers": [
+    "sha256:bac1ce201147bfaef5591ae3e3f77d8baa10468410e80520ca08d4be9ed425ca",
+    "sha256:73c3619fb187b9129dcb3380ca18f27e7de5c4cc992170c41b079af66d839d56",
+    "sha256:d49827920acab921e0bfa976477bad46f8b94188cd022aecc5f62614708eefe7",
+    "sha256:c8eacd12fc040a3c8eb38e03465a29d436540973a26a1a63931f11c57dc78cc4",
+    "sha256:3904c3bfe5fbfe7d68abcbc91e5b21783aa36e72bb7427303e2faf6477c68e6f",
+    "sha256:c1794f64bf676e2fb25dfb58e85d5336b32982f6b4a799622f077f40e96b7234",
+
+Loaded image: docker-image-nixos-pysay:v0.5.9
+
+REPOSITORY                 TAG       IMAGE ID       CREATED       SIZE
+docker-image-nixos-pysay   v0.5.9    04735ffe72d8   7 hours ago   189MB
+
+     _________________
+    ( Hello from Nix! )
+     -----------------
+       \    __
+        \  {oo}
+           (__)\
+             λ \\
+               _\\__
+              (_____)_
+             (________)0o°
+```
