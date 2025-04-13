@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.10] - 2025-04-13
+
+### Nix
+
+- Update locks
+- Update locks
+- *(docker)* Add nixos docker image and commands
+- Update locks
+
 ## [0.5.9] - 2025-04-04
 
 ### Nix
