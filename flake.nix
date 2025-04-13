@@ -348,6 +348,65 @@
               ];
             };
         };
+
+        dockerImageUbuntu = pkgs.dockerTools.buildLayeredImage {
+          name = "docker-image-ubuntu-pysay";
+          tag = "${version}";
+          created = "now";
+          maxLayers = 125; # max is 125
+
+          fromImage = pkgs.dockerTools.pullImage {
+            imageName = "ubuntu";
+            finalImageTag = "24.04";
+            imageDigest = "sha256:1e622c5f073b4f6bfad6632f2616c7f59ef256e96fe78bf6a595d1dc4376ac02";
+            sha256 = "sha256-UhZaL7KJLeTDzbkfgKawAHEoQ6JtwLrV4OG0GHfpRMg=";
+            os = "linux";
+            arch = "${system}";
+          };
+
+          # doesn't have access to most of the layer contents, this creates the top-most layer
+          extraCommands = ''
+            : do stuff
+          '';
+
+          # can be used for installation scripts that need an LFS in /
+          enableFakechroot = true;
+
+          # has access to all the layer contents, files owned by root, can be changed
+          # last layer
+          # apt is missing from the image
+          fakeRootCommands = ''
+            # the ubuntu image forces looking for executables in /usr/bin which doesn't exist
+            ls /
+            mkdir -v /usr
+            ln -sv /bin /usr/bin
+          '';
+
+          contents = [
+            pkgs.neofetch # needs coreutils
+            pkgs.coreutils
+            self.packages.${system}.pysay
+          ];
+
+          config =
+            let
+              entrypoint = "${self.packages.${system}.default}/bin/pysay";
+            in
+            {
+              # startup executable
+              Entrypoint = [
+                "${entrypoint}"
+              ];
+              # arguments for entrypoint
+              Cmd = [
+                "Hello From Nix+Ubuntu+Docker!"
+              ];
+
+              Env = [
+                "ENTRYPOINT=${entrypoint}"
+              ];
+            };
+        };
       };
 
       # Make pysay runnable with `nix run`

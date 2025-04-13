@@ -872,7 +872,7 @@ Count   Total Space  Path
 
 #### Running the container without arguments for the entry point
 
-````text
+```text
 $ docker run --rm -it docker-image-nixos-pysay:v0.5.9
 
      __________________________
@@ -885,7 +885,7 @@ $ docker run --rm -it docker-image-nixos-pysay:v0.5.9
                _\\__
               (_____)_
              (________)0o°
-
+```
 
 #### Running the container with arguments for the entry point
 
@@ -902,7 +902,7 @@ $ docker run --rm -it docker-image-nixos-pysay:v0.5.9 "Hello from command-line!"
                _\\__
               (_____)_
              (________)0o°
-````
+```
 
 #### Using nix run to run docker run
 
@@ -944,4 +944,183 @@ docker-image-nixos-pysay   v0.5.9    04735ffe72d8   7 hours ago   189MB
                _\\__
               (_____)_
              (________)0o°
+```
+
+### Using Ubuntu Containers
+
+#### Building the container
+
+```text
+$ nix build .#dockerImageUbuntu
+
+$ docker load < ./result
+bac1ce201147: Loading layer [==================================================>]  2.079MB/2.079MB
+73c3619fb187: Loading layer [==================================================>]  399.4kB/399.4kB
+d49827920aca: Loading layer [==================================================>]    215kB/215kB
+c8eacd12fc04: Loading layer [==================================================>]  30.78MB/30.78MB
+3904c3bfe5fb: Loading layer [==================================================>]  143.4kB/143.4kB
+c1794f64bf67: Loading layer [==================================================>]  5.202MB/5.202MB
+185acf266499: Loading layer [==================================================>]   1.72MB/1.72MB
+cc16370331d9: Loading layer [==================================================>]    215kB/215kB
+9d4dc07856d6: Loading layer [==================================================>]   1.69MB/1.69MB
+eef160dc49d3: Loading layer [==================================================>]  92.16kB/92.16kB
+25d5f0ab16e8: Loading layer [==================================================>]    297kB/297kB
+829e9138c982: Loading layer [==================================================>]  10.02MB/10.02MB
+690ae98a8704: Loading layer [==================================================>]  491.5kB/491.5kB
+b011966820c8: Loading layer [==================================================>]  81.92kB/81.92kB
+7926448bbffa: Loading layer [==================================================>]  143.4kB/143.4kB
+3b0071b79b5f: Loading layer [==================================================>]  133.1kB/133.1kB
+6a1dc9365436: Loading layer [==================================================>]  235.5kB/235.5kB
+abcb277ace82: Loading layer [==================================================>]  8.264MB/8.264MB
+abc445bff6ba: Loading layer [==================================================>]  491.5kB/491.5kB
+67fe4cdb969c: Loading layer [==================================================>]  2.929MB/2.929MB
+6b1cb7f6fab8: Loading layer [==================================================>]  2.017MB/2.017MB
+3af9d70cfe80: Loading layer [==================================================>]  911.4kB/911.4kB
+fa922ca941c6: Loading layer [==================================================>]  118.5MB/118.5MB
+c2a65c9b65cd: Loading layer [==================================================>]  757.8kB/757.8kB
+10fb4e9680c0: Loading layer [==================================================>]  81.92kB/81.92kB
+e66086be6059: Loading layer [==================================================>]  9.574MB/9.574MB
+df7f15b3c105: Loading layer [==================================================>]  81.92kB/81.92kB
+5a11b79679ed: Loading layer [==================================================>]  2.376MB/2.376MB
+b6e00727fc5a: Loading layer [==================================================>]  61.44kB/61.44kB
+ceed970fb923: Loading layer [==================================================>]  30.72kB/30.72kB
+Loaded image: docker-image-ubuntu-pysay:0.5.10
+```
+
+#### Examining the image with dive
+
+```text
+$ nix run .#dive docker-image-ubuntu-pysay:0.5.10
+DOCKER_HOST="unix:///run/docker.sock"
+
+Using UI config file: /nix/store/ir2yvc4b6crhzljd5mg8rjjdxfw8gf0w-dive-ui.yaml
+
+Image file: /nix/store/6ygp1ahqbxnvgh3zkwbxyr02wi38rv5a-docker-image-nixos-pysay.tar.gz
+
+Inspecting Image:
+{
+  "Digest": "sha256:2b56f58327c73a583de64ee217df7800eb104ce5482ebdeb1ac8dbec03b411c0",
+  "RepoTags": [],
+  "Created": "2025-04-13T17:34:10.735733Z",
+  "DockerVersion": "",
+  "Labels": null,
+  "Architecture": "amd64",
+  "Os": "linux",
+  "Layers": [
+    "sha256:bac1ce201147bfaef5591ae3e3f77d8baa10468410e80520ca08d4be9ed425ca",
+    "sha256:73c3619fb187b9129dcb3380ca18f27e7de5c4cc992170c41b079af66d839d56",
+    "sha256:d49827920acab921e0bfa976477bad46f8b94188cd022aecc5f62614708eefe7",
+    "sha256:c8eacd12fc040a3c8eb38e03465a29d436540973a26a1a63931f11c57dc78cc4",
+    "sha256:3904c3bfe5fbfe7d68abcbc91e5b21783aa36e72bb7427303e2faf6477c68e6f",
+    "sha256:c1794f64bf676e2fb25dfb58e85d5336b32982f6b4a799622f077f40e96b7234",
+
+c2a65c9b65cd: Loading layer [==================================================>]  757.8kB/757.8kB
+10fb4e9680c0: Loading layer [==================================================>]  81.92kB/81.92kB
+e66086be6059: Loading layer [==================================================>]  9.574MB/9.574MB
+7652eb4eefd2: Loading layer [==================================================>]  92.16kB/92.16kB
+5a11b79679ed: Loading layer [==================================================>]  2.376MB/2.376MB
+251f592f819e: Loading layer [==================================================>]  61.44kB/61.44kB
+b29da20b5554: Loading layer [==================================================>]  30.72kB/30.72kB
+Loaded image: docker-image-nixos-pysay:0.5.10
+
+Using config file: /nix/store/ir2yvc4b6crhzljd5mg8rjjdxfw8gf0w-dive-ui.yaml
+Image Source: docker://docker-image-ubuntu-pysay:0.5.10
+Extracting image from docker-engine... (this can take a while for large images)
+Analyzing image...
+Building cache...
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+                                                                                      │ Current Layer Contents ├───────────────────────────────────────────────────────────
+┃ ● Layers ┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Permission     UID:GID       Size  Filetree
+Cmp   Size  Command                                                                   drwxr-xr-x         0:0      32 kB  └── nix
+    864 kB                                                                            drwxr-xr-x         0:0      32 kB      └── store
+    113 MB                                                                            dr-xr-xr-x         0:0      32 kB          └── sb8pgk5bn37c2j9x3vr51qiaxmrlk4aw-pysay
+    473 kB                                                                            dr-xr-xr-x         0:0      31 kB              ├── bin
+     40 kB                                                                            -r--r--r--         0:0     9.0 kB              │   ├── Activate.ps1
+    8.3 MB                                                                            -r--r--r--         0:0     2.2 kB              │   ├── activate
+     48 kB                                                                            -r--r--r--         0:0      995 B              │   ├── activate.csh
+    2.1 MB                                                                            -r--r--r--         0:0     2.3 kB              │   ├── activate.fish
+     32 kB                                                                            -r-xr-xr-x         0:0      367 B              │   ├── markdown-it
+                                                                                      -r-xr-xr-x         0:0      362 B              │   ├── pygmentize
+│ Layer Details ├──────────────────────────────────────────────────────────────────── -r-xr-xr-x         0:0      356 B              │   ├── pysay
+                                                                                      -rwxrwxrwx         0:0        0 B              │   ├── python → python3.12
+Tags:   (unavailable)                                                                 -rwxrwxrwx         0:0        0 B              │   ├── python3 → python3.12
+Id:     blobs                                                                         -r-xr-xr-x         0:0      16 kB              │   └── python3.12
+Size:   32 kB                                                                         dr-xr-xr-x         0:0        0 B              ├── include
+Digest: sha256:b6e00727fc5a2134e26f9ced9a2e03939d629d9cced1448610fa127dcd3e0961       dr-xr-xr-x         0:0        0 B              │   └── python3.12
+Command:                                                                              dr-xr-xr-x         0:0        0 B              ├── lib
+                                                                                      dr-xr-xr-x         0:0        0 B              │   └── python3.12
+                                                                                      dr-xr-xr-x         0:0        0 B              │       └── site-packages
+                                                                                      -rwxrwxrwx         0:0        0 B              │           ├── markdown_it → /nix/sto
+                                                                                      -rwxrwxrwx         0:0        0 B              │           ├── markdown_it_py-3.0.0.d
+│ Image Details ├──────────────────────────────────────────────────────────────────── -rwxrwxrwx         0:0        0 B              │           ├── mdurl → /nix/store/a99
+                                                                                      -rwxrwxrwx         0:0        0 B              │           ├── mdurl-0.1.2.dist-info
+Image name: docker-image-ubuntu-pysay:0.5.10                                          -rwxrwxrwx         0:0        0 B              │           ├── pygments → /nix/store/
+Total Image size: 267 MB                                                              -rwxrwxrwx         0:0        0 B              │           ├── pygments-2.19.1.dist-i
+Potential wasted space: 0 B                                                           -rwxrwxrwx         0:0        0 B              │           ├── pysay → /nix/store/ygw
+Image efficiency score: 100 %                                                         -rwxrwxrwx         0:0        0 B              │           ├── pysay-0.0.0.dist-info
+                                                                                      -rwxrwxrwx         0:0        0 B              │           ├── rich → /nix/store/zpi9
+Count   Total Space  Path                                                             -rwxrwxrwx         0:0        0 B              │           └── rich-13.9.4.dist-info
+    2           0 B  /lib64                                                           -rwxrwxrwx         0:0        0 B              ├── lib64 → lib
+                                                                                      -r--r--r--         0:0      449 B              └── pyvenv.cfg
+```
+
+#### Running the container without arguments for the entry point
+
+```text
+$ docker run --rm -it docker-image-ubuntu-pysay:0.5.10
+
+     _______________________________
+    ( Hello From Nix+Ubuntu+Docker! )
+     -------------------------------
+       \    __
+        \  {oo}
+           (__)\
+             λ \\
+               _\\__
+              (_____)_
+             (________)0o°
+```
+
+#### Running the container with arguments for the entry point
+
+```text
+$ docker run --rm -it docker-image-ubuntu-pysay:0.5.10 "Hello from command-line!"
+
+     __________________________
+    ( Hello from command-line! )
+     --------------------------
+       \    __
+        \  {oo}
+           (__)\
+             λ \\
+               _\\__
+              (_____)_
+             (________)0o°
+```
+
+#### Verifying the container is running Ubuntu
+
+```text
+$ docker run --rm -it --entrypoint neofetch docker-image-ubuntu-pysay:0.5.10
+            .-/+oossssoo+\-.               root@4d0ad86375fa
+        ´:+ssssssssssssssssss+:`           -----------------
+      -+ssssssssssssssssssyyssss+-         OS: Ubuntu 24.04.2 LTS x86_64
+    .ossssssssssssssssssdMMMNysssso.       Host: crosvm
+   /ssssssssssshdmmNNmmyNMMMMhssssss\      Kernel: 6.6.67-06628-g571b599e617d
+  +ssssssssshmydMMMMMMMNddddyssssssss+     Uptime: 16 hours, 26 mins
+ /sssssssshNMMMyhhyyyyhmNMMMNhssssssss\    Shell: bash 5.2.37
+.ssssssssdMMMNhsssssssssshNMMMdssssssss.   Memory: 33599MiB / 61868MiB
++sssshhhyNMMNyssssssssssssyNMMMysssssss+
+ossyNMMMNyMMhsssssssssssssshmmmhssssssso
+ossyNMMMNyMMhsssssssssssssshmmmhssssssso
++sssshhhyNMMNyssssssssssssyNMMMysssssss+
+.ssssssssdMMMNhsssssssssshNMMMdssssssss.
+ \sssssssshNMMMyhhyyyyhdNMMMNhssssssss/
+  +sssssssssdmydMMMMMMMMddddyssssssss+
+   \ssssssssssshdmNNNNmyNMMMMhssssss/
+    .ossssssssssssssssssdMMMNysssso.
+      -+sssssssssssssssssyyyssss+-
+        `:+ssssssssssssssssss+:`
+            .-\+oossssoo+/-.
 ```
