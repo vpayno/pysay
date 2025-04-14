@@ -1124,3 +1124,16 @@ ossyNMMMNyMMhsssssssssssssshmmmhssssssso
         `:+ssssssssssssssssss+:`
             .-\+oossssoo+/-.
 ```
+
+## Vulnerability Scanning
+
+### Project vulnerability scanner
+
+Using [vulnix](https://github.com/nix-community/vulnix) to scan the project for
+vulnerabilities.
+
+```text
+$ nix build .#default^*
+
+$ nix run github:nix-community/vulnix -- ./result*
+```
