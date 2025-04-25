@@ -221,6 +221,8 @@ the default `devShell`.
 To install `direnv` and `nix-direnv` use `nix`.
 
 ```bash { name=direnv-00-install }
+nix profile install nixpkgs#gum
+
 nix profile install nixpkgs#direnv
 
 nix profile install nixpkgs#nix-direnv
@@ -234,6 +236,8 @@ if ! grep -q .nix-profile/share/nix-direnv/direnvrc "${HOME}"/.config/direnv/dir
 	printf "\n%s\n" 'source $HOME/.nix-profile/share/nix-direnv/direnvrc' | tee -a "${HOME}"/.config/direnv/direnvrc
 fi
 ```
+
+#### direnv with nix develop
 
 Telling `direnv` to use the project `flake.nix` to run the `devShell`.
 
@@ -254,6 +258,8 @@ EOF
 direnv allow
 ```
 
+#### direnv with devbox shell
+
 Telling `direnv` to use the project `devbox.json` to run the `devShell`.
 
 ```bash { name=direnv-02-setup-project-use-devbox }
@@ -264,9 +270,19 @@ devbox generate direnv --force
 direnv allow
 ```
 
+#### direnv allow/disallow
+
 By default, `direnv` needs explicit permission to run `.envrc` so it's safe to
 install `direnv` without having to worry that a random git clone will compromise
 your system.
+
+If a `.envrc` file that was previously allowed changes, you'll see this message:
+
+```text
+direnv: error /home/vpayno/git_vpayno/pysay/.envrc is blocked. Run `direnv allow` to approve its content
+```
+
+Just do as it says and run `direnv allow` after inspecting the file.
 
 If the project already has a `.envrc` file configured, you just need to allow
 `direnv` to use it.
@@ -279,6 +295,18 @@ To disable `direnv` auto loading of `.envrc` for this project run:
 
 ```bash { name=direnv-04-setup-disallow-repo-autoloading }
 direnv disallow
+```
+
+#### direnv shell selection using gum
+
+Updated `.envrc` to use `gum` to allow the selection of the developer shell to
+use.
+
+```text
+direnv: which environment would you like to use?
+> nix develop .#default
+  devbox shell
+  abort
 ```
 
 ## Running
