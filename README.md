@@ -223,6 +223,8 @@ To install `direnv` and `nix-direnv` use `nix`.
 ```bash { name=direnv-00-install }
 nix profile install nixpkgs#gum
 
+nix profile install nixpkgs#moreutils
+
 nix profile install nixpkgs#direnv
 
 nix profile install nixpkgs#nix-direnv
@@ -237,11 +239,24 @@ if ! grep -q .nix-profile/share/nix-direnv/direnvrc "${HOME}"/.config/direnv/dir
 fi
 ```
 
+#### direnv settings
+
+Configure `direnv` settings.
+
+```bash { name=direnv-01-set-settings }
+# disable timeout warning
+nix run nixpkgs#toml-cli -- set ~/.config/direnv/direnv.toml global.warn_timeout "0" | sponge ~/.config/direnv/direnv.toml
+printf "\n"
+
+nix run nixpkgs#toml-cli -- get ~/.config/direnv/direnv.toml . | nix run nixpkgs#jq .
+printf "\n"
+```
+
 #### direnv with nix develop
 
 Telling `direnv` to use the project `flake.nix` to run the `devShell`.
 
-```bash { name=direnv-01-setup-project-use-nix_develop }
+```bash { name=direnv-02-setup-project-use-nix_develop }
 eval "$(direnv hook bash)
 
 cat > ./.envrc <<EOF
@@ -262,7 +277,7 @@ direnv allow
 
 Telling `direnv` to use the project `devbox.json` to run the `devShell`.
 
-```bash { name=direnv-02-setup-project-use-devbox }
+```bash { name=direnv-03-setup-project-use-devbox }
 eval "$(direnv hook bash)
 
 devbox generate direnv --force
@@ -287,13 +302,13 @@ Just do as it says and run `direnv allow` after inspecting the file.
 If the project already has a `.envrc` file configured, you just need to allow
 `direnv` to use it.
 
-```bash { name=direnv-03-setup-allow-repo-autoloading }
+```bash { name=direnv-04-setup-allow-repo-autoloading }
 direnv allow
 ```
 
 To disable `direnv` auto loading of `.envrc` for this project run:
 
-```bash { name=direnv-04-setup-disallow-repo-autoloading }
+```bash { name=direnv-05-setup-disallow-repo-autoloading }
 direnv disallow
 ```
 
