@@ -237,7 +237,7 @@ fi
 
 Telling `direnv` to use the project `flake.nix` to run the `devShell`.
 
-```bash { name=direnv-01-setup-project }
+```bash { name=direnv-01-setup-project-use-nix_develop }
 eval "$(direnv hook bash)
 
 cat > ./.envrc <<EOF
@@ -250,6 +250,16 @@ fi
 
 use flake
 EOF
+
+direnv allow
+```
+
+Telling `direnv` to use the project `devbox.json` to run the `devShell`.
+
+```bash { name=direnv-02-setup-project-use-devbox }
+eval "$(direnv hook bash)
+
+devbox generate direnv --force
 
 direnv allow
 ```
