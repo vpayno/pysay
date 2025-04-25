@@ -212,6 +212,48 @@ project.
  source = { editable = "." }
 ```
 
+### direnv
+
+Using [direnv](https://direnv.net/) and
+[nix-direnv](https://github.com/nix-community/nix-direnv) to automatically start
+the default `devShell`.
+
+To install `direnv` and `nix-direnv` use `nix`.
+
+```bash { name=direnv-00-install }
+nix profile install nixpkgs#direnv
+
+nix profile install nixpkgs#nix-direnv
+
+if ! grep -q 'direnv hook bash' ~/.bashrc; then
+  printf "\n%s\n" 'eval "$(direnv hook bash)"' | tee -a ~/.bashrc
+fi
+
+mkdir -pv "${HOME}"/.config/direnv/
+if ! grep -q .nix-profile/share/nix-direnv/direnvrc "${HOME}"/.config/direnv/direnvrc; then
+	printf "\n%s\n" 'source $HOME/.nix-profile/share/nix-direnv/direnvrc' | tee -a "${HOME}"/.config/direnv/direnvrc
+fi
+```
+
+Telling `direnv` to use the project `flake.nix` to run the `devShell`.
+
+```bash { name=direnv-01-setup-project }
+eval "$(direnv hook bash)
+
+cat > ./.envrc <<EOF
+# .envrc
+# shellcheck shell=bash
+
+if ! has nix_direnv_version || ! nix_direnv_version 3.0.6; then
+  source_url "https://raw.githubusercontent.com/nix-community/nix-direnv/3.0.6/direnvrc" "sha256-RYcUJaRMf8oF5LznDrlCXbkOQrywm0HDv1VjYGaJGdM="
+fi
+
+use flake
+EOF
+
+direnv allow
+```
+
 ## Running
 
 ### uv
