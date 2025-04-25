@@ -264,6 +264,23 @@ devbox generate direnv --force
 direnv allow
 ```
 
+By default, `direnv` needs explicit permission to run `.envrc` so it's safe to
+install `direnv` without having to worry that a random git clone will compromise
+your system.
+
+If the project already has a `.envrc` file configured, you just need to allow
+`direnv` to use it.
+
+```bash { name=direnv-03-setup-allow-repo-autoloading }
+direnv allow
+```
+
+To disable `direnv` auto loading of `.envrc` for this project run:
+
+```bash { name=direnv-04-setup-disallow-repo-autoloading }
+direnv disallow
+```
+
 ## Running
 
 ### uv
