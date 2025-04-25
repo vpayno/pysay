@@ -479,6 +479,7 @@
         # It is of course perfectly OK to keep using an impure virtualenv workflow and only use uv2nix to build packages.
         # This devShell simply adds Python and undoes the dependency leakage done by Nixpkgs Python infrastructure.
         impure = pkgs.mkShell {
+          name = "devShell.impure";
           packages = [
             python
             pkgs.uv
@@ -502,7 +503,7 @@
             };
           shellHook = ''
             unset PYTHONPATH
-            ${pkgs.lib.getExe pkgs.cowsay} "Welcome to ${name}'s devShell!"
+            ${pkgs.lib.getExe pkgs.cowsay} "Welcome to ${name}'s ${impure.name} devShell!"
             printf "\n"
             which python uv
           '';
@@ -565,6 +566,7 @@
             virtualenv = editablePythonSet.mkVirtualEnv "${pname}-dev-env-${version}" workspace.deps.all;
           in
           pkgs.mkShell {
+            name = "devShell.uv2nix";
             packages = [
               virtualenv
               pkgs.uv
@@ -590,6 +592,9 @@
 
               # Get repository root using git. This is expanded at runtime by the editable `.pth` machinery.
               export REPO_ROOT=$(git rev-parse --show-toplevel)
+
+              ${pkgs.lib.getExe pkgs.cowsay} "Welcome to ${name}'s ${uv2nix.name} devShell!"
+              printf "\n"
             '';
           };
       };
