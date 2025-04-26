@@ -227,6 +227,12 @@
           printf "%s version: %s\n" "${pname}" "${version}"
         '';
 
+        updateLocksUV = pkgs.writeShellScriptBin "update-locks-uv" ''
+          ${pkgs.coreutils}/bin/printf "Updating version in uv.lock...\n"
+          ${pkgs.lib.getExe pkgs.uv} lock --upgrade
+          ${pkgs.coreutils}/bin/printf "done."
+        '';
+
         dockerCiCheck = pkgs.writeShellScriptBin "dockerCiCheck" ''
           printf "%s version: %s\n" "docker" "$("${pkgs.docker}/bin/docker" --version)"
           printf "%s version: %s\n" "dive" "$("${pkgs.lib.getExe pkgs.dive}" --version)"
@@ -439,6 +445,15 @@
           pname = "${name}-${version}";
           inherit version;
           program = "${pkgs.lib.getExe packages.${system}.showVersion}";
+          meta = metadata;
+        };
+
+        updateLocksUV = {
+          type = "app";
+          name = "update-locks-uv";
+          pname = "${name}-${version}";
+          inherit version;
+          program = "${pkgs.lib.getExe packages.${system}.updateLocksUV}";
           meta = metadata;
         };
 
