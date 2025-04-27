@@ -229,7 +229,11 @@
 
         updateLocksUV = pkgs.writeShellScriptBin "update-locks-uv" ''
           ${pkgs.coreutils}/bin/printf "Updating version in uv.lock...\n"
-          ${pkgs.lib.getExe pkgs.uv} lock --upgrade
+          ${pkgs.lib.getExe pkgs.uv} run poe update
+          ${pkgs.coreutils}/bin/printf "done."
+          ${pkgs.coreutils}/bin/printf "\n"
+          ${pkgs.coreutils}/bin/printf "Outdated packages."
+          ${pkgs.lib.getExe pkgs.uv} run poe outdated
           ${pkgs.coreutils}/bin/printf "done."
         '';
 
