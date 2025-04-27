@@ -184,7 +184,7 @@ cmd = "mypy --install-types --non-interactive ./src ./tests"
 help = "Run mypy type annotation linter"
 
 [tool.poe.tasks.outdated]
-cmd = "pip list --outdated"
+cmd = "uv pip list --outdated"
 help = "Show outdated dependencies"
 
 [tool.poe.tasks.doctest]
