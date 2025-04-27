@@ -147,6 +147,10 @@ line_length = 11
 cmd = "python -m pysay"
 help = "Run main module"
 
+[tool.poe.tasks.update]
+shell = "uv lock --upgrade; uv sync"
+help = "Update uv locks and .venv"
+
 [tool.poe.tasks.clean_docs]
 shell = "rm -rf html mkdocs pysay.html pysay.md pysay.txt"
 help = "Clean up generated docs"
