@@ -317,11 +317,26 @@ direnv disallow
 Updated `.envrc` to use `gum` to allow the selection of the developer shell to
 use.
 
+Updated the `.envrc` file so it probes `flake.nix` and checks for `devbox.json`
+to generate the list of available shells.
+
 ```text
+direnv: loading ~/git_vpayno/pysay/.envrc
+Running on x86_64-linux
+Inspecting flake...
+
+Found 3 nix develop devShells
+
+Found devbox shell.
+
 direnv: which environment would you like to use?
-> nix develop .#default
-  devbox shell
-  abort
+  nix develop .#default
+  nix develop .#impure
+  nix develop .#uv2nix
+> devbox shell
+  skip
+
+←↓↑→ navigate • enter submit
 ```
 
 ## Running
