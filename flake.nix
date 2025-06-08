@@ -497,7 +497,7 @@
 
         # It is of course perfectly OK to keep using an impure virtualenv workflow and only use uv2nix to build packages.
         # This devShell simply adds Python and undoes the dependency leakage done by Nixpkgs Python infrastructure.
-        impure = pkgs.mkShell {
+        impure = pkgs.mkShell rec {
           name = "devShell.impure";
           packages = [
             python
@@ -521,10 +521,36 @@
               # LD_LIBRARY_PATH = lib.makeLibraryPath pkgs.pythonManylinuxPackages.manylinux1;
             };
           shellHook = ''
+            export PATH="$PATH:${
+              pkgs.lib.makeBinPath (
+                packages
+                ++ (with pkgs; [
+                  binutils
+                  coreutils-full
+                  gawk
+                  gnugrep
+                  gnused
+                  less
+                  moreutils
+                  nix
+                  openssh
+                  which
+                ])
+              )
+            }"
             unset PYTHONPATH
+
             ${pkgs.lib.getExe pkgs.cowsay} "Welcome to ${name}'s ${impure.name} devShell!"
             printf "\n"
             which python uv
+            printf "\n"
+
+            printf "Commands:\n"
+            printf "\tRun pysay: %s\n" "uv run pysay"
+            printf "\tUpdate Nix Locks: %s\n" "nix lock update"
+            printf "\tUpdate UV Locks: %s\n" "uv lock --upgrade"
+            printf "\tReload shell: %s\n" "direnv reload"
+            printf "\n"
           '';
         };
 
