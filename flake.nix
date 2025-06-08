@@ -252,7 +252,7 @@
           cat "${diveCiConfigFile}"
           printf "\n"
 
-          image_file="${self.packages.x86_64-linux.dockerImageNixos}"
+          image_file="${self.packages.${system}.dockerImageNixos}"
 
           printf "Image file: %s\n" "$image_file"
           printf "\n"
@@ -316,11 +316,13 @@
           "${pkgs.lib.getExe pkgs.docker-client}" run --rm -it "docker-image-nixos-${pname}:${version}" "''${@}"
         '';
 
-        dockerImageNixos = pkgs.dockerTools.buildLayeredImage {
-          name = "docker-image-nixos-pysay";
+        dockerImageNixos = dockerImageNixosBuild;
+
+        dockerImageNixosBuild = pkgs.dockerTools.buildLayeredImage {
+          name = "docker-image-nixos-${pname}";
           tag = "${version}";
           created = "now";
-          maxLayers = 125; # max is 125
+          maxLayers = 100; # max is 125
 
           # doesn't have access to most of the layer contents, this creates the top-most layer
           extraCommands = ''
@@ -359,11 +361,32 @@
             };
         };
 
+        dockerImageNixosStreamed = pkgs.dockerTools.streamLayeredImage {
+          name = "docker-image-nixos-${pname}-streamelayeredimage";
+
+          # git rev-parse HEAD
+          tag = self.rev or "dev";
+
+          # leaves room to append
+          maxLayers = 100; # max is 125
+
+          config = {
+            Entrypoint = [
+              "${pkgs.lib.getExe self.packages.${system}.default}"
+            ];
+
+            # adds glibLocales and sets LOCALE_ARCHIVE
+            Env = [
+              "LANG=C.UTF-8"
+            ];
+          };
+        };
+
         dockerImageUbuntu = pkgs.dockerTools.buildLayeredImage {
-          name = "docker-image-ubuntu-pysay";
+          name = "docker-image-ubuntu-${pname}";
           tag = "${version}";
           created = "now";
-          maxLayers = 125; # max is 125
+          maxLayers = 100; # max is 125
 
           fromImage = pkgs.dockerTools.pullImage {
             imageName = "ubuntu";
