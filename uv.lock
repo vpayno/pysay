@@ -456,7 +456,22 @@ wheels = [
 name = "pysay"
 source = { editable = "." }
 dependencies = [
+    { name = "bandit" },
+    { name = "isort" },
+    { name = "mkdocs" },
+    { name = "mypy" },
+    { name = "mypy-extensions" },
+    { name = "pdoc3" },
+    { name = "poethepoet" },
+    { name = "pylint" },
+    { name = "pyright" },
+    { name = "pytest" },
+    { name = "pytest-cov" },
+    { name = "pytest-datafiles" },
+    { name = "pytest-randomly" },
     { name = "rich" },
+    { name = "ruff" },
+    { name = "tomlq" },
 ]
 
 [package.dev-dependencies]
@@ -479,7 +494,24 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "rich", specifier = ">=13.7.0" }]
+requires-dist = [
+    { name = "bandit", specifier = ">=1.8.3" },
+    { name = "isort", specifier = ">=6.0.1" },
+    { name = "mkdocs", specifier = ">=1.6.1" },
+    { name = "mypy", specifier = ">=1.16.0" },
+    { name = "mypy-extensions", specifier = ">=1.1.0" },
+    { name = "pdoc3", specifier = ">=0.11.6" },
+    { name = "poethepoet", specifier = ">=0.34.0" },
+    { name = "pylint", specifier = ">=3.3.7" },
+    { name = "pyright", specifier = ">=1.1.401" },
+    { name = "pytest", specifier = ">=8.3.5" },
+    { name = "pytest-cov", specifier = ">=6.1.1" },
+    { name = "pytest-datafiles", specifier = ">=3.0.0" },
+    { name = "pytest-randomly", specifier = ">=3.16.0" },
+    { name = "rich", specifier = ">=14.0.0" },
+    { name = "ruff", specifier = ">=0.11.12" },
+    { name = "tomlq", specifier = ">=0.1.0" },
+]
 
 [package.metadata.requires-dev]
 dev = [
