@@ -50,11 +50,10 @@
         "uv run poe test"
       ],
       "update_locks": [
-        "uv run poe outdated",
-        "uv lock --upgrade \"$@\"",
-        "uv sync",
-        "uv run poe outdated",
-        "uv run poe test"
+        "./update-devbox-locks.sh",
+        "./update-flake-locks.sh",
+        "./update-uv-locks.sh",
+        "./update-uv-constraints.sh"
       ]
     }
   }
