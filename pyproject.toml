@@ -25,21 +25,21 @@ classifiers = [
   "Topic :: Utilities",
 ]
 dependencies = [
-    "bandit>=1.8.3",
+    "bandit>=1.8.5",
     "isort>=6.0.1",
     "mkdocs>=1.6.1",
-    "mypy>=1.16.0",
+    "mypy>=1.16.1",
     "mypy-extensions>=1.1.0",
     "pdoc3>=0.11.6",
-    "poethepoet>=0.34.0",
+    "poethepoet>=0.35.0",
     "pylint>=3.3.7",
-    "pyright>=1.1.401",
-    "pytest>=8.3.5",
-    "pytest-cov>=6.1.1",
+    "pyright>=1.1.402",
+    "pytest>=8.4.1",
+    "pytest-cov>=6.2.1",
     "pytest-datafiles>=3.0.0",
     "pytest-randomly>=3.16.0",
     "rich>=14.0.0",
-    "ruff>=0.11.12",
+    "ruff>=0.12.1",
     "tomlq>=0.1.0",
 ]
 
