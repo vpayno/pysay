@@ -59,6 +59,7 @@ dev = [
   "ruff>=0.9.6",
   "poethepoet>=0.32.2",
   "yq>=3.4.3",
+  "pip-audit>=2.9.0",
 ]
 
 [build-system]
