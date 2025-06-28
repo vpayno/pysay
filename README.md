@@ -1293,3 +1293,20 @@ $ nix build .#default^*
 
 $ nix run github:nix-community/vulnix -- ./result*
 ```
+
+### pip-audit
+
+For just Python dependencies for the project, using `pip-audit` for
+vulnerability scanning.
+
+```text
+$ uv run poe audit
+      Built pysay @ file:///home/vpayno/git_vpayno/pysay
+Uninstalled 1 package in 0.35ms
+Installed 1 package in 0.96ms
+Poe => pip-audit
+No known vulnerabilities found
+Name  Skip Reason
+----- ---------------------------------------------------------------------------
+pysay Dependency not found on PyPI and could not be audited: pysay (0.5.11.dev51)
+```

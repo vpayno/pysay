@@ -254,6 +254,12 @@ ruff format ./src ./tests
 """
 help = "Run isort and ruff format on project"
 
+[tool.poe.tasks.audit]
+shell = """
+pip-audit
+"""
+help = "Run pip-audit on project"
+
 [tool.poe.tasks.info]
 shell = """
 uv version
