@@ -234,6 +234,18 @@
           package = pythonSet.pysay;
         };
 
+        pysayWheel = pythonSet.pysay.override {
+          pyprojectHook = pythonSet.pyprojectDistHook;
+        };
+
+        pysaySdist =
+          (pythonSet.pysay.override {
+            pyprojectHook = pythonSet.pyprojectDistHook;
+          }).overrideAttrs
+            (old: {
+              env.uvBuildType = "sdist";
+            });
+
         showUsage = pkgs.writeShellScriptBin "showUsage" ''
           printf "%s" "${usageMessage}"
         '';
