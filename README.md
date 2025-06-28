@@ -368,6 +368,97 @@ Run:
 docker run -it --rm -v "${PWD}:/build" devcontainer-nixshell-pysay:0.5.10-x86_64
 ```
 
+## Packaging
+
+### wheel & sdist
+
+Unfortunately generating `wheel` or `sdist` distributable with `uv2nix` isn't
+working right now.
+
+However, you can use `hatch build` to build a tar file and `wheel`.
+
+```text
+$ hatch build
+──────────────────────────────────── sdist ─────────────────────────────────────
+dist/pysay-0.5.11.dev53.tar.gz
+──────────────────────────────────── wheel ─────────────────────────────────────
+dist/pysay-0.5.11.dev53-py3-none-any.whl
+```
+
+### uv2nix application release
+
+Using `mkApplication` lets you create a single Python entry-point what uses a
+Python interpreter (`pythonWithPackages`) with baked in dependencies and hides
+implementation details.
+
+```text
+$ nix build .#pysayApp
+
+$ tree ./result/
+./result/
+└── bin
+    └── pysay -> /nix/store/bgjd6vxrr4bsxyqfkw1f2r66ilfv4pi0-pysay-prod-env-0.5.10/bin/pysay
+
+2 directories, 1 file
+
+$ ./result/bin/pysay hello
+     _______
+    ( hello )
+     -------
+       \    __
+        \  {oo}
+           (__)\
+             λ \\
+               _\\__
+              (_____)_
+             (________)0o°
+
+$ cat ./result/bin/pysay
+#!/nix/store/bgjd6vxrr4bsxyqfkw1f2r66ilfv4pi0-pysay-prod-env-0.5.10/bin/python3.12
+# -*- coding: utf-8 -*-
+import sys
+from pysay.main import main
+if __name__ == "__main__":
+    if sys.argv[0].endswith("-script.pyw"):
+        sys.argv[0] = sys.argv[0][:-11]
+    elif sys.argv[0].endswith(".exe"):
+        sys.argv[0] = sys.argv[0][:-4]
+    sys.exit(main())
+
+$ tree /nix/store/bgjd6vxrr4bsxyqfkw1f2r66ilfv4pi0-pysay-prod-env-0.5.10/
+/nix/store/bgjd6vxrr4bsxyqfkw1f2r66ilfv4pi0-pysay-prod-env-0.5.10/
+├── bin
+│   ├── activate
+│   ├── activate.csh
+│   ├── activate.fish
+│   ├── Activate.ps1
+│   ├── markdown-it
+│   ├── pygmentize
+│   ├── pysay
+│   ├── python -> python3.12
+│   ├── python3 -> python3.12
+│   └── python3.12
+├── include
+│   └── python3.12
+├── lib
+│   └── python3.12
+│       └── site-packages
+│           ├── markdown_it -> /nix/store/valpxbdbxqfipngwwvchvgb72c6fgbph-markdown-it-py-3.0.0/lib/python3.12/site-packages/markdown_it
+│           ├── markdown_it_py-3.0.0.dist-info -> /nix/store/valpxbdbxqfipngwwvchvgb72c6fgbph-markdown-it-py-3.0.0/lib/python3.12/site-packages/markdown_it_py-3.0.0.dist-info
+│           ├── mdurl -> /nix/store/8rlb6ncrpd2jm99pimyk0kdd3gabl9s0-mdurl-0.1.2/lib/python3.12/site-packages/mdurl
+│           ├── mdurl-0.1.2.dist-info -> /nix/store/8rlb6ncrpd2jm99pimyk0kdd3gabl9s0-mdurl-0.1.2/lib/python3.12/site-packages/mdurl-0.1.2.dist-info
+│           ├── pygments -> /nix/store/h9qa6l2z9snr62gx15mj7k3kp7hpg13y-pygments-2.19.2/lib/python3.12/site-packages/pygments
+│           ├── pygments-2.19.2.dist-info -> /nix/store/h9qa6l2z9snr62gx15mj7k3kp7hpg13y-pygments-2.19.2/lib/python3.12/site-packages/pygments-2.19.2.dist-info
+│           ├── pysay -> /nix/store/0vmm6bfzc0h2q4qz3wqjzx1s1i2lw4b8-pysay/lib/python3.12/site-packages/pysay
+│           ├── pysay-0.0.0.dist-info -> /nix/store/0vmm6bfzc0h2q4qz3wqjzx1s1i2lw4b8-pysay/lib/python3.12/site-packages/pysay-0.0.0.dist-info
+│           ├── rich -> /nix/store/n7zscxli32nmb390470d0a58makl5p5c-rich-14.0.0/lib/python3.12/site-packages/rich
+│           └── rich-14.0.0.dist-info -> /nix/store/n7zscxli32nmb390470d0a58makl5p5c-rich-14.0.0/lib/python3.12/site-packages/rich-14.0.0.dist-info
+├── lib64 -> lib
+└── pyvenv.cfg
+
+18 directories, 11 files
+```
+
 ## Running
 
 ### uv
