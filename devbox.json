@@ -14,7 +14,8 @@
     "refurb":                      "latest",
     "python":                      "3.12",
     "python312Packages.hatch-vcs": "latest",
-    "hatch":                       "latest"
+    "hatch":                       "latest",
+    "docker-client":               "latest"
   },
   "env": {
     "UV_PYTHON":            "python3",
