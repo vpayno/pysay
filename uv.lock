@@ -471,7 +471,6 @@ dependencies = [
     { name = "pytest-randomly" },
     { name = "rich" },
     { name = "ruff" },
-    { name = "tomlq" },
 ]
 
 [package.dev-dependencies]
@@ -490,7 +489,7 @@ dev = [
     { name = "pytest-datafiles" },
     { name = "pytest-randomly" },
     { name = "ruff" },
-    { name = "tomlq" },
+    { name = "yq" },
 ]
 
 [package.metadata]
@@ -510,7 +509,6 @@ requires-dist = [
     { name = "pytest-randomly", specifier = ">=3.16.0" },
     { name = "rich", specifier = ">=14.0.0" },
     { name = "ruff", specifier = ">=0.12.1" },
-    { name = "tomlq", specifier = ">=0.1.0" },
 ]
 
 [package.metadata.requires-dev]
@@ -529,7 +527,7 @@ dev = [
     { name = "pytest-datafiles", specifier = ">=3.0.0" },
     { name = "pytest-randomly", specifier = ">=3.16.0" },
     { name = "ruff", specifier = ">=0.9.6" },
-    { name = "tomlq", specifier = ">=0.1.0" },
+    { name = "yq", specifier = ">=3.4.3" },
 ]
 
 [[package]]
@@ -711,18 +709,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/cc/18/0bbf3884e9eaa38819ebe46a7bd25dcd56b67434402b66a58c4b8e552575/tomlkit-0.13.3.tar.gz", hash = "sha256:430cf247ee57df2b94ee3fbe588e71d362a941ebb545dec29b53961d61add2a1", size = 185207, upload-time = "2025-06-05T07:13:44.947Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/bd/75/8539d011f6be8e29f339c42e633aae3cb73bffa95dd0f9adec09b9c58e85/tomlkit-0.13.3-py3-none-any.whl", hash = "sha256:c89c649d79ee40629a9fda55f8ace8c6a1b42deb912b2a8fd8d942ddadb606b0", size = 38901, upload-time = "2025-06-05T07:13:43.546Z" },
-]
-
-[[package]]
-name = "tomlq"
-version = "0.1.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "yq" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/9a/94/0f6009f5fd9693e142d21a860828c5861b1a726b3dbeb22a1aeedbd5d82c/tomlq-0.1.0.tar.gz", hash = "sha256:e775720e90da3e405142b9fe476145e71c0389f787b1ff9933f92a1704d8c6e7", size = 8317, upload-time = "2019-05-31T20:41:30.273Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/a7/08/a409df2a47dcb99a690b94b71eaf081eb24f1e0f0f8b70efa422828178fe/tomlq-0.1.0-py2.py3-none-any.whl", hash = "sha256:4b966fd999ed2bf69081b7c7f5caadbc4c9542d0ed5fcf2e9b7b4d8d7ada3c82", size = 3446, upload-time = "2019-05-31T20:41:28.173Z" },
 ]
 
 [[package]]

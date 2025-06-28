@@ -40,7 +40,6 @@ dependencies = [
     "pytest-randomly>=3.16.0",
     "rich>=14.0.0",
     "ruff>=0.12.1",
-    "tomlq>=0.1.0",
 ]
 
 [dependency-groups]
@@ -59,7 +58,7 @@ dev = [
   "pytest>=8.3.4",
   "ruff>=0.9.6",
   "poethepoet>=0.32.2",
-  "tomlq>=0.1.0",
+  "yq>=3.4.3",
 ]
 
 [build-system]
