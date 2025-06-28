@@ -52,6 +52,8 @@
 
       inherit (nixpkgs) lib;
 
+      inherit (pkgs.callPackages pyproject-nix.build.util { }) mkApplication;
+
       # Load a uv workspace from a workspace root.
       # Uv2nix treats all uv projects as workspace projects.
       workspace = uv2nix.lib.workspace.loadWorkspace { workspaceRoot = ./.; };
@@ -216,13 +218,21 @@
       #
       # Enable no optional dependencies for production build.
       packages.${system} = rec {
+        default = packages.${system}.pysayApp;
+
         pysay = pythonSet.mkVirtualEnv "${pname}-prod-env-${version}" workspace.deps.default // {
           inherit pname;
           inherit version;
           inherit name;
           meta = metadata;
         };
-        default = pysay;
+
+        pysayApp = mkApplication {
+          inherit pname;
+          inherit version;
+          venv = packages.${system}.pysay;
+          package = pythonSet.pysay;
+        };
 
         showUsage = pkgs.writeShellScriptBin "showUsage" ''
           printf "%s" "${usageMessage}"
