@@ -26,6 +26,10 @@
       url = "github:vpayno/nix-treefmt-conf";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nvim-conf = {
+      url = "github:vpayno/neovim-nix-nvf-conf";
+    };
   };
 
   outputs =
@@ -37,13 +41,14 @@
       pyproject-build-systems,
       treefmt-conf,
       ...
-    }:
+    }@inputs:
     let
       pname = "pysay";
       version = "0.5.10";
       name = "${pname}-${version}";
 
       system = "x86_64-linux";
+      arch = pkgs.lib.trim (builtins.toString (builtins.split "-linux$" system));
 
       inherit (nixpkgs) lib;
 
@@ -394,7 +399,7 @@
             imageDigest = "sha256:1e622c5f073b4f6bfad6632f2616c7f59ef256e96fe78bf6a595d1dc4376ac02";
             sha256 = "sha256-UhZaL7KJLeTDzbkfgKawAHEoQ6JtwLrV4OG0GHfpRMg=";
             os = "linux";
-            arch = "${system}";
+            arch = "${arch}";
           };
 
           # doesn't have access to most of the layer contents, this creates the top-most layer
@@ -439,6 +444,17 @@
                 "ENTRYPOINT=${entrypoint}"
               ];
             };
+        };
+
+        devcontainer = pkgs.dockerTools.buildNixShellImage {
+          name = "devcontainer-nixshell-${pname}";
+          tag = "${version}-${arch}";
+
+          drv = self.devShells.${system}.uv2nix.overrideAttrs (oldAttrs: {
+            packages = oldAttrs.packages or [ ] ++ [
+              inputs.nvim-conf.packages.${system}.default # lol, adds 10GB
+            ];
+          });
         };
       };
 
@@ -590,7 +606,7 @@
               # Use environment variable
               root = "$REPO_ROOT";
               # Optional: Only enable editable for these packages
-              # members = [ "pysay" ];
+              members = [ "pysay" ];
             };
 
             # Override previous set with our overrideable overlay.

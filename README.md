@@ -339,6 +339,35 @@ direnv: which environment would you like to use?
 ←↓↑→ navigate • enter submit
 ```
 
+### Dev Container
+
+Using Nix to build a devcontainer. Adding a full featured editor made it 10GB so
+probably better off just using `devbox shell` or `nix develop`.
+
+A nix build dev-container probably makes sense on Darwin where software like
+Ceph won't compile and we need to use `orbstack`/`docker desktop` to run Linux
+containers.
+
+Build:
+
+```bash
+nix build .#devcontainer && docker load < result
+```
+
+Image:
+
+```text
+$ docker image ls devcontainer-nixshell-pysay:0.5.10-x86_64
+REPOSITORY                    TAG             IMAGE ID       CREATED        SIZE
+devcontainer-nixshell-pysay   0.5.10-x86_64   c1c5f1b1f4af   55 years ago   13.1GB
+```
+
+Run:
+
+```bash
+docker run -it --rm -v "${PWD}:/build" devcontainer-nixshell-pysay:0.5.10-x86_64
+```
+
 ## Running
 
 ### uv
