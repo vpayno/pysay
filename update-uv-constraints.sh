@@ -51,7 +51,7 @@ for old_dep in "${dev_deps[@]}"; do
 	[[ -z ${new_dep} ]] && continue
 
 	echo uv add --dev "${new_dep}"
-	uv add " --dev ${new_dep}"
+	uv add --dev "${new_dep}"
 	printf "\n"
 done
 
