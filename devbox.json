@@ -29,7 +29,7 @@
       "[ -d ${VENV_DIR} ] || uv venv",
       "[ -d ${VENV_DIR} ] && . ${VENV_DIR}/bin/activate",
       "uv sync",
-      "pip() { uv pip \"$@\"; }",
+      "pip() { exec uv pip \"$@\"; }",
       "cowsay \"Welcome to $(hatch project metadata | jq -r '. | \"\\(.name)-\\(.version)\"')'s devbox shell!\""
     ],
     "scripts": {
