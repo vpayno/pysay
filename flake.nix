@@ -220,15 +220,153 @@
           printf "%s version: %s\n" "${pname}" "${version}"
         '';
 
-        updateLocksUV = pkgs.writeShellScriptBin "update-locks-uv" ''
-          ${pkgs.coreutils}/bin/printf "Updating version in uv.lock...\n"
-          ${pkgs.lib.getExe pkgs.uv} run poe update
-          ${pkgs.coreutils}/bin/printf "done."
-          ${pkgs.coreutils}/bin/printf "\n"
-          ${pkgs.coreutils}/bin/printf "Outdated packages."
-          ${pkgs.lib.getExe pkgs.uv} run poe outdated
-          ${pkgs.coreutils}/bin/printf "done."
-        '';
+        updateUvConstraints = pkgs.writeShellApplication {
+          name = "update-uv-constraints";
+
+          runtimeInputs = with pkgs; [
+            coreutils
+            gnused
+            uv
+          ];
+
+          text = ''
+            is_git_dirty() {
+              git diff-files --quiet || return 0
+
+              return 1
+            }
+
+            is_git_staged() {
+              git diff-index --quiet --cached HEAD -- || return 0
+
+              return 1
+            }
+
+            if is_git_dirty || is_git_staged; then
+              printf "ERROR: Please commit or stash your changes before running this script.\n"
+              exit 1
+            fi
+
+            printf "INFO: Updating pyproject.toml dependancy constraints.\n"
+            printf "\n"
+
+            # $ uv run tomlq -r ".project.dependencies[]" pyproject.toml
+            # requests>=2.31.0
+
+            # $ uv run tomlq -r '.["dependency-groups"].dev[]' pyproject.toml
+            # bandit>=1.7.8
+
+            declare -a main_deps
+            mapfile -t main_deps < <(uv run tomlq -r ".project.dependencies[]" pyproject.toml | sed -r -e 's/(^[-_a-zA-Z0-9]*)[>=<]+.*/\1/g' | sort)
+
+            declare -a dev_deps
+            mapfile -t dev_deps < <(uv run tomlq -r '.["dependency-groups"].dev[]' pyproject.toml | sed -r -e 's/(^[-_a-zA-Z0-9]*)[>=<]+.*/\1/g' | sort)
+
+            declare freeze_data
+            freeze_data="$(uv pip freeze)"
+
+            declare old_dep
+            declare new_dep
+
+            for old_dep in "''${main_deps[@]}"; do
+              new_dep="$(grep -E "^''${old_dep}[>=<]" <<<"''${freeze_data}" | sed -r -e 's/==/>=/g')"
+
+              [[ -z ''${new_dep} ]] && continue
+
+              echo uv add "''${new_dep}"
+              uv add "''${new_dep}"
+              printf "\n"
+            done
+
+            for old_dep in "''${dev_deps[@]}"; do
+              new_dep="$(grep -E "^''${old_dep}[>=<]" <<<"''${freeze_data}" | sed -r -e 's/==/>=/g')"
+
+              [[ -z ''${new_dep} ]] && continue
+
+              echo uv add --dev "''${new_dep}"
+              uv add --dev "''${new_dep}"
+              printf "\n"
+            done
+
+            if is_git_dirty; then
+              git add pyproject.toml uv.lock
+              printf "\n"
+
+              git commit -m "uv: update minimum dependency version constraints"
+              printf "\n"
+
+              git show --name-only
+              printf "\n"
+            else
+              printf "No updates.\n"
+            fi
+          '';
+        };
+
+        updateProjectLocks = pkgs.writeShellApplication {
+          name = "update-project-locks";
+
+          runtimeInputs =
+            with pkgs;
+            [
+              coreutils
+              devbox
+              uv
+            ]
+            ++ (with scripts; [
+              updateUvConstraints
+            ]);
+
+          text = ''
+            is_git_clean() {
+              local -i retval=0
+
+              if ! git diff-files --quiet; then
+                (( retval += 1 ))
+              fi
+
+              if ! git diff-index --quiet --cached HEAD --; then
+                (( retval +=1 ))
+              fi
+
+              return ''${retval}
+            }
+
+            if ! is_git_clean; then
+              printf "ERROR: Please commit or stash your changes before running this script.\n"
+              exit 1
+            fi
+
+            uv run poe outdated
+            printf "\n"
+
+            if [[ -f devbox.json ]]; then
+              printf "INFO: Updating devbox locks...\n"
+              devbox update
+              git add ./devbox.lock
+              git commit -m 'devbox: lock update'
+              printf "\n"
+            fi
+
+            printf "INFO: Updating nix flake locks...\n"
+            nix flake update
+            git add ./flake.lock
+            git commit -m 'nix: lock update'
+            printf "\n"
+
+            printf "INFO: Updating UV locks...\n"
+            uv lock --upgrade
+            git add ./uv.lock
+            git commit -m 'uv: lock update'
+            printf "\n"
+
+            update-uv-constraints
+            printf "\n"
+
+            uv run poe outdated
+            printf "\n"
+          '';
+        };
 
         dockerCiCheck = pkgs.writeShellScriptBin "dockerCiCheck" ''
           printf "%s version: %s\n" "docker" "$("${pkgs.docker}/bin/docker" --version)"
@@ -515,12 +653,12 @@
           meta = metadata;
         };
 
-        updateLocksUV = {
+        updateProjectLocks = {
           type = "app";
-          name = "update-locks-uv";
+          name = "updateProjectLocks";
           pname = "${name}-${version}";
           inherit version;
-          program = "${pkgs.lib.getExe scripts.updateLocksUV}";
+          program = "${pkgs.lib.getExe scripts.updateProjectLocks}";
           meta = metadata;
         };
 
