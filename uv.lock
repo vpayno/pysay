@@ -724,7 +724,7 @@ dev = [
     { name = "bandit", specifier = ">=1.8.6" },
     { name = "isort", specifier = ">=6.0.1" },
     { name = "mkdocs", specifier = ">=1.6.1" },
-    { name = "mypy", specifier = ">=1.16.1" },
+    { name = "mypy", specifier = ">=1.17.0" },
     { name = "mypy-extensions", specifier = ">=1.1.0" },
     { name = "pdoc3", specifier = ">=0.11.6" },
     { name = "pip-audit", specifier = ">=2.9.0" },
@@ -735,7 +735,7 @@ dev = [
     { name = "pytest-cov", specifier = ">=6.2.1" },
     { name = "pytest-datafiles", specifier = ">=3.0.0" },
     { name = "pytest-randomly", specifier = ">=3.16.0" },
-    { name = "ruff", specifier = ">=0.12.2" },
+    { name = "ruff", specifier = ">=0.12.3" },
     { name = "yq", specifier = ">=3.4.3" },
 ]
 
