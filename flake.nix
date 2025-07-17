@@ -210,42 +210,8 @@
           # Enable showing all changes from this layer and every previous layer
           show-aggregated-changes: false
       '';
-    in
-    rec {
-      formatter.${system} = treefmt-conf.formatter.${system};
 
-      # Package a virtual environment as our main application.
-      #
-      # Enable no optional dependencies for production build.
-      packages.${system} = rec {
-        default = packages.${system}.pysayApp;
-
-        pysay = pythonSet.mkVirtualEnv "${pname}-prod-env-${version}" workspace.deps.default // {
-          inherit pname;
-          inherit version;
-          inherit name;
-          meta = metadata;
-        };
-
-        pysayApp = mkApplication {
-          inherit pname;
-          inherit version;
-          venv = packages.${system}.pysay;
-          package = pythonSet.pysay;
-        };
-
-        pysayWheel = pythonSet.pysay.override {
-          pyprojectHook = pythonSet.pyprojectDistHook;
-        };
-
-        pysaySdist =
-          (pythonSet.pysay.override {
-            pyprojectHook = pythonSet.pyprojectDistHook;
-          }).overrideAttrs
-            (old: {
-              env.uvBuildType = "sdist";
-            });
-
+      scripts = {
         showUsage = pkgs.writeShellScriptBin "showUsage" ''
           printf "%s" "${usageMessage}"
         '';
@@ -342,6 +308,42 @@
 
           "${pkgs.lib.getExe pkgs.docker-client}" run --rm -it "docker-image-nixos-${pname}:${version}" "''${@}"
         '';
+      };
+    in
+    rec {
+      formatter.${system} = treefmt-conf.formatter.${system};
+
+      # Package a virtual environment as our main application.
+      #
+      # Enable no optional dependencies for production build.
+      packages.${system} = rec {
+        default = packages.${system}.pysayApp;
+
+        pysay = pythonSet.mkVirtualEnv "${pname}-prod-env-${version}" workspace.deps.default // {
+          inherit pname;
+          inherit version;
+          inherit name;
+          meta = metadata;
+        };
+
+        pysayApp = mkApplication {
+          inherit pname;
+          inherit version;
+          venv = packages.${system}.pysay;
+          package = pythonSet.pysay;
+        };
+
+        pysayWheel = pythonSet.pysay.override {
+          pyprojectHook = pythonSet.pyprojectDistHook;
+        };
+
+        pysaySdist =
+          (pythonSet.pysay.override {
+            pyprojectHook = pythonSet.pyprojectDistHook;
+          }).overrideAttrs
+            (old: {
+              env.uvBuildType = "sdist";
+            });
 
         dockerImageNixos = dockerImageNixosBuild;
 
@@ -500,7 +502,7 @@
           pname = "usage";
           name = "${pname}-${version}";
           inherit version;
-          program = "${pkgs.lib.getExe packages.${system}.showUsage}";
+          program = "${pkgs.lib.getExe scripts.showUsage}";
           meta = metadata;
         };
 
@@ -509,7 +511,7 @@
           name = "version";
           pname = "${name}-${version}";
           inherit version;
-          program = "${pkgs.lib.getExe packages.${system}.showVersion}";
+          program = "${pkgs.lib.getExe scripts.showVersion}";
           meta = metadata;
         };
 
@@ -518,7 +520,7 @@
           name = "update-locks-uv";
           pname = "${name}-${version}";
           inherit version;
-          program = "${pkgs.lib.getExe packages.${system}.updateLocksUV}";
+          program = "${pkgs.lib.getExe scripts.updateLocksUV}";
           meta = metadata;
         };
 
@@ -527,7 +529,7 @@
           name = "dockerCiCheck";
           pname = "${name}-${version}";
           inherit version;
-          program = "${pkgs.lib.getExe packages.${system}.dockerCiCheck}";
+          program = "${pkgs.lib.getExe scripts.dockerCiCheck}";
           meta = metadata;
         };
 
@@ -536,7 +538,7 @@
           name = "dive";
           pname = "${name}-${version}";
           inherit version;
-          program = "${pkgs.lib.getExe packages.${system}.dive}";
+          program = "${pkgs.lib.getExe scripts.dive}";
           meta = metadata;
         };
 
@@ -545,7 +547,7 @@
           name = "dockerRun";
           pname = "${name}-${version}";
           inherit version;
-          program = "${pkgs.lib.getExe packages.${system}.dockerRun}";
+          program = "${pkgs.lib.getExe scripts.dockerRun}";
           meta = metadata;
         };
       };
