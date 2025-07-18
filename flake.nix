@@ -115,105 +115,107 @@
         mainProgram = "pysay";
       };
 
-      usageMessage = ''
-        Available ${name} flake commands:
+      data = {
+        usageMessage = ''
+          Available ${name} flake commands:
 
-          nix run .#usage
-          nix run .#tag-release v1.2.3 'release notes'
+            nix run .#usage
+            nix run .#tag-release v1.2.3 'release notes'
 
-          nix run . -- "message"
-            nix run .#default -- "message"
-            nix run .#pysay -- "message"
+            nix run . -- "message"
+              nix run .#default -- "message"
+              nix run .#pysay -- "message"
 
-          nix run .#dive
-          nix run .#dockerCiCheck
-          nix run .#dockerRun -- "message"
+            nix run .#dive
+            nix run .#dockerCiCheck
+            nix run .#dockerRun -- "message"
 
-          nix profile install github:vpayno/pysay
-      '';
+            nix profile install github:vpayno/pysay
+        '';
 
-      diveCiConfigFile = pkgs.writeText ".dive-ci.yaml" ''
-        ---
-        rules:
-          # If the efficiency is measured below X%, mark as failed.
-          # Expressed as a ratio between 0-1.
-          lowestEfficiency: 0.95
+        diveCiConfigFile = pkgs.writeText ".dive-ci.yaml" ''
+          ---
+          rules:
+            # If the efficiency is measured below X%, mark as failed.
+            # Expressed as a ratio between 0-1.
+            lowestEfficiency: 0.95
 
-          # If the amount of wasted space is at least X or larger than X, mark as failed.
-          # Expressed in B, KB, MB, and GB.
-          highestWastedBytes: 20MB
+            # If the amount of wasted space is at least X or larger than X, mark as failed.
+            # Expressed in B, KB, MB, and GB.
+            highestWastedBytes: 20MB
 
-          # If the amount of wasted space makes up for X% or more of the image, mark as failed.
-          # Note: the base image layer is NOT included in the total image size.
-          # Expressed as a ratio between 0-1; fails if the threshold is met or crossed.
-          highestUserWastedPercent: 0.20
-      '';
+            # If the amount of wasted space makes up for X% or more of the image, mark as failed.
+            # Note: the base image layer is NOT included in the total image size.
+            # Expressed as a ratio between 0-1; fails if the threshold is met or crossed.
+            highestUserWastedPercent: 0.20
+        '';
 
-      diveUiConfigFile = pkgs.writeText ".dive-ui.yaml" ''
-        ---
-        # supported options are "docker" and "podman"
-        container-engine: docker
-        # continue with analysis even if there are errors parsing the image archive
-        ignore-errors: false
-        log:
-          enabled: true
-          path: ./dive.log
-          level: info
+        diveUiConfigFile = pkgs.writeText ".dive-ui.yaml" ''
+          ---
+          # supported options are "docker" and "podman"
+          container-engine: docker
+          # continue with analysis even if there are errors parsing the image archive
+          ignore-errors: false
+          log:
+            enabled: true
+            path: ./dive.log
+            level: info
 
-        # Note: you can specify multiple bindings by separating values with a comma.
-        # Note: UI hinting is derived from the first binding
-        keybinding:
-          # Global bindings
-          quit: ctrl+c
-          toggle-view: tab
-          filter-files: ctrl+f, ctrl+slash
-          close-filter-files: esc
-          up: up,k
-          down: down,j
-          left: left,h
-          right: right,l
+          # Note: you can specify multiple bindings by separating values with a comma.
+          # Note: UI hinting is derived from the first binding
+          keybinding:
+            # Global bindings
+            quit: ctrl+c
+            toggle-view: tab
+            filter-files: ctrl+f, ctrl+slash
+            close-filter-files: esc
+            up: up,k
+            down: down,j
+            left: left,h
+            right: right,l
 
-          # Layer view specific bindings
-          compare-all: ctrl+a
-          compare-layer: ctrl+l
+            # Layer view specific bindings
+            compare-all: ctrl+a
+            compare-layer: ctrl+l
 
-          # File view specific bindings
-          toggle-collapse-dir: space
-          toggle-collapse-all-dir: ctrl+space
-          toggle-added-files: ctrl+a
-          toggle-removed-files: ctrl+r
-          toggle-modified-files: ctrl+m
-          toggle-unmodified-files: ctrl+u
-          toggle-filetree-attributes: ctrl+b
-          page-up: pgup,u
-          page-down: pgdn,d
+            # File view specific bindings
+            toggle-collapse-dir: space
+            toggle-collapse-all-dir: ctrl+space
+            toggle-added-files: ctrl+a
+            toggle-removed-files: ctrl+r
+            toggle-modified-files: ctrl+m
+            toggle-unmodified-files: ctrl+u
+            toggle-filetree-attributes: ctrl+b
+            page-up: pgup,u
+            page-down: pgdn,d
 
-        diff:
-          # You can change the default files shown in the filetree (right pane). All diff types are shown by default.
-          hide:
-            # - added
-            # - removed
-            # - modified
-            - unmodified
+          diff:
+            # You can change the default files shown in the filetree (right pane). All diff types are shown by default.
+            hide:
+              # - added
+              # - removed
+              # - modified
+              - unmodified
 
-        filetree:
-          # The default directory-collapse state
-          collapse-dir: false
+          filetree:
+            # The default directory-collapse state
+            collapse-dir: false
 
-          # The percentage of screen width the filetree should take on the screen (must be >0 and <1)
-          pane-width: 0.5
+            # The percentage of screen width the filetree should take on the screen (must be >0 and <1)
+            pane-width: 0.5
 
-          # Show the file attributes next to the filetree
-          show-attributes: true
+            # Show the file attributes next to the filetree
+            show-attributes: true
 
-        layer:
-          # Enable showing all changes from this layer and every previous layer
-          show-aggregated-changes: false
-      '';
+          layer:
+            # Enable showing all changes from this layer and every previous layer
+            show-aggregated-changes: false
+        '';
+      };
 
       scripts = {
         showUsage = pkgs.writeShellScriptBin "showUsage" ''
-          printf "%s" "${usageMessage}"
+          printf "%s" "${data.usageMessage}"
         '';
 
         showVersion = pkgs.writeShellScriptBin "showVersion" ''
@@ -379,8 +381,8 @@
             printf "\n"
           fi
 
-          printf "Using CI config file: %s\n" "${diveCiConfigFile}"
-          cat "${diveCiConfigFile}"
+          printf "Using CI config file: %s\n" "${data.diveCiConfigFile}"
+          cat "${data.diveCiConfigFile}"
           printf "\n"
 
           image_file="${self.packages.${system}.dockerImageNixos}"
@@ -395,7 +397,7 @@
           "${pkgs.lib.getExe pkgs.docker-client}" load < "$image_file"
           printf "\n"
 
-          "${pkgs.lib.getExe pkgs.dive}" docker-image-nixos-pysay:${version} --ci --ci-config="${diveCiConfigFile}"
+          "${pkgs.lib.getExe pkgs.dive}" docker-image-nixos-pysay:${version} --ci --ci-config="${data.diveCiConfigFile}"
         '';
 
         dive = pkgs.writeShellScriptBin "dive" ''
@@ -405,7 +407,7 @@
             printf "\n"
           fi
 
-          printf "Using UI config file: %s\n" "${diveUiConfigFile}"
+          printf "Using UI config file: %s\n" "${data.diveUiConfigFile}"
           printf "\n"
 
           image_file="${self.packages.x86_64-linux.dockerImageNixos}"
@@ -420,7 +422,7 @@
           "${pkgs.lib.getExe pkgs.docker-client}" load < "$image_file"
           printf "\n"
 
-          "${pkgs.lib.getExe pkgs.dive}" --config="${diveUiConfigFile}" ''${@:-docker-image-nixos-pysay:${version}}
+          "${pkgs.lib.getExe pkgs.dive}" --config="${data.diveUiConfigFile}" ''${@:-docker-image-nixos-pysay:${version}}
         '';
 
         dockerRun = pkgs.writeShellScriptBin "dockerRun" ''
