@@ -2,6 +2,87 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.11] - 2025-07-18
+
+### Nix
+
+- *(docker)* Add ubuntu docker image
+- Add names to devShells
+- Update locks
+- Add uv lock update app
+- Switch default devShell to impure
+- Update updateLocksUV script
+- Update locks
+- Update locks
+- Update locks
+- *(devshell)* Experimenting with isolated PATH
+- *(docker)* Add dockerImageNixosStreamed and other clean up
+- Update locks
+- *(docker)* Add devcontainer package
+- *(packages)* Use mkApplication to create a single file python application
+- *(packages)* Add wheel and sdist outputs (broken)
+- Update locks
+- Move scripts from packages to scripts attribute set
+- *(apps)* Add project lock update script
+- Lock update
+- Move data to data attribute set
+
+### Other
+
+- *(nix)* Setup devShell autoloading
+- Add runme play to setup devbox shell use
+- Add runme plays for allowing and disallowing direnv use
+- Use gum to select between nix develop and devbox shell
+- Add runme play for configuring direnv
+- Update locks
+- Update locks
+- Add cowsay prompt to hook
+- Use .#impure instead of .#uv2nix
+- Always use "uv pip" instead of "pip"
+- Add lock update task
+- Set devbox as the default shell
+- Update locks
+- .envrc file that automatically populates devshell options
+- Fixes/improvements
+- Rename abort option to skip
+- Update .envrc to v20250524.0.0
+- Update locks
+- Update .envrc to v20250524.0.0
+- Set devbox shell as the default option
+- Updaet locks
+- Add tomlq dev dependency
+- Update minimum application dependency version constraints
+- Update dependency locks
+- Update minimum dependency version constraints
+- Update update_locks script
+- Remove tomlq dev dependency that conflicts with yq
+- Add docker-client to shell
+- Add pip-audit dev dependency
+- Add poe command for running audit commands
+- Fix constraint script bug which added dev deps as prod deps
+- *(scripts)* Fix pip() in shell hook
+- Update locks
+- Update dependency locks
+- Update minimum dependency version constraints
+- Lock update
+- Lock update
+- Update minimum dependency version constraints
+
+### Documentation
+
+- *(security)* Add notes on how to use vulnix
+- *(direnv)* Update .envrc menu example
+- Add notes on wheel and uv2nix app releases
+
+### Miscellaneous Tasks
+
+- *(style)* Update .editorconfig file
+- *(tools)* Add pyproject.toml constraint update script
+- *(tools)* Add uv.lock update script
+- *(tools)* Add flake lock update script
+- *(tools)* Add devbox lock update script
+- *(tools)* Fix typo in update-uv-constraints.sh
+
 ## [0.5.10] - 2025-04-13
 
 ### Nix
