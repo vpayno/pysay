@@ -366,22 +366,34 @@
 
             printf "INFO: Updating nix flake locks...\n"
             nix flake update
-            git add ./flake.lock
-            git commit -m 'nix: lock update'
+            if ! git diff --quiet ./flake.lock; then # command fails when file is dirty
+              git add ./flake.lock
+              git commit -m 'nix: lock update'
+            else
+              printf "WARN: no nix flake updates found.\n"
+            fi
             printf "\n"
 
             if [[ -f devbox.json ]]; then
               printf "INFO: Updating devbox locks...\n"
               devbox update
-              git add ./devbox.lock
-              git commit -m 'devbox: lock update'
+              if ! git diff --quiet ./devbox.lock; then # command fails when file is dirty
+                git add ./devbox.lock
+                git commit -m 'devbox: lock update'
+              else
+                printf "WARN: no devbox updates found.\n"
+              fi
               printf "\n"
             fi
 
             printf "INFO: Updating UV locks...\n"
             uv lock --upgrade
-            git add ./uv.lock
-            git commit -m 'uv: lock update'
+            if ! git diff --quiet ./uv.lock; then # command fails when file is dirty
+              git add ./uv.lock
+              git commit -m 'uv: lock update'
+            else
+              printf "WARN: no UV updates found.\n"
+            fi
             printf "\n"
 
             update-uv-constraints
