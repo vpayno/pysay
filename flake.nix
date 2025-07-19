@@ -356,7 +356,12 @@
               exit 1
             fi
 
-            uv run poe outdated
+            printf "INFO: Checking for outdated python packages before lock update...\n"
+            uv run poe outdated || true
+            printf "\n"
+
+            printf "INFO: Checking for python package CVEs before lock update...\n"
+            uv run poe audit || true
             printf "\n"
 
             printf "INFO: Updating nix flake locks...\n"
@@ -382,7 +387,12 @@
             update-uv-constraints
             printf "\n"
 
-            uv run poe outdated
+            printf "INFO: Checking for outdated python packages after lock update...\n"
+            uv run poe outdated || true
+            printf "\n"
+
+            printf "INFO: Checking for python package CVEs after lock update...\n"
+            uv run poe audit || true
             printf "\n"
           '';
         };
