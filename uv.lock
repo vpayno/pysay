@@ -735,7 +735,7 @@ dev = [
     { name = "pytest-cov", specifier = ">=6.2.1" },
     { name = "pytest-datafiles", specifier = ">=3.0.0" },
     { name = "pytest-randomly", specifier = ">=3.16.0" },
-    { name = "ruff", specifier = ">=0.12.3" },
+    { name = "ruff", specifier = ">=0.12.4" },
     { name = "yq", specifier = ">=3.4.3" },
 ]
 
