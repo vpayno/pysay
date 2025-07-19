@@ -359,6 +359,12 @@
             uv run poe outdated
             printf "\n"
 
+            printf "INFO: Updating nix flake locks...\n"
+            nix flake update
+            git add ./flake.lock
+            git commit -m 'nix: lock update'
+            printf "\n"
+
             if [[ -f devbox.json ]]; then
               printf "INFO: Updating devbox locks...\n"
               devbox update
@@ -366,12 +372,6 @@
               git commit -m 'devbox: lock update'
               printf "\n"
             fi
-
-            printf "INFO: Updating nix flake locks...\n"
-            nix flake update
-            git add ./flake.lock
-            git commit -m 'nix: lock update'
-            printf "\n"
 
             printf "INFO: Updating UV locks...\n"
             uv lock --upgrade
