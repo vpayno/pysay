@@ -825,54 +825,6 @@
           "store_path": "/nix/store/xdyaq6cckinpnk9vqy1sjkbshxas0iwc-tig-2.5.12"
         }
       }
-    },
-    "uv@latest": {
-      "last_modified": "2025-07-13T22:45:35Z",
-      "resolved": "github:NixOS/nixpkgs/a421ac6595024edcfbb1ef950a3712b89161c359#uv",
-      "source": "devbox-search",
-      "version": "0.7.20",
-      "systems": {
-        "aarch64-darwin": {
-          "outputs": [
-            {
-              "name": "out",
-              "path": "/nix/store/8ci0rsgacxbxyir7mwknjdc8pi6rmp9z-uv-0.7.20",
-              "default": true
-            }
-          ],
-          "store_path": "/nix/store/8ci0rsgacxbxyir7mwknjdc8pi6rmp9z-uv-0.7.20"
-        },
-        "aarch64-linux": {
-          "outputs": [
-            {
-              "name": "out",
-              "path": "/nix/store/bi9hwz1fddjp005qnhkvr9qx92pssjpq-uv-0.7.20",
-              "default": true
-            }
-          ],
-          "store_path": "/nix/store/bi9hwz1fddjp005qnhkvr9qx92pssjpq-uv-0.7.20"
-        },
-        "x86_64-darwin": {
-          "outputs": [
-            {
-              "name": "out",
-              "path": "/nix/store/g6cb2jsk1hg056nbngk0pxa87dkm2634-uv-0.7.20",
-              "default": true
-            }
-          ],
-          "store_path": "/nix/store/g6cb2jsk1hg056nbngk0pxa87dkm2634-uv-0.7.20"
-        },
-        "x86_64-linux": {
-          "outputs": [
-            {
-              "name": "out",
-              "path": "/nix/store/i17kw12rrlgn8fp6hxw73lqi0jdcwmbs-uv-0.7.20",
-              "default": true
-            }
-          ],
-          "store_path": "/nix/store/i17kw12rrlgn8fp6hxw73lqi0jdcwmbs-uv-0.7.20"
-        }
-      }
     }
   }
 }

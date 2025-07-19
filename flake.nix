@@ -54,6 +54,14 @@
 
       inherit (pkgs.callPackages pyproject-nix.build.util { }) mkApplication;
 
+      # we need to make sure we're always using the same uv version as uv2nix
+      uv-bin = uv2nix.outputs.packages.${system}.uv-bin;
+
+      nixpkgsOverlay = self: super: {
+        uv-upstream = super.uv;
+        uv = uv-bin;
+      };
+
       # Load a uv workspace from a workspace root.
       # Uv2nix treats all uv projects as workspace projects.
       workspace = uv2nix.lib.workspace.loadWorkspace { workspaceRoot = ./.; };
@@ -82,7 +90,16 @@
         # It's using https://pyproject-nix.github.io/pyproject.nix/build.html
       };
 
-      pkgs = nixpkgs.legacyPackages.${system};
+      # pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = import nixpkgs {
+        inherit system;
+        config = {
+          allowUnfree = true;
+        };
+        overlay = [
+          nixpkgsOverlay
+        ];
+      };
 
       # Use Python 3.12 from nixpkgs
       python = pkgs.python312;
@@ -457,6 +474,8 @@
       #
       # Enable no optional dependencies for production build.
       packages.${system} = rec {
+        uv = uv-bin; # provide the uv version the flake uses to devbox
+
         default = packages.${system}.pysayApp;
 
         pysay = pythonSet.mkVirtualEnv "${pname}-prod-env-${version}" workspace.deps.default // {
@@ -481,7 +500,7 @@
           (pythonSet.pysay.override {
             pyprojectHook = pythonSet.pyprojectDistHook;
           }).overrideAttrs
-            (old: {
+            (oldAttrs: {
               env.uvBuildType = "sdist";
             });
 

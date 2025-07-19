@@ -5,7 +5,6 @@
     "bashInteractive":             "latest",
     "coreutils":                   "latest",
     "moreutils":                   "latest",
-    "uv":                          "latest",
     "git":                         "latest",
     "tig":                         "latest",
     "glow":                        "latest",
@@ -15,7 +14,8 @@
     "python":                      "3.12",
     "python312Packages.hatch-vcs": "latest",
     "hatch":                       "latest",
-    "docker-client":               "latest"
+    "docker-client":               "latest",
+    ".#uv":                        ""
   },
   "env": {
     "UV_PYTHON":            "python3",
