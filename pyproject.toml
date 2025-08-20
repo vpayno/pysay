@@ -5,7 +5,8 @@ authors = [{ name = "Victor Payno", email = "vpayno@users.noreply.github.com" }]
 maintainers = [
   { name = "Victor Payno", email = "vpayno@users.noreply.github.com" },
 ]
-dynamic = ["version"]
+dynamic = []
+version = "0.5.11"
 requires-python = ">=3.12"
 readme = "README.md"
 license = "MIT"
