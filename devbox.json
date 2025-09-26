@@ -51,10 +51,7 @@
         "uv run poe test"
       ],
       "update_locks": [
-        "./update-devbox-locks.sh",
-        "./update-flake-locks.sh",
-        "./update-uv-locks.sh",
-        "./update-uv-constraints.sh"
+        "nix run .#updateProjectLocks"
       ]
     }
   }
