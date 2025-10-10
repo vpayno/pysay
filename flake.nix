@@ -489,16 +489,16 @@
         '';
       };
     in
-    rec {
+    {
       formatter.${system} = treefmt-conf.formatter.${system};
 
       # Package a virtual environment as our main application.
       #
       # Enable no optional dependencies for production build.
-      packages.${system} = rec {
+      packages.${system} = {
         uv = uv-bin; # provide the uv version the flake uses to devbox
 
-        default = packages.${system}.pysayApp;
+        default = self.packages.${system}.pysayApp;
 
         pysay = pythonSet.mkVirtualEnv "${pname}-prod-env-${version}" workspace.deps.default // {
           inherit pname;
@@ -510,7 +510,7 @@
         pysayApp = mkApplication {
           inherit pname;
           inherit version;
-          venv = packages.${system}.pysay;
+          venv = self.packages.${system}.pysay;
           package = pythonSet.pysay;
         };
 
@@ -526,7 +526,7 @@
               env.uvBuildType = "sdist";
             });
 
-        dockerImageNixos = dockerImageNixosBuild;
+        dockerImageNixos = self.packages.${system}.dockerImageNixosBuild;
 
         dockerImageNixosBuild = pkgs.dockerTools.buildLayeredImage {
           name = "docker-image-nixos-${pname}";
@@ -664,10 +664,10 @@
       };
 
       # Make pysay runnable with `nix run`
-      apps.${system} = rec {
+      apps.${system} = {
         inherit (treefmt-conf.apps.${system}) tag-release;
 
-        default = pysay;
+        default = self.apps.${system}.pysay;
 
         pysay = {
           type = "app";
@@ -736,12 +736,12 @@
       # This example provides two different modes of development:
       # - Impurely using uv to manage virtual environments
       # - Pure development using uv2nix to manage virtual environments
-      devShells.${system} = rec {
-        default = impure; # don't use uv2nix as a "traditional" development environment
+      devShells.${system} = {
+        default = self.devShells.${system}.impure; # don't use uv2nix as a "traditional" development environment
 
         # It is of course perfectly OK to keep using an impure virtualenv workflow and only use uv2nix to build packages.
         # This devShell simply adds Python and undoes the dependency leakage done by Nixpkgs Python infrastructure.
-        impure = pkgs.mkShell rec {
+        impure = pkgs.mkShell {
           name = "devShell.impure";
           packages = [
             python
@@ -750,24 +750,22 @@
             pkgs.git
             pkgs.bashInteractive
           ];
-          env =
-            {
-              # Prevent uv from managing Python downloads
-              UV_PYTHON_DOWNLOADS = "never";
+          env = {
+            # Prevent uv from managing Python downloads
+            UV_PYTHON_DOWNLOADS = "never";
 
-              # Force uv to use nixpkgs Python interpreter
-              UV_PYTHON = python.interpreter;
-
-            }
-            // lib.optionalAttrs pkgs.stdenv.isLinux {
-              # Python libraries often load native shared objects using dlopen(3).
-              # Setting LD_LIBRARY_PATH makes the dynamic library loader aware of libraries without using RPATH for lookup.
-              # LD_LIBRARY_PATH = lib.makeLibraryPath pkgs.pythonManylinuxPackages.manylinux1;
-            };
+            # Force uv to use nixpkgs Python interpreter
+            UV_PYTHON = python.interpreter;
+          }
+          // lib.optionalAttrs pkgs.stdenv.isLinux {
+            # Python libraries often load native shared objects using dlopen(3).
+            # Setting LD_LIBRARY_PATH makes the dynamic library loader aware of libraries without using RPATH for lookup.
+            # LD_LIBRARY_PATH = lib.makeLibraryPath pkgs.pythonManylinuxPackages.manylinux1;
+          };
           shellHook = ''
             export PATH="$PATH:${
               pkgs.lib.makeBinPath (
-                packages
+                self.packages.${system}
                 ++ (with pkgs; [
                   binutils
                   coreutils-full
@@ -784,7 +782,9 @@
             }"
             unset PYTHONPATH
 
-            ${pkgs.lib.getExe pkgs.cowsay} "Welcome to ${name}'s ${impure.name} devShell!"
+            ${pkgs.lib.getExe pkgs.cowsay} "Welcome to ${name}'s ${
+              self.devShells.${system}.impure.name
+            } devShell!"
             printf "\n"
             which python uv
             printf "\n"
