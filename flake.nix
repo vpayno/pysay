@@ -63,18 +63,12 @@
           system,
           ...
         }:
-        {
-        };
-
-      # old legacy flake (migrate to modules and perSystem)
-      # also for nixosConfiguration, darwinConfigurations, etc
-      flake =
         let
           pname = "pysay";
           version = "0.5.13";
           name = "${pname}-${version}";
 
-          system = "x86_64-linux";
+          # system = "x86_64-linux";
           arch = pkgs.lib.trim (builtins.toString (builtins.split "-linux$" system));
 
           inherit (nixpkgs) lib;
@@ -518,12 +512,12 @@
           };
         in
         {
-          formatter.${system} = treefmt-conf.formatter.${system};
+          formatter = treefmt-conf.formatter.${system};
 
           # Package a virtual environment as our main application.
           #
           # Enable no optional dependencies for production build.
-          packages.${system} = {
+          packages = {
             uv = uv-bin; # provide the uv version the flake uses to devbox
 
             default = self.packages.${system}.pysayApp;
@@ -692,7 +686,7 @@
           };
 
           # Make pysay runnable with `nix run`
-          apps.${system} = {
+          apps = {
             inherit (treefmt-conf.apps.${system}) tag-release;
 
             default = self.apps.${system}.pysay;
@@ -777,7 +771,7 @@
           # This example provides two different modes of development:
           # - Impurely using uv to manage virtual environments
           # - Pure development using uv2nix to manage virtual environments
-          devShells.${system} = {
+          devShells = {
             default = self.devShells.${system}.impure; # don't use uv2nix as a "traditional" development environment
 
             # It is of course perfectly OK to keep using an impure virtualenv workflow and only use uv2nix to build packages.
@@ -933,5 +927,10 @@
               };
           };
         };
+
+      # old legacy flake (migrate to modules and perSystem)
+      # also for nixosConfiguration, darwinConfigurations, etc
+      flake = {
+      };
     };
 }
