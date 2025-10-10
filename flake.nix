@@ -446,7 +446,7 @@
               cat "${data.diveCiConfigFile}"
               printf "\n"
 
-              image_file="${self.packages.${system}.dockerImageNixos}"
+              image_file="${self'.packages.dockerImageNixos}"
 
               printf "Image file: %s\n" "$image_file"
               printf "\n"
@@ -471,7 +471,7 @@
               printf "Using UI config file: %s\n" "${data.diveUiConfigFile}"
               printf "\n"
 
-              image_file="${self.packages.x86_64-linux.dockerImageNixos}"
+              image_file="${self'.packages.dockerImageNixos}"
 
               printf "Image file: %s\n" "$image_file"
               printf "\n"
@@ -493,7 +493,7 @@
                 printf "\n"
               fi
 
-              image_file="${self.packages.x86_64-linux.dockerImageNixos}"
+              image_file="${self'.packages.dockerImageNixos}"
 
               printf "Image file: %s\n" "$image_file"
               printf "\n"
@@ -520,7 +520,7 @@
           packages = {
             uv = uv-bin; # provide the uv version the flake uses to devbox
 
-            default = self.packages.${system}.pysayApp;
+            default = self'.packages.pysayApp;
 
             pysay = pythonSet.mkVirtualEnv "${pname}-prod-env-${version}" workspace.deps.default // {
               inherit pname;
@@ -532,7 +532,7 @@
             pysayApp = mkApplication {
               inherit pname;
               inherit version;
-              venv = self.packages.${system}.pysay;
+              venv = self'.packages.pysay;
               package = pythonSet.pysay;
             };
 
@@ -548,7 +548,7 @@
                   env.uvBuildType = "sdist";
                 });
 
-            dockerImageNixos = self.packages.${system}.dockerImageNixosBuild;
+            dockerImageNixos = self'.packages.dockerImageNixosBuild;
 
             dockerImageNixosBuild = pkgs.dockerTools.buildLayeredImage {
               name = "docker-image-nixos-${pname}";
@@ -570,12 +570,12 @@
               '';
 
               contents = [
-                self.packages.${system}.pysay
+                self'.packages.pysay
               ];
 
               config =
                 let
-                  entrypoint = "${self.packages.${system}.default}/bin/pysay";
+                  entrypoint = "${self'.packages.default}/bin/pysay";
                 in
                 {
                   # startup executable
@@ -604,7 +604,7 @@
 
               config = {
                 Entrypoint = [
-                  "${pkgs.lib.getExe self.packages.${system}.default}"
+                  "${pkgs.lib.getExe self'.packages.default}"
                 ];
 
                 # adds glibLocales and sets LOCALE_ARCHIVE
@@ -650,12 +650,12 @@
               contents = [
                 pkgs.neofetch # needs coreutils
                 pkgs.coreutils
-                self.packages.${system}.pysay
+                self'.packages.pysay
               ];
 
               config =
                 let
-                  entrypoint = "${self.packages.${system}.default}/bin/pysay";
+                  entrypoint = "${self'.packages.default}/bin/pysay";
                 in
                 {
                   # startup executable
@@ -677,7 +677,7 @@
               name = "devcontainer-nixshell-${pname}";
               tag = "${version}-${arch}";
 
-              drv = self.devShells.${system}.uv2nix.overrideAttrs (oldAttrs: {
+              drv = self'.devShells.uv2nix.overrideAttrs (oldAttrs: {
                 packages = oldAttrs.packages or [ ] ++ [
                   inputs.nvim-conf.packages.${system}.default # lol, adds 10GB
                 ];
@@ -689,11 +689,11 @@
           apps = {
             inherit (treefmt-conf.apps.${system}) tag-release;
 
-            default = self.apps.${system}.pysay;
+            default = self'.apps.pysay;
 
             pysay = {
               type = "app";
-              program = "${self.packages.${system}.default}/bin/pysay";
+              program = "${self'.packages.default}/bin/pysay";
               meta = pkgs.lib.attrsets.recursiveUpdate metadata {
                 inherit pname;
                 inherit version;
@@ -772,7 +772,7 @@
           # - Impurely using uv to manage virtual environments
           # - Pure development using uv2nix to manage virtual environments
           devShells = {
-            default = self.devShells.${system}.impure; # don't use uv2nix as a "traditional" development environment
+            default = self'.devShells.impure; # don't use uv2nix as a "traditional" development environment
 
             # It is of course perfectly OK to keep using an impure virtualenv workflow and only use uv2nix to build packages.
             # This devShell simply adds Python and undoes the dependency leakage done by Nixpkgs Python infrastructure.
@@ -801,7 +801,7 @@
               shellHook = ''
                 export PATH="$PATH:${
                   pkgs.lib.makeBinPath (
-                    self.devShells.${system}.impure.nativeBuildInputs
+                    self'.devShells.impure.nativeBuildInputs
                     ++ (with pkgs; [
                       binutils
                       coreutils-full
@@ -818,9 +818,7 @@
                 }"
                 unset PYTHONPATH
 
-                ${pkgs.lib.getExe pkgs.cowsay} "Welcome to ${name}'s ${
-                  self.devShells.${system}.impure.name
-                } devShell!"
+                ${pkgs.lib.getExe pkgs.cowsay} "Welcome to ${name}'s ${self'.devShells.impure.name} devShell!"
                 printf "\n"
                 which python uv
                 printf "\n"
@@ -919,9 +917,7 @@
                   # Get repository root using git. This is expanded at runtime by the editable `.pth` machinery.
                   export REPO_ROOT=$(git rev-parse --show-toplevel)
 
-                  ${pkgs.lib.getExe pkgs.cowsay} "Welcome to ${name}'s ${
-                    self.devShells.${system}.uv2nix.name
-                  } devShell!"
+                  ${pkgs.lib.getExe pkgs.cowsay} "Welcome to ${name}'s ${self'.devShells.uv2nix.name} devShell!"
                   printf "\n"
                 '';
               };
