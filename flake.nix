@@ -783,7 +783,7 @@
             # It is of course perfectly OK to keep using an impure virtualenv workflow and only use uv2nix to build packages.
             # This devShell simply adds Python and undoes the dependency leakage done by Nixpkgs Python infrastructure.
             impure = pkgs.mkShell {
-              name = "devShell.impure";
+              name = "devShells.${system}.impure";
               # becomes nativeBuildInputs
               packages = [
                 python
@@ -897,7 +897,8 @@
                 virtualenv = editablePythonSet.mkVirtualEnv "${pname}-dev-env-${version}" workspace.deps.all;
               in
               pkgs.mkShell {
-                name = "devShell.uv2nix";
+                name = "devShells.${system}.uv2nix";
+
                 packages = [
                   virtualenv
                   pkgs.uv
