@@ -743,6 +743,7 @@
         # This devShell simply adds Python and undoes the dependency leakage done by Nixpkgs Python infrastructure.
         impure = pkgs.mkShell {
           name = "devShell.impure";
+          # becomes nativeBuildInputs
           packages = [
             python
             pkgs.uv
@@ -765,7 +766,7 @@
           shellHook = ''
             export PATH="$PATH:${
               pkgs.lib.makeBinPath (
-                self.packages.${system}
+                self.devShells.${system}.impure.nativeBuildInputs
                 ++ (with pkgs; [
                   binutils
                   coreutils-full
@@ -882,7 +883,9 @@
               # Get repository root using git. This is expanded at runtime by the editable `.pth` machinery.
               export REPO_ROOT=$(git rev-parse --show-toplevel)
 
-              ${pkgs.lib.getExe pkgs.cowsay} "Welcome to ${name}'s ${uv2nix.name} devShell!"
+              ${pkgs.lib.getExe pkgs.cowsay} "Welcome to ${name}'s ${
+                self.devShells.${system}.uv2nix.name
+              } devShell!"
               printf "\n"
             '';
           };
