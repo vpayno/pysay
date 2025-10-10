@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.13] - 2025-10-10
+
+### Nix
+
+- *(style)* Remove recursive attribute sets - missed fixes
+
 ## [0.5.12] - 2025-10-10
 
 ### Nix
@@ -45,6 +51,10 @@ All notable changes to this project will be documented in this file.
 ### Miscellaneous Tasks
 
 - Switch to static versioning
+
+### Security
+
+- *(0.5.12)* Update improvements, lock updates, rec keyword removal, ci fixes, shell fixes
 
 ## [0.5.11] - 2025-07-18
 

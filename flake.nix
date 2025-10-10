@@ -44,7 +44,7 @@
     }@inputs:
     let
       pname = "pysay";
-      version = "0.5.12";
+      version = "0.5.13";
       name = "${pname}-${version}";
 
       system = "x86_64-linux";
