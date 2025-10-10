@@ -2,6 +2,50 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.12] - 2025-10-10
+
+### Nix
+
+- Use the uv2nix uv-bin packge in the flake and devbox shell
+- Update flake before devbox since the flake defines packages in devbox
+- *(apps)* Fix outdated execution and add audit checks in updateProjectLocks
+- *(apps)* Check if lock updates were successful
+- Lock update
+- Lock update
+- Lock update
+- Lock update
+- Lock update
+- Lock update
+- Lock update
+- *(style)* Remove recursive attribute sets
+
+### Other
+
+- Lock update
+- Lock update
+- Update minimum dependency version constraints
+- Lock update
+- Lock update
+- Lock update
+- Update minimum dependency version constraints
+- Lock update
+- Lock update
+- Update minimum dependency version constraints
+- Lock update
+- Lock update
+- Update minimum dependency version constraints
+- Update to 20250925.0.3
+- Run .#updateProjectLocks in update_locks script
+- Lock update
+- Lock update
+- Update minimum dependency version constraints
+- Use current-system from gh:vpayno/nix-misc-tools
+- Fix DEP_PATH bin paths
+
+### Miscellaneous Tasks
+
+- Switch to static versioning
+
 ## [0.5.11] - 2025-07-18
 
 ### Nix
@@ -82,6 +126,10 @@ All notable changes to this project will be documented in this file.
 - *(tools)* Add flake lock update script
 - *(tools)* Add devbox lock update script
 - *(tools)* Fix typo in update-uv-constraints.sh
+
+### Security
+
+- *(0.5.11)* Devshell and lock update
 
 ## [0.5.10] - 2025-04-13
 
