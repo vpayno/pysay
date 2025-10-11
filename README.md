@@ -15,7 +15,7 @@ play with dependency update related maintenance.
 To tag a release run:
 
 ```bash
-nix run github:vpayno/nix-treefmt-conf#tag-release v0.5.8 'devbox shell, pyproject.toml and flake.nix fixes'
+nix run .#tag-release v0.5.8 'devbox shell, pyproject.toml and flake.nix fixes'
 ```
 
 ## Usage
