@@ -2,11 +2,30 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.14] - 2025-10-11
+
+### Nix
+
+- Start migration to flake-parts - part 1
+- Start migration to flake-parts - part 2
+- Start migration to flake-parts - part 3
+- Start migration to flake-parts - part 4
+- Start migration to flake-parts - part 5
+- *(apps)* Move tag-release to local flake, fix python revbump
+
+### Other
+
+- Fix project version manually
+
 ## [0.5.13] - 2025-10-10
 
 ### Nix
 
 - *(style)* Remove recursive attribute sets - missed fixes
+
+### Security
+
+- *(0.5.13)* Rec keyword removal fixes
 
 ## [0.5.12] - 2025-10-10
 

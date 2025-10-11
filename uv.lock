@@ -724,7 +724,7 @@ wheels = [
 
 [[package]]
 name = "pysay"
-version = "0.5.13"
+version = "0.5.14"
 source = { editable = "." }
 dependencies = [
     { name = "rich" },
