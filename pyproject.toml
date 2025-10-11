@@ -26,24 +26,24 @@ classifiers = [
   "Topic :: Utilities",
 ]
 dependencies = [
-    "rich>=14.1.0",
+    "rich>=14.2.0",
 ]
 
 [dependency-groups]
 dev = [
   "bandit>=1.8.6",
-  "isort>=6.0.1",
+  "isort>=6.1.0",
   "mkdocs>=1.6.1",
   "mypy-extensions>=1.1.0",
   "mypy>=1.18.2",
   "pdoc3>=0.11.6",
-  "pylint>=3.3.8",
-  "pyright>=1.1.405",
+  "pylint>=3.3.9",
+  "pyright>=1.1.406",
   "pytest-cov>=7.0.0",
   "pytest-datafiles>=3.0.0",
   "pytest-randomly>=4.0.1",
   "pytest>=8.4.2",
-  "ruff>=0.13.2",
+  "ruff>=0.14.0",
   "poethepoet>=0.37.0",
   "yq>=3.4.3",
   "pip-audit>=2.9.0",
