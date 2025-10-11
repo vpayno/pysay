@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.18] - 2025-10-11
+
+### Nix
+
+- *(apps/tag-release)* Add change log to annotated tags
+
 ## [0.5.17] - 2025-10-11
 
 ### Nix
