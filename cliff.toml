@@ -77,8 +77,12 @@ commit_parsers = [
   { message = "^nix", group = "<!-- 10 --> Nix" },
   { message = "^treefmt", group = "<!-- 11 --> Treefmt" },
   { message = "^conf", group = "<!-- 12 --> Configs" },
+  { message = "^direnv", group = "<!-- 13 --> Direnv" },
+  { message = "^devbox", group = "<!-- 14 --> Devbox" },
+  { message = "^python", group = "<!-- 15 --> Python" },
+  { message = "^uv", group = "<!-- 16 --> UV" },
   { message = "^release\\(v?[0-9]+[.][0-9]+[.][0-9]+\\)", skip = true },
-  { message = ".*", group = "<!-- 13 --> Other" },
+  { message = ".*", group = "<!-- 17 --> Other" },
 ]
 # filter out the commits that are not matched by commit parsers
 filter_commits = false
