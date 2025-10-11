@@ -11,9 +11,7 @@
     "runme":                       "latest",
     "python312Packages.ipython":   "latest",
     "refurb":                      "latest",
-    "hatch":                       "latest",
     "python":                      "3.13",
-    "python312Packages.hatch-vcs": "latest",
     "docker-client":               "latest",
     ".#uv":                        "",
     "cowsay":                      "latest"
@@ -30,7 +28,6 @@
       "[ -d ${VENV_DIR} ] || uv venv",
       "[ -d ${VENV_DIR} ] && . ${VENV_DIR}/bin/activate",
       "uv sync",
-      "pip() { exec uv pip \"$@\"; }",
       "cowsay \"Welcome to $(hatch project metadata | jq -r '. | \"\\(.name)-\\(.version)\"')'s devbox shell!\""
     ],
     "scripts": {
