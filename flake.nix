@@ -264,11 +264,15 @@
             updateUvConstraints = pkgs.writeShellApplication {
               name = "update-uv-constraints";
 
-              runtimeInputs = with pkgs; [
-                coreutils
-                gnused
-                uv
-              ];
+              runtimeInputs =
+                with pkgs;
+                [
+                  coreutils
+                  gnused
+                ]
+                ++ [
+                  self'.packages.uv
+                ];
 
               text = ''
                 is_git_dirty() {
@@ -352,11 +356,13 @@
                 [
                   coreutils
                   devbox
-                  uv
                 ]
                 ++ (with scripts; [
                   updateUvConstraints
-                ]);
+                ])
+                ++ [
+                  self'.packages.uv
+                ];
 
               text = ''
                 is_git_clean() {
@@ -512,14 +518,19 @@
 
             tag-release = pkgs.writeShellApplication {
               name = "tag-release";
-              runtimeInputs = with pkgs; [
-                coreutils
-                git
-                git-cliff
-                gnugrep
-                gnused
-                gum
-              ];
+              runtimeInputs =
+                with pkgs;
+                [
+                  coreutils
+                  git
+                  git-cliff
+                  gnugrep
+                  gnused
+                  gum
+                ]
+                ++ [
+                  self'.packages.uv
+                ];
               text = ''
                 declare current_branch
                 current_branch="$(git branch --show-current)"
@@ -915,7 +926,7 @@
               # becomes nativeBuildInputs
               packages = [
                 python
-                pkgs.uv
+                self'.packages.uv
                 pkgs.hatch
                 pkgs.git
                 pkgs.bashInteractive
@@ -1027,7 +1038,7 @@
 
                 packages = [
                   virtualenv
-                  pkgs.uv
+                  self'.packages.uv
                   pkgs.hatch
                   pkgs.git
                   pkgs.bashInteractive
