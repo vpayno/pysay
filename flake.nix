@@ -627,7 +627,10 @@
                 "
                 printf "\n"
 
-                git tag -a -m "release($version): $note" "$version"
+                git tag -a -m "release($version): $note
+
+                $(git-cliff "$last_version".. --tag "$version")
+                " "$version"
                 printf "\n"
 
                 git show "$version"
