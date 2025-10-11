@@ -696,8 +696,8 @@
               program = "${self'.packages.default}/bin/pysay";
               meta = pkgs.lib.attrsets.recursiveUpdate metadata {
                 inherit pname;
-                inherit version;
                 inherit name;
+                inherit version;
               };
             };
 
@@ -707,7 +707,7 @@
               meta = pkgs.lib.attrsets.recursiveUpdate metadata {
                 description = "Script that shows the flake usage message";
                 pname = "usage";
-                name = "${pname}-${version}";
+                name = "${self'.apps.usage.meta.pname}-${version}";
                 inherit version;
               };
             };
@@ -717,8 +717,8 @@
               program = "${pkgs.lib.getExe scripts.showVersion}";
               meta = pkgs.lib.attrsets.recursiveUpdate metadata {
                 description = "Script that shows the flake version message";
-                name = "version";
-                pname = "${name}-${version}";
+                pname = "showVersion";
+                name = "${self'.apps.version.meta.pname}-${version}";
                 inherit version;
               };
             };
@@ -728,8 +728,8 @@
               program = "${pkgs.lib.getExe scripts.updateProjectLocks}";
               meta = pkgs.lib.attrsets.recursiveUpdate metadata {
                 description = "Script that updates all the project locks in the correct order";
-                name = "updateProjectLocks";
-                pname = "${name}-${version}";
+                pname = "updateProjectLocks";
+                name = "${self'.apps.updateProjectLocks.meta.pname}-${version}";
                 inherit version;
               };
             };
@@ -739,8 +739,8 @@
               program = "${pkgs.lib.getExe scripts.dockerCiCheck}";
               meta = pkgs.lib.attrsets.recursiveUpdate metadata {
                 description = "Docker CI Job";
-                name = "dockerCiCheck";
-                pname = "${name}-${version}";
+                pname = "dockerCiCheck";
+                name = "${self'.apps.dockerCiCheck.meta.pname}-${version}";
                 inherit version;
               };
             };
@@ -750,9 +750,9 @@
               program = "${pkgs.lib.getExe scripts.dive}";
               meta = pkgs.lib.attrsets.recursiveUpdate metadata {
                 description = pkgs.dive.meta.description + " (wrapper)";
-                name = "dive";
-                pname = "${name}-${version}";
-                inherit version;
+                inherit (pkgs.dive) pname;
+                inherit (pkgs.dive) name;
+                inherit (pkgs.dive) version;
               };
             };
 
@@ -761,8 +761,8 @@
               program = "${pkgs.lib.getExe scripts.dockerRun}";
               meta = pkgs.lib.attrsets.recursiveUpdate metadata {
                 description = "Run pysay using a docker container";
-                name = "dockerRun";
-                pname = "${name}-${version}";
+                pname = "dockerRun";
+                name = "${self'.apps.dockerRun.meta.pname}-${version}";
                 inherit version;
               };
             };
