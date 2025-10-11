@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.15] - 2025-10-11
+
+### Nix
+
+- Lock update
+
+### Other
+
+- Lock update
+- Lock update
+- Update minimum dependency version constraints
+- Update config to v0.16.0
+
 ## [0.5.14] - 2025-10-11
 
 ### Nix
