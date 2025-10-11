@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.17] - 2025-10-11
+
+### Nix
+
+- Change all pkgs.uv references to uv2nix uv-bin package
+- Lock update
+
+### Devbox
+
+- Lock update
+- Move hatch deps to pyproject.toml
+
+### Python
+
+- Bump to 3.13
+
+### UV
+
+- Lock update
+
 ## [0.5.16] - 2025-10-11
 
 ### Miscellaneous Tasks
