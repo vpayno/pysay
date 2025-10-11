@@ -2,18 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.16] - 2025-10-11
+
+### Miscellaneous Tasks
+
+- Upddate git-cliff config
+
 ## [0.5.15] - 2025-10-11
 
 ### Nix
 
 - Lock update
 
-### Other
+### Devbox
 
 - Lock update
+- Update config to v0.16.0
+
+### UV
+
 - Lock update
 - Update minimum dependency version constraints
-- Update config to v0.16.0
 
 ## [0.5.14] - 2025-10-11
 
@@ -26,7 +35,7 @@ All notable changes to this project will be documented in this file.
 - Start migration to flake-parts - part 5
 - *(apps)* Move tag-release to local flake, fix python revbump
 
-### Other
+### UV
 
 - Fix project version manually
 
@@ -57,28 +66,34 @@ All notable changes to this project will be documented in this file.
 - Lock update
 - *(style)* Remove recursive attribute sets
 
-### Other
+### Direnv
+
+- Update to 20250925.0.3
+- Use current-system from gh:vpayno/nix-misc-tools
+- Fix DEP_PATH bin paths
+
+### Devbox
 
 - Lock update
 - Lock update
-- Update minimum dependency version constraints
 - Lock update
 - Lock update
 - Lock update
-- Update minimum dependency version constraints
-- Lock update
-- Lock update
-- Update minimum dependency version constraints
-- Lock update
-- Lock update
-- Update minimum dependency version constraints
-- Update to 20250925.0.3
 - Run .#updateProjectLocks in update_locks script
 - Lock update
+
+### UV
+
 - Lock update
 - Update minimum dependency version constraints
-- Use current-system from gh:vpayno/nix-misc-tools
-- Fix DEP_PATH bin paths
+- Lock update
+- Update minimum dependency version constraints
+- Lock update
+- Update minimum dependency version constraints
+- Lock update
+- Update minimum dependency version constraints
+- Lock update
+- Update minimum dependency version constraints
 
 ### Miscellaneous Tasks
 
@@ -113,44 +128,53 @@ All notable changes to this project will be documented in this file.
 - Lock update
 - Move data to data attribute set
 
-### Other
+### Direnv
 
 - *(nix)* Setup devShell autoloading
 - Add runme play to setup devbox shell use
 - Add runme plays for allowing and disallowing direnv use
 - Use gum to select between nix develop and devbox shell
 - Add runme play for configuring direnv
-- Update locks
-- Update locks
-- Add cowsay prompt to hook
 - Use .#impure instead of .#uv2nix
-- Always use "uv pip" instead of "pip"
-- Add lock update task
 - Set devbox as the default shell
-- Update locks
 - .envrc file that automatically populates devshell options
 - Fixes/improvements
 - Rename abort option to skip
 - Update .envrc to v20250524.0.0
-- Update locks
 - Update .envrc to v20250524.0.0
 - Set devbox shell as the default option
+
+### Devbox
+
+- Update locks
+- Add cowsay prompt to hook
+- Update locks
 - Updaet locks
+- Update update_locks script
+- Add docker-client to shell
+- *(scripts)* Fix pip() in shell hook
+- Update locks
+- Lock update
+
+### Python
+
+- Always use "uv pip" instead of "pip"
+- Add lock update task
+
+### UV
+
+- Update locks
+- Update locks
 - Add tomlq dev dependency
 - Update minimum application dependency version constraints
 - Update dependency locks
 - Update minimum dependency version constraints
-- Update update_locks script
 - Remove tomlq dev dependency that conflicts with yq
-- Add docker-client to shell
 - Add pip-audit dev dependency
 - Add poe command for running audit commands
 - Fix constraint script bug which added dev deps as prod deps
-- *(scripts)* Fix pip() in shell hook
-- Update locks
 - Update dependency locks
 - Update minimum dependency version constraints
-- Lock update
 - Lock update
 - Update minimum dependency version constraints
 
@@ -209,12 +233,15 @@ All notable changes to this project will be documented in this file.
 - Switch default devShell from impure to uv2nix
 - Update locks
 
-### Other
+### Devbox
 
 - Add hatch
+- Update scripts
+
+### Python
+
 - Fix vcs version settings
 - Update locks
-- Update scripts
 - Fix license declaration for uv2nix
 - Update classifiers metadata
 
@@ -226,7 +253,7 @@ All notable changes to this project will be documented in this file.
 - Fix devShells and set default to impure
 - Update locks
 
-### Other
+### Python
 
 - Bump minimum pythoon version to 3.12
 
@@ -266,12 +293,18 @@ All notable changes to this project will be documented in this file.
 
 ## [0.5.3] - 2025-03-09
 
+### Devbox
+
+- Python and lock updates
+
+### UV
+
+- Recreate and update lock file
+
 ### Other
 
 - Initialize config
-- Recreate and update lock file
 - Add python+uv config
-- Python and lock updates
 
 ## [0.5.2] - 2025-03-09
 
@@ -282,7 +315,7 @@ All notable changes to this project will be documented in this file.
 - Fix mainainters, license, packages and apps
 - Update locks
 
-### Other
+### Python
 
 - Fix tool.poe.tasks in pyproject.toml
 
@@ -292,7 +325,7 @@ All notable changes to this project will be documented in this file.
 
 ## [0.5.1] - 2025-02-19
 
-### Other
+### Python
 
 - Add outdated command
 - Add poethepoet tool
@@ -310,7 +343,11 @@ All notable changes to this project will be documented in this file.
 - Add shell.nix and python-packages.nix
 - Add flake with uv2nix and devshell
 
-### Other
+### Devbox
+
+- Add developer shell
+
+### Python
 
 - Add clean commands
 - Add ruff lint and format options
@@ -318,7 +355,6 @@ All notable changes to this project will be documented in this file.
 - Update dev dependencies
 - Run pdm fix
 - Update dependencies
-- Add developer shell
 - Switch from pdm to uv
 
 ### Documentation
@@ -340,7 +376,7 @@ All notable changes to this project will be documented in this file.
 - Pylint consider-using-from-import
 - Add missing typing information
 
-### Other
+### Python
 
 - Add more project urls
 - Update "pdm run lint" command
@@ -364,7 +400,7 @@ All notable changes to this project will be documented in this file.
 
 ## [0.3.0] - 2024-01-23
 
-### Other
+### Python
 
 - Fix dynamic versioning
 - Fix script entrypoint section name
@@ -382,20 +418,23 @@ All notable changes to this project will be documented in this file.
 
 - Draw snake and speech bubble
 
-### Other
+### Python
 
 - Switch to dynamic versioning
 
 ## [0.1.0] - 2024-01-23
 
-### Other
+### Python
 
 - Initialize project using pdm
 - Add entry points
 - Add rich dependency
-- Add entrypoints
 - Update project description
 - Update project urls
+
+### Other
+
+- Add entrypoints
 
 ### Documentation
 
