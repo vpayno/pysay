@@ -12,10 +12,13 @@ play with dependency update related maintenance.
 
 ## Releases
 
+- Tags no longer start with a `v`.
+- Tags follow `semver`.
+
 To tag a release run:
 
 ```bash
-nix run .#tag-release v0.5.8 'devbox shell, pyproject.toml and flake.nix fixes'
+nix run .#tag-release 0.5.8 'devbox shell, pyproject.toml and flake.nix fixes'
 ```
 
 ## Usage
