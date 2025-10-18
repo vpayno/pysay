@@ -605,6 +605,7 @@
                   # pyproject.toml:version = "v0.5.11"
                   # pyproject.toml:version = "0.5.11"
                   sed -r -i -e "s/^(version = \")v?[0-9]+.[0-9]+.[0-9]+(\")/\1$version\2/g" ./pyproject.toml
+                  sed -r -i -e "s/^(fallback[-_]version = \")v?[0-9]+.[0-9]+.[0-9]+(\")/\1$version\2/g" ./pyproject.toml
                   printf "\n"
 
                   uv lock
