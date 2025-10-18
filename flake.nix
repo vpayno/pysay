@@ -159,6 +159,7 @@
               Available ${name} flake commands:
 
                 nix run .#usage
+                nix run .#tag-list count
                 nix run .#tag-release v1.2.3 'release notes'
 
                 nix run . -- "message"
@@ -649,6 +650,23 @@
                 fi
               '';
             };
+
+            tag-list = pkgs.writeShellApplication {
+              name = "tag-list";
+              runtimeInputs = with pkgs; [
+                coreutils
+                git
+                glow
+              ];
+              text = ''
+                declare -i count="''${1:-10}"
+
+                {
+                  printf "| Date | Tag | Subject |\n| --- | --- | --- |\n"
+                  TZ=UTC git for-each-ref --format="%(taggerdate:format-local:%Y-%m-%d %H:%M:%S:%Z) | %(refname:short) | %(subject) |" --sort=-taggerdate --count="$count" refs/tags
+                } | glow --width=0
+              '';
+            };
           };
         in
         {
@@ -879,6 +897,17 @@
                 description = "Script that tags/releases the Python project";
                 pname = "tag-release";
                 name = "${self'.apps.tag-release.meta.pname}-${version}";
+                inherit version;
+              };
+            };
+
+            tag-list = {
+              type = "app";
+              program = "${pkgs.lib.getExe scripts.tag-list}";
+              meta = pkgs.lib.attrsets.recursiveUpdate metadata {
+                description = "Script that list the latest tags";
+                pname = "tag-list";
+                name = "${self'.apps.tag-list.meta.pname}-${version}";
                 inherit version;
               };
             };

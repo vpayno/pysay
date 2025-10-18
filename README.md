@@ -15,10 +15,29 @@ play with dependency update related maintenance.
 - Tags no longer start with a `v`.
 - Tags follow `semver`.
 
+To list the latest tags run:
+
+```text
+$ nix run .#tag-list
+
+   Date                    │ Tag    │ Subject
+  ─────────────────────────┼────────┼────────────────────────────────────────────────────────────────────────────────────────────────
+   2025-10-18 03:23:10:UTC │ 0.5.19 │ release(0.5.19): make sure fallback versions are updated in pyproject.toml
+   2025-10-11 17:59:29:UTC │ 0.5.18 │ release(0.5.18): add change log to annotated tags
+   2025-10-11 17:45:18:UTC │ 0.5.17 │ release(0.5.17): migrate to python 3.13, lock update and fixes
+   2025-10-11 03:03:08:UTC │ 0.5.16 │ release(0.5.16): update changelog settings
+   2025-10-11 02:57:17:UTC │ 0.5.15 │ release(0.5.15): lock update
+   2025-10-11 02:52:01:UTC │ 0.5.14 │ release(0.5.14): flake-parts migration started, tag-release fixes
+   2025-10-10 20:17:25:UTC │ 0.5.13 │ release(0.5.13): rec keyword removal fixes
+   2025-10-10 19:04:57:UTC │ 0.5.12 │ release(0.5.12): update improvements, lock updates, rec keyword removal, ci fixes, shell fixes
+   2025-07-18 13:11:16:UTC │ 0.5.11 │ release(0.5.11): devshell and lock update
+   2025-04-13 16:32:02:UTC │ 0.5.10 │ release(0.5.10): remove leading v in versions
+```
+
 To tag a release run:
 
 ```bash
-nix run .#tag-release 0.5.8 'devbox shell, pyproject.toml and flake.nix fixes'
+nix run .#tag-release 0.5.19 'make sure fallback versions are updated in pyproject.toml'
 ```
 
 ## Usage
@@ -27,16 +46,19 @@ To show the usage help screen run: `nix run github:vpayno/pysay#usage`
 
 ```text
 $ nix run github:vpayno/pysay#usage
-this derivation will be built:
-  /nix/store/j7y81rm34jn8v6j001z7xzlh6zq9i3d0-showUsage.drv
-building '/nix/store/j7y81rm34jn8v6j001z7xzlh6zq9i3d0-showUsage.drv'...
-Available pysay flake commands:
+Available pysay-0.5.19 flake commands:
 
   nix run .#usage
+  nix run .#tag-release v1.2.3 'release notes'
+  nix run .#tag-list count
 
   nix run . -- message
     nix run .#default -- message
     nix run .#pysay -- message
+
+  nix run .#dive
+  nix run .#dockerCiCheck
+  nix run .#dockerRun -- message
 
   nix profile install github:vpayno/pysay
 ```
