@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.19] - 2025-10-18
+
+### Nix
+
+- *(apps/tag-release)* Make sure fallback versions are updated in pyproject.toml
+
 ## [0.5.18] - 2025-10-11
 
 ### Nix
