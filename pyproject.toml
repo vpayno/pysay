@@ -6,7 +6,7 @@ maintainers = [
   { name = "Victor Payno", email = "vpayno@users.noreply.github.com" },
 ]
 dynamic = []
-version = "0.5.19"
+version = "0.5.20"
 requires-python = ">=3.13"
 readme = "README.md"
 license = "MIT"
@@ -57,7 +57,7 @@ build-backend = "hatchling.build"
 
 [tool.hatch.version]
 source = "vcs"
-fallback-version = "0.5.19"
+fallback-version = "0.5.20"
 
 [tool.hatch.version.vcs]
 tag-pattern = "v[0-9]*"
@@ -76,7 +76,7 @@ git_describe_command = [
   "--first-parent",
 ]
 #version_scheme = "post-release"
-fallback_version = "0.5.19"
+fallback_version = "0.5.20"
 
 [tool.hatch.metadata]
 allow-direct-references = true

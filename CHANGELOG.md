@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.20] - 2025-10-18
+
+### Nix
+
+- *(apps/tag-list)* Add script/app for listing latest tags
+- Lock update
+
+### Devbox
+
+- Lock update
+
+### UV
+
+- Lock update
+- Update minimum dependency version constraints
+
+### Documentation
+
+- Update release notes
+
 ## [0.5.19] - 2025-10-18
 
 ### Nix
