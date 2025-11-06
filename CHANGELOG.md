@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.21] - 2025-11-06
+
+### Nix
+
+- Lock update
+
+### Devbox
+
+- Lock update
+
+### UV
+
+- Lock update
+- Update minimum dependency version constraints
+
+### Documentation
+
+- *(bundle)* Add notes on how to use nix bundle
+
 ## [0.5.20] - 2025-10-18
 
 ### Nix
