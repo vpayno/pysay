@@ -96,6 +96,34 @@ $ which pysay
 /home/vpayno/.nix-profile/bin/pysay
 ```
 
+## nix bundle
+
+We can use `nix bundle` to run an application on another host with a nix store.
+It builds a portable self-installing (to the host `/nix/store`) and running
+executable.
+
+### pysay-arx
+
+This command builds a nix store bundle for the application for the default
+system CPU/OS of the host it's built on.
+
+```bash
+time nix bundle --bundler github:vpayno/pysay#pysayApp && ./pysay-arx -- "Hello World!"
+```
+
+### nix bundle + docker
+
+We can use Nix to build a very efficient docker image to distribute the
+application with to hosts with out Nix.
+
+```bash
+time nix bundle --bundler github:NixOS/bundlers#toDockerImage github:vpayno/pysay#pysayApp && time docker load < pysay-0.5.20.tar.gz && time docker run -it --rm pysay-0.5.20:latest pysay "Hello World!"
+```
+
+```bash
+nix run github:vpayno/pysay#dive -- pysay-0.5.20:latest
+```
+
 ## pdm to uv
 
 Switched from `pdm` to `uv` to make working with the project using `uv2nix`
