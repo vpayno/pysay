@@ -781,8 +781,8 @@
               fromImage = pkgs.dockerTools.pullImage {
                 imageName = "ubuntu";
                 finalImageTag = "24.04";
-                imageDigest = "sha256:1e622c5f073b4f6bfad6632f2616c7f59ef256e96fe78bf6a595d1dc4376ac02";
-                sha256 = "sha256-UhZaL7KJLeTDzbkfgKawAHEoQ6JtwLrV4OG0GHfpRMg=";
+                imageDigest = "sha256:4fdf0125919d24aec972544669dcd7d6a26a8ad7e6561c73d5549bd6db258ac2";
+                sha256 = "sha256-0j8xM+mECrBBHv7ZqofiRaeSoOXFBtLYjgnKivQztS0=";
                 os = "linux";
                 arch = "${arch}";
               };
