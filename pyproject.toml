@@ -26,6 +26,7 @@ classifiers = [
   "Topic :: Utilities",
 ]
 dependencies = [
+    "argparse>=1.4.0",
     "rich>=14.2.0",
 ]
 
