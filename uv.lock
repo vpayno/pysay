@@ -1037,6 +1037,7 @@ source = { editable = "." }
 dependencies = [
     { name = "argparse" },
     { name = "rich" },
+    { name = "wxpython" },
 ]
 
 [package.dev-dependencies]
@@ -1065,6 +1066,7 @@ dev = [
 requires-dist = [
     { name = "argparse", specifier = ">=1.4.0" },
     { name = "rich", specifier = ">=14.2.0" },
+    { name = "wxpython", specifier = ">=4.2.4" },
 ]
 
 [package.metadata.requires-dev]
