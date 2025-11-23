@@ -60,6 +60,52 @@ integration_test_data: list[list[str | list[str]]] = [
 
 
 @pytest.mark.parametrize("message,expected", unit_test_data)
+def test_method_with_input_with_flag1(message: str, expected: list[str], capsys: CaptureFixture) -> None:
+    """Runs the class methods against all of our test data."""
+
+    captured_out: list[str]
+    expected_out: list[str]
+
+    sys.argv = ["pysay", "--message", message]
+
+    # discard previous output
+    captured: CaptureResult[Any] = capsys.readouterr()
+    cli()
+    captured = capsys.readouterr()  # capture new output
+
+    # captured_out = captured.out.split("\n")
+    captured_out = [*captured.out]
+    # expected_out = [str(number) for number in expected]
+    expected_out = [*expected]
+
+    print(f"{captured_out} == {expected_out}")
+    assert all(e == o for e, o in zip(captured_out, expected_out))
+
+
+@pytest.mark.parametrize("message,expected", unit_test_data)
+def test_method_with_input_with_flag2(message: str, expected: list[str], capsys: CaptureFixture) -> None:
+    """Runs the class methods against all of our test data."""
+
+    captured_out: list[str]
+    expected_out: list[str]
+
+    sys.argv = ["pysay", "--message"] + message.split(" ")
+
+    # discard previous output
+    captured: CaptureResult[Any] = capsys.readouterr()
+    cli()
+    captured = capsys.readouterr()  # capture new output
+
+    # captured_out = captured.out.split("\n")
+    captured_out = [*captured.out]
+    # expected_out = [str(number) for number in expected]
+    expected_out = [*expected]
+
+    print(f"{captured_out} == {expected_out}")
+    assert all(e == o for e, o in zip(captured_out, expected_out))
+
+
+@pytest.mark.parametrize("message,expected", unit_test_data)
 def test_method_with_input(message: str, expected: list[str], capsys: CaptureFixture) -> None:
     """Runs the class methods against all of our test data."""
 
