@@ -4,7 +4,6 @@ Snake Tests
 
 from typing import (
     Any,
-    List,
     Union,
 )
 
@@ -20,7 +19,7 @@ from pysay import (
 )
 
 # [[input, expected], ...]
-unit_test_data: List[List[str]] = [
+unit_test_data: list[list[str]] = [
     [
         "hello",
         r"""
@@ -40,7 +39,7 @@ unit_test_data: List[List[str]] = [
 ]
 
 # [[input, expected], ...]
-integration_test_data: List[List[Union[str, List[str]]]] = [
+integration_test_data: list[list[Union[str, list[str]]]] = [
     [
         "Hello World!",
         r"""
@@ -60,7 +59,7 @@ integration_test_data: List[List[Union[str, List[str]]]] = [
 
 
 @pytest.mark.parametrize("message,expected", unit_test_data)
-def test_snake_bubble(message: str, expected: List[str]) -> None:
+def test_snake_bubble(message: str, expected: list[str]) -> None:
     """Runs the method against all of our test data."""
 
     result: str = snake.bubble(message)
@@ -70,11 +69,11 @@ def test_snake_bubble(message: str, expected: List[str]) -> None:
 
 
 @pytest.mark.parametrize("message,expected", integration_test_data)
-def test_snake_say(message: str, expected: List[str], capsys: CaptureFixture) -> None:
+def test_snake_say(message: str, expected: list[str], capsys: CaptureFixture) -> None:
     """Runs the class methods against all of our test data."""
 
-    captured_out: List[str]
-    expected_out: List[str]
+    captured_out: list[str]
+    expected_out: list[str]
 
     # discard previous output
     captured: CaptureResult[Any] = capsys.readouterr()

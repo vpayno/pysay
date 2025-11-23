@@ -7,7 +7,6 @@ import subprocess  # nosec
 import sys
 from typing import (
     Any,
-    List,
     Union,
 )
 
@@ -22,7 +21,7 @@ from pysay import (
     main as cli,
 )
 
-unit_test_data: List[List[str]] = [
+unit_test_data: list[list[str]] = [
     [
         "hello",
         r"""
@@ -42,7 +41,7 @@ unit_test_data: List[List[str]] = [
 ]
 
 # [[input, expected], ...]
-integration_test_data: List[List[Union[str, List[str]]]] = [
+integration_test_data: list[list[Union[str, list[str]]]] = [
     [
         "Hello World!",
         r"""
@@ -62,11 +61,11 @@ integration_test_data: List[List[Union[str, List[str]]]] = [
 
 
 @pytest.mark.parametrize("message,expected", unit_test_data)
-def test_method_with_input(message: str, expected: List[str], capsys: CaptureFixture) -> None:
+def test_method_with_input(message: str, expected: list[str], capsys: CaptureFixture) -> None:
     """Runs the class methods against all of our test data."""
 
-    captured_out: List[str]
-    expected_out: List[str]
+    captured_out: list[str]
+    expected_out: list[str]
 
     sys.argv = ["pysay"] + message.split(" ")
 
@@ -85,7 +84,7 @@ def test_method_with_input(message: str, expected: List[str], capsys: CaptureFix
 
 
 @pytest.mark.parametrize("message,expected", integration_test_data)
-def test_script(message: str, expected: List[str]) -> None:
+def test_script(message: str, expected: list[str]) -> None:
     """Runs the main script against all of our test data."""
 
     program_input: str = ""
@@ -103,11 +102,11 @@ def test_script(message: str, expected: List[str]) -> None:
 
     program_output: str = process.stdout.decode("utf-8").strip()
     # program_output: str = process.stdout.decode("utf-8")
-    # program_out: List[str] = program_output.split("\n")
-    program_out: List[str] = [*program_output]
+    # program_out: list[str] = program_output.split("\n")
+    program_out: list[str] = [*program_output]
 
-    # expected_out: List[int] = [str(number) for number in expected]
-    expected_out: List[str] = [*expected]
+    # expected_out: list[int] = [str(number) for number in expected]
+    expected_out: list[str] = [*expected]
 
     print(f" program_out: {program_out}\n==\nexpected_out: {expected_out}")
     assert all(e == o for e, o in zip(program_out, expected_out))
