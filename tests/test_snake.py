@@ -4,7 +4,6 @@ Snake Tests
 
 from typing import (
     Any,
-    Union,
 )
 
 import pytest
@@ -39,7 +38,7 @@ unit_test_data: list[list[str]] = [
 ]
 
 # [[input, expected], ...]
-integration_test_data: list[list[Union[str, list[str]]]] = [
+integration_test_data: list[list[str | list[str]]] = [
     [
         "Hello World!",
         r"""
