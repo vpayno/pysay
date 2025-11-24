@@ -80,6 +80,50 @@ $ nix run github:vpayno/pysay -- "Hello World!"
              (________)0o°
 ```
 
+### argparse
+
+The original behavior still exists, passing the message as the only argument
+without flags.
+
+- flag: `--help | -h`
+
+```text
+# nix run .#pysay -- --help
+usage: pysay [-h] [-V] [-m MESSAGE]
+
+options:
+  -h, --help            show this help message and exit
+  -V, --version         show version
+  -m, --message MESSAGE
+                        message to print
+```
+
+- flag: `--version | -v`
+
+```text
+# nix run .#pysay -- --version
+pysay version 0.6.0
+```
+
+- flag: `--message | -m`
+
+```text
+# nix run .#pysay -- --message "Hello from command line!"
+
+     _________________________
+    ( Hello from command line )
+     -------------------------
+       \    __
+        \  {oo}
+           (__)\
+             λ \\
+               _\\__
+              (_____)_
+             (________)0o°
+```
+
+## nix install
+
 To install `pysay` from the command line use `nix profile install`.
 
 ```text
