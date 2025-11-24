@@ -27,7 +27,9 @@ classifiers = [
 ]
 dependencies = [
     "argparse>=1.4.0",
+    "gooey>=1.0.8.1",
     "rich>=14.2.0",
+    "wxpython>=4.2.4",
 ]
 
 [dependency-groups]
@@ -51,6 +53,9 @@ dev = [
   "hatch>=1.15.1",
   "hatch-vcs>=0.5.0",
 ]
+
+[tool.uv.extra-build-dependencies]
+"wxPython-4.2.4" = ["setuptools"]
 
 [build-system]
 requires = ["hatchling", "hatch-vcs"]

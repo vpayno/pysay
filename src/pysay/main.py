@@ -10,6 +10,9 @@ from typing import (
     override,
 )
 
+from gooey import (
+    Gooey,
+)
 from rich.traceback import (
     install,
 )
@@ -32,6 +35,7 @@ type t_config = Config
 default_message: str = "Hello World!"
 
 
+@Gooey
 def setup() -> Config:
     """
     Handles startup setup.

@@ -83,6 +83,16 @@
             uv = uv-bin;
           };
 
+          gooeyNativeBuildInputs = with pkgs; [
+            expat.dev
+            gtk3.dev
+            libjpeg
+            libpng
+            pkg-config
+            zlib.dev
+            wxGTK32
+          ];
+
           # Load a uv workspace from a workspace root.
           # Uv2nix treats all uv projects as workspace projects.
           workspace = uv2nix.lib.workspace.loadWorkspace { workspaceRoot = ./.; };
@@ -105,10 +115,28 @@
           # This is an additional overlay implementing build fixups.
           # See:
           # - https://pyproject-nix.github.io/uv2nix/FAQ.html
-          pyprojectOverrides = _final: _prev: {
+          pyprojectOverrides = final: prev: {
             # Implement build fixups here.
             # Note that uv2nix is _not_ using Nixpkgs buildPythonPackage.
             # It's using https://pyproject-nix.github.io/pyproject.nix/build.html
+            gooey = prev.gooey.overrideAttrs (old: {
+              buildInputs = old.buildInputs ++ gooeyNativeBuildInputs;
+            });
+            wx = prev.wx.overrideAttrs (old: {
+              buildInputs =
+                old.buildInputs
+                ++ (with pkgs; [
+                  wxGTK32
+                  wxwidgets_3_3
+                ]);
+            });
+            wxpython = prev.wxpython.overrideAttrs (old: {
+              nativeBuildInputs = old.nativeBuildInputs ++ [
+                (final.resolveBuildSystem {
+                  setuptools = [ ];
+                })
+              ];
+            });
           };
 
           # pkgs = nixpkgs.legacyPackages.${system};
