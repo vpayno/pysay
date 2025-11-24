@@ -27,6 +27,7 @@ classifiers = [
 ]
 dependencies = [
     "argparse>=1.4.0",
+    "gooey>=1.0.8.1",
     "rich>=14.2.0",
     "wxpython>=4.2.4",
 ]
