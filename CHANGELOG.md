@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.6.0] - 2025-11-24
+
+### Nix
+
+- *(docker)* Update ubuntu base docker image digest/sha256
+- Lock update
+
+### Devbox
+
+- Lock update
+
+### UV
+
+- Add argparse direct dependency
+- Lock update
+- Update minimum dependency version constraints
+
+### Other
+
+- Add -V/--version flag
+- Add --message flag while preserving original behavior
+
+### Miscellaneous Tasks
+
+- *(lint)* Switch from typing.List to list
+- *(lint)* Switch from typing.Union to |
+
 ## [0.5.21] - 2025-11-06
 
 ### Nix

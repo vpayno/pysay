@@ -65,7 +65,7 @@
         }:
         let
           pname = "pysay";
-          version = "0.5.21";
+          version = "0.6.0";
           name = "${pname}-${version}";
 
           # system = "x86_64-linux";
