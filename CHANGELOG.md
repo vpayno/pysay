@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.6.1] - 2026-01-13
+
+### Nix
+
+- *(devshell)* Add doq python docstring generator
+- Lock update
+
+### Direnv
+
+- Bump .envrc file to v20251210.0.0
+
+### Devbox
+
+- Add doq python docstring generator
+- Lock update
+
+### UV
+
+- Lock update
+- Update minimum dependency version constraints
+
+### Documentation
+
+- *(argparse)* Add notes on argparse update
+
+### Miscellaneous Tasks
+
+- *(style)* Use tabs with git files
+
 ## [0.6.0] - 2025-11-24
 
 ### Nix
