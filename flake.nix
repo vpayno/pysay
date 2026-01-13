@@ -139,6 +139,10 @@
                 ]
               );
 
+          pythonDevTools = with pkgs; [
+            doq
+          ];
+
           metadata = {
             homepage = "https://github.com/vpayno/pysay";
             description = "Like cowsay but with a python";
@@ -963,7 +967,8 @@
                 pkgs.hatch
                 pkgs.git
                 pkgs.bashInteractive
-              ];
+              ]
+              ++ pythonDevTools;
               env = {
                 # Prevent uv from managing Python downloads
                 UV_PYTHON_DOWNLOADS = "never";
@@ -1075,7 +1080,8 @@
                   pkgs.hatch
                   pkgs.git
                   pkgs.bashInteractive
-                ];
+                ]
+                ++ pythonDevTools;
 
                 env = {
                   # Don't create venv using uv
