@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.6.2] - 2026-02-01
+
+### Nix
+
+- Lock update
+
+### Direnv
+
+- Bump .envrc to version 20250131.0.0
+- Bump .envrc to version 20250131.0.1
+- Bump .envrc to version 20250131.0.2
+
+### Devbox
+
+- Lock update
+
+### UV
+
+- Lock update
+- Update minimum dependency version constraints
+
 ## [0.6.1] - 2026-01-13
 
 ### Nix
